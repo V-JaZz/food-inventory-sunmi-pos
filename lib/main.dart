@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:food_inventory/UI/Login/login.dart';
 
+import 'UI/LandingPage/landing_page.dart';
+
 void main() {
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
@@ -13,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const LoginPage(),
+      home:  LandingPage(),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:food_inventory/UI/Dashboard/dashboard.dart';
 import 'package:food_inventory/UI/ResetPass/reset_password.dart';
 import '../../constant/colors.dart';
 import '../../constant/image.dart';
@@ -18,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    _emailController =  TextEditingController();
+    _emailController = TextEditingController();
     _passController = TextEditingController();
   }
 
@@ -50,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                       margin: const EdgeInsets.only(bottom: 05),
                       child: const Text(
                         "Login!",
-                        style:  TextStyle(
+                        style: TextStyle(
                             color: colorTextBlack,
                             fontWeight: FontWeight.bold,
                             fontSize: 35),
@@ -187,7 +188,11 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   onTap: () {
-                    //TODO : Login
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const DashBoard(),
+                        ));
                   },
                   behavior: HitTestBehavior.opaque,
                 ),

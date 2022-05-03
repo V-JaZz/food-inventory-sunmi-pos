@@ -38,6 +38,8 @@ dependencies:
   shared_preferences:
   intl:
   flutter_svg:
+  flutter_gifimage: ^1.0.1
+  fluttertoast: ^7.1.1
 
 
 

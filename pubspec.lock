@@ -76,6 +76,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_gifimage:
+    dependency: "direct main"
+    description:
+      name: flutter_gifimage
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -100,6 +107,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  fluttertoast:
+    dependency: "direct main"
+    description:
+      name: fluttertoast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.1.8"
   http:
     dependency: "direct main"
     description:
