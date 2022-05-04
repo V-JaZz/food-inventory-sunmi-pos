@@ -3,9 +3,11 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
+import 'package:food_inventory/UI/Dashboard/Fab_bar.dart';
 import 'package:food_inventory/UI/DeliverySettings/deliverySettings.dart';
 import 'package:food_inventory/UI/Offer/offer_discount.dart';
 import 'package:food_inventory/UI/RestaurantDetails/restaurantDetails.dart';
+import 'package:food_inventory/UI/dashboard/layout.dart';
 import 'package:food_inventory/UI/instantAction/instant_action.dart';
 import 'package:food_inventory/UI/menu/menu.dart';
 import 'package:food_inventory/UI/order/order.dart';
@@ -23,6 +25,7 @@ import '../../constant/image.dart';
 import '../../constant/utils.dart';
 import '../Login/login.dart';
 import '../itemsTimeSet/itemsTimeSet.dart';
+import 'Fab_icons.dart';
 
 class DashBoard extends StatefulWidget {
   @override
@@ -33,6 +36,19 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
   int _selectedDrawerIndex = 0, _checkPage = 0;
   // final List<int> _backstack = [0];
   List<int> mOriginaListMain = [0];
+  String _lastSelected = 'TAB: 0';
+
+  void _selectedTab(int index) {
+    setState(() {
+      _lastSelected = 'TAB: $index';
+    });
+  }
+
+  void _selectedFab(int index) {
+    setState(() {
+      _lastSelected = 'FAB: $index';
+    });
+  }
 
   late GifController controller;
 
@@ -473,15 +489,51 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                         color: colorTextWhite,
                       ),
                     ),
-                    // _selectedDrawerIndex
                   ]),
                 ),
                 Expanded(child: _getDrawerItemWidget(_selectedDrawerIndex)),
-                // _selectedDrawerIndex=4
               ],
             ),
           ),
         ),
+        bottomNavigationBar: FABBottomAppBar(
+          centerItemText: 'A',
+          color: Color.fromRGBO(124, 117, 175, 1),
+          selectedColor: Color.fromRGBO(252, 174, 3, 1),
+          notchedShape: CircularNotchedRectangle(),
+          onTabSelected: _selectedTab,
+          items: [
+            FABBottomAppBarItem(iconData: icButton4, text: 'Orders'),
+            FABBottomAppBarItem(iconData: icButton2, text: 'table Order'),
+            FABBottomAppBarItem(iconData: icButton3, text: 'Menu'),
+            FABBottomAppBarItem(iconData: icButton4, text: 'Reports'),
+          ],
+          backgroundColor: colorTextWhite,
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: _buildFab(context),
+      ),
+    );
+  }
+
+  Widget _buildFab(BuildContext context) {
+    final icons = [Icons.sms, Icons.mail, Icons.phone];
+    return AnchoredOverlay(
+      showOverlay: true,
+      overlayBuilder: (context, offset) {
+        return CenterAbout(
+          position: Offset(offset.dx, offset.dy - icons.length * 35.0),
+          child: FabWithIcons(
+            icons: icons,
+            onIconTapped: _selectedFab,
+          ),
+        );
+      },
+      child: FloatingActionButton(
+        onPressed: () {},
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+        elevation: 2.0,
       ),
     );
   }
@@ -491,7 +543,6 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
       child: Hero(
         tag: 'avatar',
         child: Card(
-          // shape: CircleBorder(),
           clipBehavior: Clip.antiAlias,
           elevation: 10,
           child: CircleAvatar(
