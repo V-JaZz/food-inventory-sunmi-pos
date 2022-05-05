@@ -71,6 +71,8 @@ class ApiBaseHelper {
   static final String getOrders = "orderService/getOrders";
   static final String orderHistory = "orderService/orderHistory";
   static final String updateorderstatus = "orderService/updateorderstatus";
+  static final String updateTableorderstatus =
+      "orderService/updateTableOrderStatus";
   static final String getDeliveryData = "restaurantService/profile";
   static final String addDeliveryData = "restaurantService/addRestDistance";
   static final String updateDeliveryData =
@@ -88,13 +90,24 @@ class ApiBaseHelper {
   static final String deleteVariant = "menuService/deleteVariant";
   static final String updateVariant = "menuService/updateVariant";
   static final String downloadMenuImage = "menuService/downloadMenuImage";
-  static final String updateOnlineOrdering =
-      "restaurantService/updateOnlineOrdering";
+  static final String getOrderPerUser = "orderService/getOrder";
+  static final String getTableOrders = "orderService/getTableOrders";
+  static final String getTableOrdersPerUser = "orderService/getTableOrder";
 
-  static bool autoAccept = false;
-  static bool autoPrint = false;
-  static bool? allowOnlineDelivery = false;
-  static bool? allowOnlinePickup = false;
+  static final String ip = 'ip';
+  static final String port = 'port';
+  static final String url = 'url';
+  static bool orderbool = true;
+  static String status = 'status';
+  static bool autoAccept = true;
+  static bool autoPrint = true;
+  static bool? autoTablePrint = true;
+
+  // static bool? allowOnlineDelivery = false;
+  // static bool? allowOnlinePickup = false;
+  // static bool? isReservationActive = false;
+  static int pending = 0;
+
   Future<dynamic> get(String url, String token) async {
     print('Api Post, url $url');
     print('Api PUT, Token $token');

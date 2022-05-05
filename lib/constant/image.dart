@@ -29,6 +29,9 @@ const String icNotification = 'assets/ic_notification.svg';
 const String icNotificationGreen = 'assets/ic_notification_green.svg';
 const String icSettingRed = 'assets/ic_setting_red.svg';
 const String icClock = 'assets/ic_clock.svg';
+const String icOrderCross = 'assets/icOrderCross.svg';
+const String icNotch = 'assets/icNotch.svg';
+
 const String icVector = 'assets/ic_vector.svg';
 const String icClose = 'assets/ic_close.svg';
 const String icDelete = 'assets/ic_delete.svg';
@@ -44,4 +47,5 @@ const String icRadioCheck = 'assets/ic_radio_check.svg';
 const String icLogOut = 'assets/ic_logout.svg';
 const String icDashRate = 'assets/icRate.svg';
 const String icDashDoc = 'assets/icDoc.svg';
-const String icHistoryCal = 'assets/ic_Calender_Status.svg';
+const String icHistoryCal = 'assets/icHistory.svg';
+const String icDropDown = 'assets/icDropDown.svg';

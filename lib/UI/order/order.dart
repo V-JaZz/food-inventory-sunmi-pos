@@ -1,7 +1,16 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:food_inventory/UI/order/dialog_order_details.dart';
 import 'package:food_inventory/constant/colors.dart';
+import 'package:food_inventory/constant/storage_util.dart';
+import 'package:food_inventory/constant/validation_util.dart';
+import 'package:food_inventory/networking/api_base_helper.dart';
+import '../../constant/app_util.dart';
 import '../../constant/image.dart';
+import 'model/order_list_response_model.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class Order extends StatefulWidget {
   const Order({Key? key}) : super(key: key);
@@ -11,76 +20,191 @@ class Order extends StatefulWidget {
 }
 
 class _OrderState extends State<Order> {
+  List<OrderDataModel> _orderList = [];
+  bool isDataLoad = false;
+  IO.Socket socket =
+      IO.io("https://demo-foodinventoryde.herokuapp.com", <String, dynamic>{
+    "transports": ["websocket"],
+    'autoConnect': false
+  });
+  bool isSocketOrderAdded = false;
+  String email = "";
+  OrderListResponseModel model = OrderListResponseModel.fromJson({});
+  String truncateString(String data, int length) {
+    return (data.length >= length) ? '${data.substring(0, length)}' : data;
+  }
+
+  String localIp = '';
+  List<String> devices = [];
+  bool isDiscovering = false;
+  int found = -1;
+  TextEditingController portController = TextEditingController(text: '9100');
+  @override
+  void initState() {
+    super.initState();
+    _orderList = [];
+    print('inside initState');
+    getOrderList(true);
+    StorageUtil.getData(StorageUtil.keyEmail, "")!.then((email) async {
+      this.email = email;
+      print("Inside initLocalStorage " + email);
+      socket.connect();
+      socket.onConnect((_) {
+        print("Connected");
+        socket.emit("joinOwner", email);
+      });
+      listenToSocket();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    print("inside dispose method...disconnecting");
+    // socket.emit("leaveOwner", this.email);
+    // socket.clearListeners();
+    // socket.disconnect();
+    isSocketOrderAdded = false;
+  }
+
+  listenToSocket() {
+    socket.on("onOrderAdded", (response) {
+      print("Socket response");
+      isSocketOrderAdded = true;
+      model = OrderListResponseModel.fromJson(response);
+      getOrderList(false);
+    });
+  }
+
+  getOrderList(bool isLoad) async {
+    StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
+      StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
+          .then((restaurantId) async {
+        print("restauranttoday");
+        print(restaurantId);
+        if (isLoad) {
+          if (mounted) {
+            setState(() {
+              isDataLoad = true;
+            });
+          }
+        }
+        try {
+          String params = "";
+          if (selectedDate.isNotEmpty) {
+            params = "date=$selectedDate";
+          }
+
+          String body = "";
+          if (params.isNotEmpty) {
+            body = "?$params";
+          }
+
+          if (!isSocketOrderAdded) {
+            final response = await ApiBaseHelper()
+                .getwith(ApiBaseHelper.getOrders, token, restaurantId);
+            model = OrderListResponseModel.fromJson(
+                ApiBaseHelper().returnResponse(context, response));
+          }
+          isSocketOrderAdded = false;
+
+          print("todayresponfirst");
+          print("todayresponfirst");
+          print(model.data.toString());
+          if (isLoad) {
+            setState(() {
+              isDataLoad = false;
+            });
+          }
+          if (model.success!) {
+            print("todayresponse");
+            print(model.data.toString());
+            if (model.data!.isEmpty) {
+              setState(() {
+                _orderList = [];
+              });
+            } else {
+              setState(() {
+                _orderList = model.data!;
+              });
+            }
+            // widget.onOrderResponse(
+            //     selectedDate,
+            //     model.summaryData == null
+            //         ? SummaryData(
+            //             sId: "0",
+            //             acceptedOrder: "0",
+            //             declinedOrder: "0",
+            //             orderReceived: "0",
+            //             cashOrderAmount: "0",
+            //             onlineOrderAmount: "0",
+            //             totalOrderAmount: "0")
+            //         : model.summaryData!);
+            if (isLoad) {
+              if (model.summaryData != null) {
+                var pendingOrder = int.parse(defaultValue(
+                    model.summaryData?.pendingOrder.toString(), "0"));
+                print("OrderPendngNAme $pendingOrder");
+                if (pendingOrder > 0) {
+                  // FlutterRingtonePlayer.play(
+                  //   android: AndroidSounds.notification,
+                  //   ios: IosSounds.glass,
+                  //   looping: false, // Android only - API >= 28
+                  //   volume: 1.0, // Android only - API >= 28
+                  //   asAlarm: false, // Android only - all APIs
+                  // );
+                }
+              }
+            }
+          }
+        } catch (e) {
+          print(e.toString());
+          if (mounted) {
+            setState(() {
+              isDataLoad = false;
+            });
+          }
+        }
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        // backgroundColor: c/,
-        body: SafeArea(
-            child: Column(
-      children: [
-        // Container(
-        //   padding: EdgeInsets.only(left: 15, right: 15),
-        //   height: MediaQuery.of(context).size.height * 0.075,
-        //   color: colorButtonBlue,
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.start,
-        //     crossAxisAlignment: CrossAxisAlignment.center,
-        //     children: [
-        //       GestureDetector(
-        //         child: SvgPicture.asset(
-        //           icMenuHam,
-        //         ),
-        //       ),
-        //       SizedBox(width: 15),
-        //       Text(
-        //         "Nameste India",
-        //         style: TextStyle(
-        //             color: colorTextWhite,
-        //             fontWeight: FontWeight.bold,
-        //             fontSize: 15),
-        //       ),
-        //       SizedBox(width: 30),
-        //       Text(
-        //         "14 June, 2021",
-        //         style: TextStyle(
-        //             color: colorTextWhite,
-        //             fontWeight: FontWeight.bold,
-        //             fontSize: 15),
-        //       ),
-        //       SizedBox(width: 15),
-        //       GestureDetector(
-        //         child: SvgPicture.asset(
-        //           icCalendar,
-        //           height: MediaQuery.of(context).size.height * 0.021,
-        //           width: MediaQuery.of(context).size.width * 0.021,
-        //           color: Colors.amber,
-        //         ),
-        //       ),
-        //       SizedBox(width: 15),
-        //       GestureDetector(
-        //         child: SvgPicture.asset(
-        //           icDashRate,
-        //           height: MediaQuery.of(context).size.height * 0.021,
-        //           width: MediaQuery.of(context).size.width * 0.021,
-        //           color: colorTextWhite,
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
-        Expanded(
-          child: Container(
-              // height: MediaQuery.of(context).size.height * 0.87,
-              color: Colors.amber.shade50,
-              child: ListView.builder(
-                  itemCount: 3,
-                  itemBuilder: (BuildContext context, index) {
-                    return Card(
+    return Container(
+        color: colorBackgroundyellow,
+        child: isDataLoad
+            ? Center(
+                child: CircularProgressIndicator(
+                  strokeWidth: 5.0,
+                  color: colorGreen,
+                ),
+              )
+            : ListView.builder(
+                itemCount: _orderList.length,
+                itemBuilder: (BuildContext context, index) {
+                  String status = "";
+                  if (_orderList[index].orderStatus == STATUS_PENDING) {
+                    status = "New Order";
+                  } else {
+                    status = _orderList[index].orderStatus![0].toUpperCase() +
+                        _orderList[index]
+                            .orderStatus!
+                            .substring(1)
+                            .toLowerCase();
+                  }
+
+                  OrderDataModel orderObj = _orderList[index];
+                  return GestureDetector(
+                    onTap: () {
+                      showOrderDialog(orderObj, "VVVVVVV");
+                    },
+                    child: Card(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
-                      margin: EdgeInsets.all(10.0),
+                      // margin: const EdgeInsets.only(left: 5, right: 5, top: 10.0),
                       child: Container(
-                        padding: EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: Column(
                           children: [
                             Row(
@@ -95,7 +219,9 @@ class _OrderState extends State<Order> {
                                         fontSize: 12),
                                     children: <TextSpan>[
                                       TextSpan(
-                                          text: '11456848458',
+                                          text: truncateString(
+                                              "${orderObj.orderNumber!.trimRight()}",
+                                              16),
                                           style: TextStyle(
                                             fontWeight: FontWeight.w400,
                                           )),
@@ -116,7 +242,9 @@ class _OrderState extends State<Order> {
                                   ),
                                   SizedBox(width: 05),
                                   Text(
-                                    "13:20",
+                                    "${orderObj.orderDateTime}",
+                                    softWrap: false,
+                                    overflow: TextOverflow.clip,
                                     style: TextStyle(
                                         color: colorTextBlack,
                                         fontWeight: FontWeight.w600,
@@ -142,7 +270,8 @@ class _OrderState extends State<Order> {
                                             fontSize: 12),
                                         children: <TextSpan>[
                                           TextSpan(
-                                              text: '16:30, 10Jan,2021',
+                                              text:
+                                                  "${orderObj.deliveryDatetime ?? ""}",
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                               )),
@@ -152,14 +281,14 @@ class _OrderState extends State<Order> {
                                     SizedBox(height: 05),
                                     RichText(
                                       text: TextSpan(
-                                        text: 'Delivery Time: ',
+                                        text: 'Delivery Type: ',
                                         style: TextStyle(
                                             color: colorTextBlack,
                                             fontWeight: FontWeight.w400,
                                             fontSize: 12),
                                         children: <TextSpan>[
                                           TextSpan(
-                                              text: '16:30, 10Jan,2021',
+                                              text: orderObj.deliveryType,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w600,
                                               )),
@@ -176,20 +305,26 @@ class _OrderState extends State<Order> {
                                         Icon(
                                           Icons.circle,
                                           size: 40,
-                                          color: index == 0
+                                          color: orderObj.orderStatus ==
+                                                  STATUS_PENDING
                                               ? colorButtonYellow
-                                              : index == 1
+                                              : orderObj.orderStatus ==
+                                                      STATUS_ACCEPTED
                                                   ? colorGreen
-                                                  : index == 2
+                                                  : orderObj.orderStatus ==
+                                                          STATUS_DENIED
                                                       ? colorButtonYellow
                                                       : colorButtonYellow,
                                         ),
                                         SvgPicture.asset(
-                                            index == 0
+                                            orderObj.orderStatus ==
+                                                    STATUS_PENDING
                                                 ? icEye
-                                                : index == 1
+                                                : orderObj.orderStatus ==
+                                                        STATUS_ACCEPTED
                                                     ? icCheck
-                                                    : index == 2
+                                                    : orderObj.orderStatus ==
+                                                            STATUS_DENIED
                                                         ? icCross
                                                         : icEye,
                                             height: 12,
@@ -197,11 +332,13 @@ class _OrderState extends State<Order> {
                                       ],
                                     ),
                                     Text(
-                                      index == 0
+                                      orderObj.orderStatus == STATUS_PENDING
                                           ? "View"
-                                          : index == 1
+                                          : orderObj.orderStatus ==
+                                                  STATUS_ACCEPTED
                                               ? "Accepted"
-                                              : index == 2
+                                              : orderObj.orderStatus ==
+                                                      STATUS_DENIED
                                                   ? "Declined"
                                                   : "View",
                                       style: TextStyle(
@@ -216,10 +353,28 @@ class _OrderState extends State<Order> {
                           ],
                         ),
                       ),
-                    );
-                  })),
-        ),
-      ],
-    )));
+                    ),
+                  );
+                }));
+  }
+
+  void showOrderDialog(OrderDataModel orderDataModel, String name) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (buildContext) {
+        return OrderDetailsDialog(
+          orderDataModel: orderDataModel,
+          name: name,
+          onOrderUpdate: () {
+            setState(() {
+              _orderList = [];
+              getOrderList(true);
+            });
+            // _player.stop();
+          },
+        );
+      },
+    );
   }
 }

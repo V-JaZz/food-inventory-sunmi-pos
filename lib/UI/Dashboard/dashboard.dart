@@ -3,29 +3,31 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
-import 'package:food_inventory/UI/Dashboard/Fab_bar.dart';
 import 'package:food_inventory/UI/DeliverySettings/deliverySettings.dart';
 import 'package:food_inventory/UI/Offer/offer_discount.dart';
 import 'package:food_inventory/UI/RestaurantDetails/restaurantDetails.dart';
-import 'package:food_inventory/UI/dashboard/layout.dart';
+import 'package:food_inventory/UI/dashboard/dialogAddNewItem.dart';
 import 'package:food_inventory/UI/instantAction/instant_action.dart';
 import 'package:food_inventory/UI/menu/menu.dart';
 import 'package:food_inventory/UI/order/order.dart';
 import 'package:food_inventory/UI/restaurentTimeSet/restaurantTimeSet.dart';
 import 'package:food_inventory/UI/settings/settings.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_inventory/networking/api_base_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import '../../constant/app_util.dart';
 import '../../constant/colors.dart';
 import '../../constant/const.dart';
 import '../../constant/image.dart';
-import '../../constant/utils.dart';
-import '../Login/login.dart';
+import '../../constant/storage_util.dart';
+import '../../constant/validation_util.dart';
+import '../OrderHistory/orderHistory.dart';
 import '../itemsTimeSet/itemsTimeSet.dart';
-import 'Fab_icons.dart';
+import '../order/model/order_list_response_model.dart';
+import 'logout_repository.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class DashBoard extends StatefulWidget {
   @override
@@ -73,12 +75,30 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
       firstName = '',
       lastName = '';
 
+  late TextEditingController _newItemDashController;
+  late TextEditingController _addDesDashController;
+  late LogoutRepository _logoutRepository;
+  var logoutEmail = "";
+  IO.Socket socket =
+      IO.io("https://demo-foodinventoryde.herokuapp.com", <String, dynamic>{
+    "transports": ["websocket"],
+    'autoConnect': false
+  });
+  bool isSocketOrderAdded = false;
+  String email = "";
+  OrderListResponseModel model = OrderListResponseModel.fromJson({});
+  String resId = '';
+  int pendingOrder = 0;
+
   @override
   void initState() {
     // List view;
     // Scheduleblocking();
 
     initPreferences();
+    _newItemDashController = new TextEditingController();
+    _addDesDashController = new TextEditingController();
+    _logoutRepository = LogoutRepository(context);
 
     avatarWidget = Container();
     controller = GifController(vsync: this);
@@ -87,8 +107,30 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
       controller.value = 0;
       controller.animateTo(22, duration: const Duration(milliseconds: 1500));
     });
+    StorageUtil.getData(StorageUtil.keyEmail, "")!.then((email) async {
+      print("Inside initLocalStorage " + email);
+      this.email = email;
+      setState(() {
+        logoutEmail = email;
+      });
+      socket.connect();
+      socket.onConnect((_) {
+        print("Connected");
+        socket.emit("joinOwner", email);
+      });
 
+      listenToSocket();
+    });
     super.initState();
+  }
+
+  listenToSocket() {
+    socket.on("onOrderAdded", (response) {
+      print("Socket response");
+      isSocketOrderAdded = true;
+      model = OrderListResponseModel.fromJson(response);
+      getPendingOrderValue(true);
+    });
   }
 
   var notiCount;
@@ -155,36 +197,85 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
     Navigator.of(context).pop(); // close the drawer
   }
 
+  getPendingOrderValue(bool isLoad) async {
+    StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
+      StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
+          .then((restaurantId) async {
+        print("restauranttoday");
+        print(restaurantId);
+        setState(() {
+          resId = restaurantId;
+        });
+
+        try {
+          String params = "";
+          if (selectedDate.isNotEmpty) {
+            params = "date=$selectedDate";
+          }
+
+          String body = "";
+          if (params.isNotEmpty) {
+            body = "?$params";
+          }
+
+          if (!isSocketOrderAdded) {
+            final response = await ApiBaseHelper()
+                .getwith(ApiBaseHelper.getOrders + body, token, restaurantId);
+            model = OrderListResponseModel.fromJson(
+                ApiBaseHelper().returnResponse(context, response));
+          }
+          isSocketOrderAdded = false;
+          print("todayresponfirst");
+          print("todayresponfirst");
+          if (model.success!) {
+            print("todayresponse");
+            print(model.data.toString());
+            if (isLoad) {
+              if (model.summaryData != null) {
+                var pending = int.parse(defaultValue(
+                    model.summaryData?.pendingOrder.toString(), "0"));
+                print(pending);
+                print(pendingOrder);
+                if (pending > 0) {
+                  // FlutterRingtonePlayer.playNotification();
+                  // FlutterRingtonePlayer.play(
+                  //   android: AndroidSounds.notification,
+                  //   ios: IosSounds.glass,
+                  //   looping: true,
+                  //   // Android only - API >= 28
+                  //   volume: 0.5,
+                  //   // Android only - API >= 28
+                  //   asAlarm: false, // Android only - all APIs
+                  // );
+                  setState(() {
+                    pendingOrder = pending;
+                  });
+                }
+              }
+            }
+          }
+        } catch (e) {
+          print(e.toString());
+        }
+      });
+    });
+  }
+
   Future<bool> customPop(BuildContext context) async {
     print("CustomPop is called");
     print("_backstack = $mOriginaListMain");
-
     List<String> mList =
         (_prefs.getStringList(Constants.backPages) ?? <String>[]);
-
     List<int> mOriginaList = mList.map((i) => int.parse(i)).toList();
-
     if (mOriginaList.length > 1) {
       mOriginaList.removeAt(mOriginaList.length - 1);
       navigateBack(mOriginaList[mOriginaList.length - 1]);
-
       List<String> stringsList = mOriginaList.map((i) => i.toString()).toList();
-
       _prefs.setStringList(Constants.backPages, stringsList);
-
       return Future.value(false);
     } else {
       return _onWillPop();
     }
-
-    // if (_backstack.length > 1) {
-    //   _backstack.removeAt(_backstack.length - 1);
-    //   navigateBack(_backstack[_backstack.length - 1]);
-
-    //   return Future.value(false);
-    // } else {
-    //   return _onWillPop();
-    // }
   }
 
   void navigateBack(int index) {
@@ -449,8 +540,6 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                     Expanded(
                       flex: 0,
                       child: Container(
-                        // color:Colors.yellow,
-                        // width: MediaQuery.of(context).size.width / 1.8,
                         child: Text(
                           '${_items[_selectedDrawerIndex]}',
                           maxLines: 1,
@@ -473,6 +562,10 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                     ),
                     const SizedBox(width: 15),
                     GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => OrderHistory()));
+                      },
                       child: SvgPicture.asset(
                         icCalendar,
                         height: MediaQuery.of(context).size.height * 0.021,
@@ -491,49 +584,124 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                     ),
                   ]),
                 ),
-                Expanded(child: _getDrawerItemWidget(_selectedDrawerIndex)),
+                Expanded(
+                    child: Container(
+                        padding: EdgeInsets.only(
+                            left: 10, top: 10, right: 15, bottom: 10),
+                        color: colorBackgroundyellow,
+                        child: _getDrawerItemWidget(_selectedDrawerIndex))),
               ],
             ),
           ),
         ),
-        bottomNavigationBar: FABBottomAppBar(
-          centerItemText: 'A',
-          color: Color.fromRGBO(124, 117, 175, 1),
-          selectedColor: Color.fromRGBO(252, 174, 3, 1),
-          notchedShape: CircularNotchedRectangle(),
-          onTabSelected: _selectedTab,
-          items: [
-            FABBottomAppBarItem(iconData: icButton4, text: 'Orders'),
-            FABBottomAppBarItem(iconData: icButton2, text: 'table Order'),
-            FABBottomAppBarItem(iconData: icButton3, text: 'Menu'),
-            FABBottomAppBarItem(iconData: icButton4, text: 'Reports'),
-          ],
-          backgroundColor: colorTextWhite,
+        floatingActionButton: FloatingActionButton(
+          // disabledElevation: 0,
+          // foregroun ? dColor : colorTextBlack,
+          onPressed: () {
+            addMoreDialog();
+          },
+          child: Container(
+            width: 60,
+            height: 60,
+            child: Icon(Icons.add),
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(colors: [colorGreen2, colorGreen1])),
+          ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: _buildFab(context),
-      ),
-    );
-  }
-
-  Widget _buildFab(BuildContext context) {
-    final icons = [Icons.sms, Icons.mail, Icons.phone];
-    return AnchoredOverlay(
-      showOverlay: true,
-      overlayBuilder: (context, offset) {
-        return CenterAbout(
-          position: Offset(offset.dx, offset.dy - icons.length * 35.0),
-          child: FabWithIcons(
-            icons: icons,
-            onIconTapped: _selectedFab,
+        bottomNavigationBar: BottomAppBar(
+          // color: colorTextWhite,
+          elevation: 10,
+          shape: CircularNotchedRectangle(),
+          notchMargin: 05,
+          child: Container(
+            padding: EdgeInsets.only(left: 10, right: 10),
+            height: MediaQuery.of(context).size.height * 0.075,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                GestureDetector(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(icOrder,
+                          height: 20, color: Color.fromRGBO(124, 117, 175, 1)),
+                      SizedBox(height: 05),
+                      Text(
+                        "Orders",
+                        style: TextStyle(
+                            color: colorTextBlack,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(right: 60),
+                  child: GestureDetector(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(icButton2,
+                            height: 20,
+                            color: Color.fromRGBO(124, 117, 175, 1)),
+                        SizedBox(height: 05),
+                        Text(
+                          "Table Order",
+                          style: TextStyle(
+                              color: colorTextBlack,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(right: 15),
+                  child: GestureDetector(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(icButton3,
+                            height: 20,
+                            color: Color.fromRGBO(124, 117, 175, 1)),
+                        SizedBox(height: 05),
+                        Text(
+                          "Menu",
+                          style: TextStyle(
+                              color: colorTextBlack,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(icButton4,
+                          height: 20, color: Color.fromRGBO(124, 117, 175, 1)),
+                      SizedBox(height: 05),
+                      Text(
+                        "Reports",
+                        style: TextStyle(
+                            color: colorTextBlack,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-        );
-      },
-      child: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-        elevation: 2.0,
+        ),
       ),
     );
   }
@@ -555,6 +723,301 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
           ),
         ),
       ),
+    );
+  }
+
+  void addMoreDialog() {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierColor: Colors.black45,
+      transitionDuration: const Duration(milliseconds: 200),
+      pageBuilder: (BuildContext buildContext, Animation animation,
+          Animation secondaryAnimation) {
+        return BackdropFilter(
+          filter: ImageFilter.blur(
+            sigmaX: 3.0,
+            sigmaY: 3.0,
+          ),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                decoration:
+                    new BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
+                padding: EdgeInsets.only(
+                    left: 20.0, right: 20.0, top: 200.0, bottom: 200.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30)),
+                  padding: EdgeInsets.all(15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                Navigator.of(context).pop();
+                                dialogAddNewitem("Add New Item");
+                              });
+                            },
+                            child: Card(
+                              color: colorButtonBlue,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              child: Padding(
+                                padding: EdgeInsets.all(18.0),
+                                child: Text(
+                                  "Add New Item",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                Navigator.of(context).pop();
+                                // dialogAddNewType(TYPE_CATEGORY);
+                              });
+                            },
+                            child: Card(
+                              color: colorButtonBlue,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              child: Padding(
+                                padding: EdgeInsets.all(18.0),
+                                child: Text(
+                                  "Add New Category",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            Navigator.of(context).pop();
+                            // dialogAddNewType(TYPE_OPTION);
+                          });
+                        },
+                        child: Card(
+                          color: colorButtonBlue,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0)),
+                          child: Padding(
+                            padding: EdgeInsets.all(18.0),
+                            child: Text(
+                              "Add Option",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Divider(
+                        color: colorButtonBlue,
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                Navigator.of(context).pop();
+                                // dialogAddNewType(TYPE_TOPPINGS);
+                              });
+                            },
+                            child: Card(
+                              color: colorButtonBlue,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              child: Padding(
+                                padding: EdgeInsets.all(18.0),
+                                child: Text(
+                                  "Add Toppings",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                Navigator.of(context).pop();
+                                // dialogAddNewType(TYPE_GROUP_TOPPINGS);
+                              });
+                            },
+                            child: Card(
+                              color: colorButtonBlue,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              child: Padding(
+                                padding: EdgeInsets.all(18.0),
+                                child: Text(
+                                  "Add Toppings Group",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        color: colorButtonBlue,
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                Navigator.of(context).pop();
+                                // addAllergyMenu(TYPE_ALLERGY);
+                              });
+                            },
+                            child: Card(
+                              color: colorButtonBlue,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              child: Padding(
+                                padding: EdgeInsets.all(18.0),
+                                child: Text(
+                                  "Add Allergy",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                Navigator.of(context).pop();
+                                // addAllergyMenuGroup(TYPE_ALLERGY_GROUP);
+                              });
+                            },
+                            child: Card(
+                              color: colorButtonBlue,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              child: Padding(
+                                padding: EdgeInsets.all(18.0),
+                                child: Text(
+                                  "Add Allergy Group",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        color: colorButtonBlue,
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                Navigator.of(context).pop();
+                                // dialogAddNewType(TYPE_VERIANT);
+                              });
+                              // addAllergyMenuGroup(TYPE_ALLERGY_GROUP);
+                            },
+                            child: Card(
+                              color: colorButtonBlue,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              child: Padding(
+                                padding: EdgeInsets.all(18.0),
+                                child: Text(
+                                  "Add Varient",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                Navigator.of(context).pop();
+                                // dialogAddNewType(TYPE_VARIANT_GROUP);
+                              });
+                            },
+                            child: Card(
+                              color: colorButtonBlue,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              child: Padding(
+                                padding: EdgeInsets.all(18.0),
+                                child: Text(
+                                  "Add Varient Group",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        color: colorButtonBlue,
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.6),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: SvgPicture.asset(
+                    icOrderCross,
+                    height: MediaQuery.of(context).size.height * 0.035,
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -617,17 +1080,24 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
     );
   }
 
+  callLogout() async {
+    StorageUtil.getData(StorageUtil.keyEmail, "")!.then((email) async {
+      _logoutRepository.logout(logoutEmail);
+      print("Logout initLocalStorage " + logoutEmail);
+    });
+  }
+
   void logoutDialog() {
     showDialog(
       context: context,
       builder: (popupContext) {
-        Widget content = const Text("Are you sure you want to logout?");
+        Widget content = Text("Are you sure you want to logout?");
         List<Widget> action = [
           TextButton(
             onPressed: () {
               Navigator.pop(popupContext);
             },
-            child: const Text(
+            child: Text(
               'No',
               style: TextStyle(color: colorTextBlack),
             ),
@@ -635,9 +1105,19 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
           TextButton(
             onPressed: () {
               Navigator.pop(popupContext);
+              // FlutterRingtonePlayer.stop();
+              StorageUtil.clearData().then((value) {
+                callLogout();
+                // logoutDialog();
+                // Navigator.pushAndRemoveUntil(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => LoginPage(),
+                //     ),
+                //     (e) => false);
+              });
             },
-            child: const Text('Yes',
-                style: const TextStyle(color: colorButtonBlue)),
+            child: Text('Yes', style: TextStyle(color: colorButtonBlue)),
           ),
         ];
 
@@ -650,6 +1130,22 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                 content: content,
                 actions: action,
               );
+      },
+    );
+  }
+
+  void dialogAddNewitem(String type) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return DialogAddNewItems(
+          onDialogClose: () {
+            // setState(() {
+            //   print("DialogClosed");
+            // });
+          },
+        );
       },
     );
   }

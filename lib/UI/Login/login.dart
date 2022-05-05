@@ -1,9 +1,11 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_inventory/UI/Dashboard/dashboard.dart';
 import 'package:food_inventory/UI/ResetPass/reset_password.dart';
 import '../../constant/colors.dart';
 import '../../constant/image.dart';
+import 'login_repository.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -14,13 +16,25 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   late TextEditingController _emailController;
-
+  late String devicetoken;
+  late LoginRepository _loginRepository;
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   late TextEditingController _passController;
   @override
   void initState() {
     super.initState();
     _emailController = TextEditingController();
     _passController = TextEditingController();
+    _loginRepository = LoginRepository(context);
+    getToken();
+  }
+
+  callLogin() async {
+    _loginRepository.login(
+        _emailController.text, _passController.text, devicetoken);
+    print(_emailController.text);
+    print(_passController.text);
+    print(devicetoken);
   }
 
   @override
@@ -188,11 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DashBoard(),
-                        ));
+                    callLogin();
                   },
                   behavior: HitTestBehavior.opaque,
                 ),
@@ -204,5 +214,14 @@ class _LoginPageState extends State<LoginPage> {
       ),
       decoration: BoxDecoration(color: Colors.amber.shade50),
     ));
+  }
+
+  getToken() async {
+    devicetoken = (await FirebaseMessaging.instance.getToken())!;
+    setState(() {
+      devicetoken = devicetoken;
+    });
+    print("raj" + "dfhshdkfjshfhsdjfsjsfdgs");
+    print("dev" + devicetoken);
   }
 }

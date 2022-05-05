@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "87493065796",
+    "project_id": "foodinventorygerman",
+    "storage_bucket": "foodinventorygerman.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87493065796:android:d1c8bc222ee4f406b41011",
+        "android_client_info": {
+          "package_name": "com.suresh.foodinventory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "87493065796-vfu4krg3b75dp0i7au0u3pgvpde2mcsp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.suresh.foodinventory",
+            "certificate_hash": "68173e32f533a3c2fe37ece82b764e76998a7a5b"
+          }
+        },
+        {
+          "client_id": "87493065796-putbbaq1fg6p9b2m39gfami1885ctfej.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMEMefIVES9QTCe32cuF5JW6NJk6o8g-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "87493065796-putbbaq1fg6p9b2m39gfami1885ctfej.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

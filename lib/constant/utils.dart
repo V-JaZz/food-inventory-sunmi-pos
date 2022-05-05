@@ -91,6 +91,10 @@ class Utils {
     );
   }
 
+  static String truncateString(String data, int length) {
+    return (data.length >= length) ? '${data.substring(0, length)}...' : data;
+  }
+
   static Widget textViewAlign(String text, double fontSize, Color textColor,
       FontWeight fontWeight, TextAlign textAlign) {
     return Text(
