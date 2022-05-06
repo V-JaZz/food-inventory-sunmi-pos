@@ -3,6 +3,7 @@
 // import 'package:flutter/cupertino.dart';
 // import 'package:food_inventory/constant/storage_util.dart';
 // import 'package:food_inventory/constant/validation_util.dart';
+// import 'package:food_inventory/model/common_model.dart';
 // import 'package:food_inventory/networking/api_base_helper.dart';
 
 // // import 'package:image_picker/image_picker.dart';
@@ -174,10 +175,10 @@
 //     TextEditingController itemName,
 //     TextEditingController descriptionName,
 //     TextEditingController discount,
-//     SelectionMenuDataList? _categoryData,
-//     List<SelectVariantData> _variantDataList,
-//     List<SelectOptionData> _optionDataList,
-//     SelectionMenuDataList? _allergyGroupData,
+//     String? _categoryData,
+//     List _variantDataList,
+//     List _optionDataList,
+//     String? _allergyGroupData,
 //   ) {
 //     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
 //       // String fileName = File(imageFile.path).path.split("/").last;

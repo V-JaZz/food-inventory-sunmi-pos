@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_inventory/constant/image.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../constant/colors.dart';
 
@@ -16,24 +20,106 @@ class DialogAddNewItems extends StatefulWidget {
 }
 
 class _DialogAddNewItemsState extends State<DialogAddNewItems> {
+  
   late TextEditingController _addNewController;
   late TextEditingController _discriptionController;
   late TextEditingController _discountController;
   late TextEditingController _variantController;
   late TextEditingController _optionController;
-  //  late MenuItemRepository _itemRepository;
+  File? cropperFile;
+  Future<void> _cropImage(path) async {
+    ImageCropper imageCropper = ImageCropper();
+    File? croppedfile = await imageCropper.cropImage(
+        sourcePath: path,
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+          CropAspectRatioPreset.ratio3x2,
+          CropAspectRatioPreset.original,
+          CropAspectRatioPreset.ratio4x3,
+          CropAspectRatioPreset.ratio16x9
+        ],
+        androidUiSettings: AndroidUiSettings(
+            toolbarTitle: '',
+            toolbarColor: colorButtonYellow,
+            toolbarWidgetColor: colorButtonBlue,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false),
+        iosUiSettings: IOSUiSettings(
+          minimumAspectRatio: 1.0,
+        ));
+
+    if (croppedfile != null) {
+      cropperFile = croppedfile;
+      setState(() {});
+    } else {
+      print("Image is not cropped.");
+    }
+  }
+
+  PickedFile? selectedBanner;
+  Future<void> _optionsDialogBox() {
+    return showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext _context) {
+          return AlertDialog(
+            content: new SingleChildScrollView(
+              child: new ListBody(
+                children: <Widget>[
+                  GestureDetector(
+                    child: new Text(
+                      'Take a picture',
+                      style: TextStyle(color: colorTextBlack, fontSize: 16),
+                    ),
+                    onTap: () {
+                      // setState(() async {
+                      ImagePicker.platform
+                          .pickImage(source: ImageSource.camera)
+                          .then((value) {
+                        setState(() {
+                          selectedBanner = value!;
+                          _cropImage(selectedBanner!.path);
+                        });
+                        // });
+                        Navigator.pop(_context);
+                      });
+                    },
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                  ),
+                  GestureDetector(
+                    child: new Text(
+                      'Select from gallery',
+                      style: TextStyle(color: colorTextBlack, fontSize: 16),
+                    ),
+                    onTap: () {
+                      ImagePicker.platform
+                          .pickImage(source: ImageSource.gallery)
+                          .then((value) {
+                        setState(() {
+                          selectedBanner = value!;
+                          _cropImage(selectedBanner!.path);
+                        });
+                      });
+                      Navigator.pop(_context);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _addNewController = new TextEditingController();
     _discriptionController = new TextEditingController();
     _discountController = new TextEditingController();
     _variantController = new TextEditingController();
     _optionController = new TextEditingController();
-    /* _deleteDataRepository =
-        new DeleteDataRepository(context,delId);*/
   }
 
   @override
@@ -47,12 +133,8 @@ class _DialogAddNewItemsState extends State<DialogAddNewItems> {
           elevation: 0,
           // backgroundColor: Colors.transparent,
           child: Container(
-            // decoration: new BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
-            // padding: EdgeInsets.only(
-            //     left: 10.0, right: 10.0, top: 100.0, bottom: 50.0),
-            height: MediaQuery.of(context).size.height * 0.80,
-            // margin: EdgeInsets.only(top: -20, right: -20),
-            padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+            height: MediaQuery.of(context).size.height * 0.785,
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             decoration: BoxDecoration(
                 color: colorTextWhite, borderRadius: BorderRadius.circular(13)),
             child: ListView(
@@ -70,9 +152,32 @@ class _DialogAddNewItemsState extends State<DialogAddNewItems> {
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(
-                      width: 120,
+                      width: 100,
                     ),
-                    Icon(Icons.add_circle, size: 32, color: colorButtonYellow)
+                    cropperFile != null
+                        ? GestureDetector(
+                            onTap: () {
+                              _optionsDialogBox();
+                            },
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.05,
+                              width: MediaQuery.of(context).size.width * 0.20,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                image: DecorationImage(
+                                    image: FileImage(cropperFile!),
+                                    fit: BoxFit.cover),
+                              ),
+                            ),
+                          )
+                        : GestureDetector(
+                            onTap: () {
+                              _optionsDialogBox();
+                            },
+                            child: Icon(Icons.add_circle,
+                                size: 32, color: colorButtonYellow))
                   ],
                 ),
                 SizedBox(
@@ -419,7 +524,7 @@ class _DialogAddNewItemsState extends State<DialogAddNewItems> {
                           child: Container(
                             padding: EdgeInsets.symmetric(vertical: 14),
                             alignment: Alignment.center,
-                            margin: EdgeInsets.only(right: 8),
+                            margin: EdgeInsets.only(left: 30, right: 10),
                             decoration: BoxDecoration(
                                 color: colorButtonYellow,
                                 borderRadius: BorderRadius.circular(30)),
@@ -439,7 +544,7 @@ class _DialogAddNewItemsState extends State<DialogAddNewItems> {
                           child: Container(
                             padding: EdgeInsets.symmetric(vertical: 14),
                             alignment: Alignment.center,
-                            margin: EdgeInsets.only(left: 8),
+                            margin: EdgeInsets.only(left: 8, right: 30),
                             decoration: BoxDecoration(
                                 color: colorGrey,
                                 borderRadius: BorderRadius.circular(30)),

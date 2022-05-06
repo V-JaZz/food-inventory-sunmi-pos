@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:food_inventory/UI/DeliverySettings/deliverySettings.dart';
@@ -15,6 +16,7 @@ import 'package:food_inventory/UI/settings/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_inventory/model/login_model.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../constant/app_util.dart';
@@ -58,15 +60,15 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
 
   late SharedPreferences _prefs;
   var _items = [
-    "Nameste India",
-    "Nameste India",
-    "Nameste India",
-    "Nameste India",
-    "Nameste India",
-    "Nameste India",
-    "Nameste India",
-    "Nameste India",
-    "Nameste India"
+    restaurantName,
+    restaurantName,
+    restaurantName,
+    restaurantName,
+    restaurantName,
+    restaurantName,
+    restaurantName,
+    restaurantName,
+    restaurantName,
   ];
   String id = '',
       userName = '',
@@ -92,9 +94,8 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    // List view;
-    // Scheduleblocking();
-
+    // clearImageCache();
+    getLoginData();
     initPreferences();
     _newItemDashController = new TextEditingController();
     _addDesDashController = new TextEditingController();
@@ -138,10 +139,33 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
     _prefs = await SharedPreferences.getInstance();
   }
 
+  clearImageCache(id) async {
+    await CachedNetworkImage.evictFromCache(getImageURL(IMAGE_ICON, resId));
+  }
+
   @override
   void dispose() {
     controller.dispose();
     super.dispose();
+  }
+
+  getLoginData() async {
+    StorageUtil.getData(StorageUtil.keyLoginData, "")!.then((value) {
+      print("Storage Data : $value");
+      if (value != null && value != "") {
+        setState(() {
+          LoginData loginData = LoginData.fromJson(jsonDecode(value));
+          restaurantName = loginData.restaurantName!;
+          restaurantName = defaultValue(loginData.restaurantName, "N/A");
+        });
+      }
+    });
+    // token = (await FirebaseMessaging.instance.getToken())!;
+    // setState(() {
+    //   token = token;
+    // });
+    print("raj" + "dfhshdkfjshfhsdjfsjsfdgs");
+    // print("dev" + token);
   }
 
   _getDrawerItemWidget(int pos) {
@@ -205,6 +229,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
         print(restaurantId);
         setState(() {
           resId = restaurantId;
+          clearImageCache(restaurantId);
         });
 
         try {
@@ -388,13 +413,59 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                     color: colorButtonBlue,
                   ),
                   child: Column(
-                    // mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                          margin: const EdgeInsets.only(left: 0, right: 0),
-                          child: const Divider(color: Colors.black)),
+                        padding: EdgeInsets.only(top: 15),
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(left: 15),
+                              width: 55,
+                              height: 60,
+                              child: CachedNetworkImage(
+                                useOldImageOnUrlChange: false,
+                                imageUrl: getImageURL(IMAGE_ICON, resId),
+                                imageBuilder: (imageContext, imageProvider) {
+                                  return Container(
+                                    width: 55,
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover),
+                                    ),
+                                  );
+                                },
+                                errorWidget: (context, url, error) =>
+                                    SvgPicture.asset(
+                                  placeHolder,
+                                  width: 80,
+                                  height: 80,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              restaurantName,
+                              maxLines: 1,
+                              overflow: TextOverflow.fade,
+                              softWrap: false,
+                              style: const TextStyle(
+                                  color: colorTextWhite,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // Container(
+                      //     margin: const EdgeInsets.only(left: 0, top: 10),
+                      //     child: const Divider(color: Colors.black)),
+                      SizedBox(height: 20),
                       Expanded(
                         child: SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
@@ -510,8 +581,8 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
             child: Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.only(
-                      left: 10, top: 05, bottom: 05, right: 10),
+                  padding:
+                      const EdgeInsets.only(top: 05, bottom: 05, right: 10),
                   color: colorButtonBlue,
                   child: Row(children: [
                     Center(
@@ -541,7 +612,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                       flex: 0,
                       child: Container(
                         child: Text(
-                          '${_items[_selectedDrawerIndex]}',
+                          restaurantName,
                           maxLines: 1,
                           overflow: TextOverflow.fade,
                           softWrap: false,
@@ -1035,7 +1106,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
         // });
       },
       child: Container(
-        margin: const EdgeInsets.only(left: 10, top: 05, bottom: 10, right: 0),
+        margin: const EdgeInsets.only(left: 10, top: 05, bottom: 08, right: 0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
