@@ -1,9 +1,16 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:food_inventory/UI/Offer/exclude_page.dart';
+import 'package:food_inventory/UI/Offer/offer_repository.dart';
 import 'package:food_inventory/constant/colors.dart';
+import 'package:food_inventory/constant/storage_util.dart';
+import 'package:food_inventory/main.dart';
+import 'package:food_inventory/model/login_model.dart';
+import 'package:food_inventory/networking/api_base_helper.dart';
 
 import '../../constant/image.dart';
 import '../../constant/validation_util.dart';
@@ -16,16 +23,55 @@ class OfferDiscount extends StatefulWidget {
 }
 
 class _OfferDiscountState extends State<OfferDiscount> {
+  late OfferRepository _offerRepository;
+
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   late TextEditingController _offerController;
   late TextEditingController _collectionController;
-  bool items = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _offerRepository = OfferRepository(context);
+    getProfileData();
+    _offerController = new TextEditingController(text: "");
+    _collectionController = new TextEditingController(text: "");
+  }
 
-    _offerController = new TextEditingController();
-    _collectionController = new TextEditingController();
+  getProfileData() async {
+    StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((value) async {
+      StorageUtil.getData(StorageUtil.keyRestaurantId, "")!.then((id) async {
+        Dialogs.showLoadingDialog(context, _keyLoader); //invoking login
+        try {
+          final response = await ApiBaseHelper()
+              .get(ApiBaseHelper.profile + "/" + id, value);
+          var model = LoginModel.fromJson(
+              ApiBaseHelper().returnResponse(context, response));
+          Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
+          if (model.success!) {
+            StorageUtil.setData(
+                StorageUtil.keyLoginData, json.encode(model.data));
+
+            setState(() {
+              _offerController = new TextEditingController(
+                  text: defaultValue(
+                      model.data!.deliveryDiscount.toString(), ""));
+              _collectionController = new TextEditingController(
+                  text: defaultValue(
+                      model.data!.collectionDiscount.toString(), ""));
+            });
+          }
+        } catch (e) {
+          print(e.toString());
+          Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
+        }
+      });
+    });
+  }
+
+  callAddOfferApi() async {
+    _offerRepository.addOffer(_offerController, _collectionController);
   }
 
   @override
@@ -114,7 +160,9 @@ class _OfferDiscountState extends State<OfferDiscount> {
                               fontSize: 15),
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        dialogAddNewType("");
+                      },
                     ),
                   ],
                 ),
@@ -202,7 +250,7 @@ class _OfferDiscountState extends State<OfferDiscount> {
                         ),
                       ),
                       onTap: () {
-                        addMoreDialog();
+                        dialogAddNewType("");
                       },
                     ),
                   ],
@@ -236,7 +284,7 @@ class _OfferDiscountState extends State<OfferDiscount> {
                         showMessage("Enter Offer/Discount Value", context);
                       } else {
                         FocusScope.of(context).requestFocus(FocusNode());
-                        // callAddOfferApi();
+                        callAddOfferApi();
                       }
                     },
                   ),
@@ -275,143 +323,16 @@ class _OfferDiscountState extends State<OfferDiscount> {
     );
   }
 
-  addMoreDialog() {
+  void dialogAddNewType(String type) {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext buildContext) {
-        return BackdropFilter(
-          filter: ImageFilter.blur(
-            sigmaX: 3.0,
-            sigmaY: 3.0,
-          ),
-          child: Container(
-            decoration:
-                new BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
-            padding: EdgeInsets.only(
-                left: 20.0, right: 20.0, top: 230.0, bottom: 248.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(30)),
-              padding: EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              Navigator.of(context).pop();
-                            });
-                          },
-                          child: Icon(Icons.arrow_back,
-                              size: 25, color: colorButtonYellow)),
-                      SizedBox(width: 05),
-                      Text(
-                        "Select Items",
-                        style: TextStyle(
-                            color: colorTextBlack,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.22,
-                    child: ListView.builder(
-                      itemCount: 10,
-                      shrinkWrap: true,
-                      itemBuilder: (listContext, index) {
-                        return Container(
-                            padding: EdgeInsets.only(left: 15),
-                            decoration: BoxDecoration(
-                                color: index % 2 == 0
-                                    ? Color.fromRGBO(228, 225, 246, 1)
-                                    : colorTextWhite),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Item One",
-                                  style: TextStyle(
-                                      color: colorTextBlack,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 13),
-                                ),
-                                Transform.scale(
-                                  scale: 0.5,
-                                  child: CupertinoSwitch(
-                                    value: items,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        items = !items;
-                                      });
-                                    },
-                                    activeColor: colorGreen,
-                                    trackColor: colorSwitchColor,
-                                  ),
-                                )
-                              ],
-                            ));
-                      },
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            child: Container(
-                              padding: EdgeInsets.symmetric(vertical: 14),
-                              alignment: Alignment.center,
-                              margin: EdgeInsets.only(right: 8),
-                              decoration: BoxDecoration(
-                                  color: colorGreen,
-                                  borderRadius: BorderRadius.circular(30)),
-                              child: Text(
-                                "Save",
-                                style: TextStyle(
-                                    color: colorTextWhite,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 12),
-                              ),
-                            ),
-                            onTap: () {},
-                          ),
-                        ),
-                        Expanded(
-                          child: GestureDetector(
-                            child: Container(
-                              padding: EdgeInsets.symmetric(vertical: 14),
-                              alignment: Alignment.center,
-                              margin: EdgeInsets.only(left: 8),
-                              decoration: BoxDecoration(
-                                  color: colorGrey,
-                                  borderRadius: BorderRadius.circular(30)),
-                              child: Text(
-                                "Cancel",
-                                style: TextStyle(
-                                    color: colorTextWhite,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 12),
-                              ),
-                            ),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            behavior: HitTestBehavior.opaque,
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
+      builder: (dialogContext) {
+        return ExcluedPage(
+          type: type,
+          onDialogClose: () {
+            getProfileData();
+          },
         );
       },
     );

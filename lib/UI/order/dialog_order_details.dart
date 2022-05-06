@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -72,790 +73,814 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Color.fromRGBO(11, 4, 58, 0.7),
-      child: Dialog(
-          insetPadding: EdgeInsets.all(20.0),
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.46,
-                // width: MediaQuery.of(context).size.width * 0.343,
-                margin: EdgeInsets.only(top: 10, right: 10),
-                // padding: EdgeInsets.only(bottom: 10),
-                decoration: BoxDecoration(
-                    color: colorTextWhite,
-                    borderRadius: BorderRadius.circular(13)),
-                child: ListView(
-                  controller: ScrollController(),
-                  shrinkWrap: true,
-                  children: [
-                    Column(
-                      children: [
-                        Row(
-                          // mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                                child: Container(
-                              padding: EdgeInsets.only(
-                                  left: 15, right: 15, top: 15, bottom: 15),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  RichText(
-                                      text: TextSpan(
-                                          text: 'Name: ',
-                                          style: TextStyle(
-                                              color: colorTextBlack,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 10),
-                                          children: [
-                                        TextSpan(
-                                            text:
-                                                "${defaultValue(widget.orderDataModel.userDetails!.firstName, "")} ${defaultValue(widget.orderDataModel.userDetails!.lastName, "")}",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                            )),
-                                      ])),
-                                  SizedBox(height: 8),
-                                  widget.orderDataModel.deliveryType ==
-                                          'DELIVERY'
-                                      ? RichText(
-                                          text: TextSpan(
-                                              text: "Address : ",
-                                              style: TextStyle(
-                                                  color: colorTextBlack,
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 10),
-                                              children: [
-                                              TextSpan(
-                                                  text: defaultValue(
-                                                      widget.orderDataModel
-                                                          .userDetails!.address,
-                                                      "N/A"),
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                  )),
-                                            ]))
-                                      : SizedBox(),
-                                  SizedBox(height: 8),
-                                  RichText(
-                                      text: TextSpan(
-                                          text: "Contact : ",
-                                          style: TextStyle(
-                                              color: colorTextBlack,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 10),
-                                          children: [
-                                        TextSpan(
-                                            text: defaultValue(
-                                                widget.orderDataModel
-                                                    .userDetails!.contact,
-                                                "N/A"),
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                            )),
-                                      ])),
-                                  SizedBox(height: 8),
-                                  widget.orderDataModel.orderTime != null
-                                      ? widget.orderDataModel.deliveryType ==
-                                              'DELIVERY'
-                                          ? RichText(
-                                              text: TextSpan(
-                                                  text: "Delivery Time : ",
-                                                  style: TextStyle(
-                                                      color: colorTextBlack,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 10),
-                                                  children: [
-                                                  TextSpan(
-                                                      text: widget
-                                                          .orderDataModel
-                                                          .orderTime!,
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                      )),
-                                                ]))
-                                          : RichText(
-                                              text: TextSpan(
-                                                  text: "Collection Time : ",
-                                                  style: TextStyle(
-                                                      color: colorTextBlack,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 10),
-                                                  children: [
-                                                  TextSpan(
-                                                      text: widget
-                                                          .orderDataModel
-                                                          .orderTime!,
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                      )),
-                                                ]))
-                                      : SizedBox(),
-                                  // widget.orderDataModel.advanceOrderDate ==
-                                  //         null
-                                  //     ? RichText(
-                                  //         text: TextSpan(
-                                  //             text:
-                                  //                 "Advance Order Date :- ",
-                                  //             style: TextStyle(
-                                  //                 color: colorTextBlack,
-                                  //                 fontSize: 14),
-                                  //             children: [
-                                  //             TextSpan(
-                                  //                 text: widget
-                                  //                     .orderDataModel
-                                  //                     .advanceOrderDate!,
-                                  //                 style: TextStyle(
-                                  //                     color: colorTextBlack,
-                                  //                     fontSize: 14)),
-                                  //           ]))
-                                  //     : SizedBox(),
-                                ],
-                              ),
-                            )),
-                            Container(
-                              width: 1,
-                              height: 100,
-                              decoration:
-                                  BoxDecoration(color: colorDividerGreen),
-                            ),
-                            Expanded(
-                                child: Container(
-                              padding: EdgeInsets.only(
-                                  left: 15, right: 15, top: 15, bottom: 0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  RichText(
-                                      text: TextSpan(
-                                          text: "Order Number :- ",
-                                          style: TextStyle(
-                                              color: colorTextBlack,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 10),
-                                          children: [
-                                        TextSpan(
-                                            text: defaultValue(
-                                                widget
-                                                    .orderDataModel.orderNumber,
-                                                "N/A"),
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                            )),
-                                      ])),
-                                  SizedBox(height: 8),
-                                  RichText(
-                                      text: TextSpan(
-                                          text: "Order Type ",
-                                          style: TextStyle(
-                                              color: colorTextBlack,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 10),
-                                          children: [
-                                        TextSpan(
-                                            text: widget.orderDataModel
-                                                    .deliveryType![0]
-                                                    .toUpperCase() +
-                                                widget.orderDataModel
-                                                    .deliveryType!
-                                                    .substring(1),
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                            )),
-                                      ])),
-                                  SizedBox(height: 8),
-                                  RichText(
-                                      text: TextSpan(
-                                          text: "Order Time :- ",
-                                          style: TextStyle(
-                                              color: colorTextBlack,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 10),
-                                          children: [
-                                        TextSpan(
-                                            text: widget
-                                                .orderDataModel.orderDateTime!,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                            )),
-                                      ])),
-                                  SizedBox(height: 8),
-                                ],
-                              ),
-                            ))
-                          ],
-                        ),
-                        Container(
-                          height: 1,
-                          decoration: BoxDecoration(color: colorDividerGreen),
-                        ),
-                        widget.orderDataModel.itemDetails == null ||
-                                widget.orderDataModel.itemDetails!.isEmpty
-                            ? Container()
-                            : ListView.builder(
-                                controller: ScrollController(),
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount:
-                                    widget.orderDataModel.itemDetails!.length,
-                                shrinkWrap: true,
+    return BackdropFilter(
+      filter: ImageFilter.blur(
+        sigmaX: 3.0,
+        sigmaY: 3.0,
+      ),
+      child: Container(
+        color: Color.fromRGBO(11, 4, 58, 0.7),
+        child: Dialog(
+            insetPadding: EdgeInsets.all(20.0),
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.46,
+                  // width: MediaQuery.of(context).size.width * 0.343,
+                  margin: EdgeInsets.only(top: 10, right: 10),
+                  // padding: EdgeInsets.only(bottom: 10),
+                  decoration: BoxDecoration(
+                      color: colorTextWhite,
+                      borderRadius: BorderRadius.circular(13)),
+                  child: ListView(
+                    controller: ScrollController(),
+                    shrinkWrap: true,
+                    children: [
+                      Column(
+                        children: [
+                          Row(
+                            // mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                  child: Container(
                                 padding: EdgeInsets.only(
-                                    left: 15, right: 25, top: 16),
-                                itemBuilder: (context, index) {
-                                  ItemDetails itemData =
-                                      widget.orderDataModel.itemDetails![index];
-                                  for (int i = 0;
-                                      itemData.toppings!.length > i;
-                                      i++) {
-                                    var qty =
-                                        itemData.toppings![i].toppingCount;
-                                    var price = itemData.toppings![i].price;
-                                    print("Quantity: " + qty.toString());
-                                    print("Price: " + price.toString());
-                                    // getOptionName(itemData.toppings!);
-                                  }
-                                  getOptionName(itemData.toppings!, itemData);
-                                  var toppingsTag = "";
-                                  if (itemData.toppings != null) {
-                                    for (Toppings topping
-                                        in itemData.toppings!) {
-                                      if (toppingsTag.isEmpty) {
-                                        String priceTag = "";
-                                        String quantityTag = "";
-                                        if (double.parse(defaultValue(
-                                                topping.price.toString(),
-                                                "0")) >
-                                            0) {
-                                          priceTag =
-                                              "(${getAmountWithCurrency(defaultValue(topping.price.toString(), "0"))})";
-                                          quantityTag =
-                                              "(${defaultValue(topping.toppingCount.toString(), "0")})";
-                                        }
-                                        toppingsTag =
-                                            "${defaultValue(topping.name, "N/A")} $priceTag $quantityTag";
-                                      } else {
-                                        String priceTag = "";
-                                        String quantityTag = "";
-                                        if (double.parse(defaultValue(
-                                                topping.price.toString(),
-                                                "0")) >
-                                            0) {
-                                          priceTag =
-                                              "(${getAmountWithCurrency(defaultValue(topping.price.toString(), "0"))})";
-                                          quantityTag =
-                                              "(${defaultValue(topping.toppingCount.toString(), "0")})";
-                                        }
-                                        toppingsTag =
-                                            "$toppingsTag, ${defaultValue(topping.name, "N/A")} $priceTag $quantityTag";
-                                      }
-                                    }
-                                  }
-
-                                  var itemOptSelection = "";
-                                  if (!checkString(itemData.option)) {
-                                    itemOptSelection =
-                                        "(${defaultValue(itemData.option, "N/A")})";
-                                  }
-                                  if (!checkString(toppingsTag)) {
-                                    if (checkString(itemOptSelection)) {
-                                      itemOptSelection = "[$toppingsTag]";
-                                    } else {
-                                      itemOptSelection =
-                                          "$itemOptSelection [$toppingsTag]";
-                                    }
-                                  }
-
-                                  return Container(
-                                    margin: EdgeInsets.only(bottom: 05),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                            child: Container(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                itemData.excludeDiscount ==
-                                                        false
-                                                    ? itemData.discount !=
-                                                                null &&
-                                                            itemData.discount !=
-                                                                0
-                                                        ? defaultValue(
-                                                                itemData.name,
-                                                                "N/A") +
-                                                            " (${getAmountWithCurrency(defaultValue(itemData.discount.toString(), "0")).replaceAll('€', "% OFF").replaceAll('.0', '')})"
-                                                        : itemData.catDiscount !=
-                                                                    null &&
-                                                                itemData.catDiscount !=
-                                                                    0
-                                                            ? defaultValue(
-                                                                    itemData
-                                                                        .name,
-                                                                    "N/A") +
-                                                                " (${getAmountWithCurrency(defaultValue(itemData.catDiscount.toString(), "0")).replaceAll('€', "% OFF").replaceAll('.0', '')})"
-                                                            : itemData.overallDiscount !=
-                                                                        null &&
-                                                                    itemData.overallDiscount !=
-                                                                        0
-                                                                ? defaultValue(
-                                                                        itemData
-                                                                            .name,
-                                                                        "N/A") +
-                                                                    " (${getAmountWithCurrency(defaultValue(itemData.overallDiscount.toString(), "0")).replaceAll('€', "% OFF").replaceAll('.0', '')})"
-                                                                : defaultValue(
-                                                                    itemData
-                                                                        .name,
-                                                                    "N/A")
-                                                    : defaultValue(
-                                                        itemData.name, "N/A"),
-                                                style: TextStyle(
-                                                    color: colorTextBlack,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 10),
-                                              ),
-                                              SizedBox(
-                                                height: 3,
-                                              ),
-                                              checkString(itemOptSelection)
-                                                  ? Container()
-                                                  : Text(
-                                                      "$itemOptSelection",
-                                                      style: TextStyle(
-                                                        color: colorGreen,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                      ),
-                                                    ),
-                                              itemData.variant != null &&
-                                                      itemData.variantPrice !=
-                                                          '0'
-                                                  ? Text(
-                                                      "${itemData.variant} (${itemData.variantPrice.toString()})",
-                                                      style: TextStyle(
-                                                          color:
-                                                              Color(0xff51C800),
-                                                          fontSize: 14),
-                                                    )
-                                                  : SizedBox(),
-                                              itemData.subVariant != null &&
-                                                      itemData.subVariantPrice !=
-                                                          0
-                                                  ? Text(
-                                                      "${itemData.subVariant} (${itemData.subVariantPrice.toString()})",
-                                                      style: TextStyle(
-                                                          color: colorTextBlack,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize: 10),
-                                                    )
-                                                  : SizedBox(),
-                                              Text(
-                                                itemData.note.toString(),
-                                                style: TextStyle(
-                                                    color: colorTextBlack,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 10),
-                                              ),
-                                            ],
-                                          ),
-                                        )),
-                                        Container(
-                                          child: Text(
-                                            // "",
-                                            "${defaultValue(itemData.quantity.toString(), "1")} X ${getOptionName(itemData.toppings!, itemData) == "" ? getAmountWithCurrency(itemData.price.toString()) : getAmountWithCurrency(getOptionName(itemData.toppings!, itemData).toString())}",
+                                    left: 15, right: 15, top: 15, bottom: 15),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    RichText(
+                                        text: TextSpan(
+                                            text: 'Name: ',
                                             style: TextStyle(
                                                 color: colorTextBlack,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 10),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              ),
-                        Container(
-                          height: 1,
-                          margin: EdgeInsets.only(left: 20, right: 25),
-                          decoration: BoxDecoration(color: colorBlack),
-                        ),
-                        // Container(
-                        //   margin: EdgeInsets.only(
-                        //       top: 16, left: 20, right: 25),
-                        //   child: Row(
-                        //     crossAxisAlignment: CrossAxisAlignment.center,
-                        //     children: [
-                        //       Expanded(
-                        //           child: Container(
-                        //         child: Text(
-                        //           "Total Quantity",
-                        //           style: TextStyle(
-                        //               color: colorTextBlack, fontSize: 16),
-                        //         ),
-                        //       )),
-                        //       Container(
-                        //         child: Text(
-                        //           widget.orderDataModel.itemDetails!.length
-                        //               .toString(),
-                        //           style: TextStyle(
-                        //               color: colorTextBlack, fontSize: 16),
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        // Container(
-                        //   margin: EdgeInsets.only(
-                        //       top: 16, left: 20, right: 25),
-                        //   child: Row(
-                        //     crossAxisAlignment: CrossAxisAlignment.center,
-                        //     children: [
-                        //       Expanded(
-                        //           child: Container(
-                        //         child: Text(
-                        //           "Subtotal",
-                        //           style: TextStyle(
-                        //               color: colorTextBlack, fontSize: 16),
-                        //         ),
-                        //       )),
-                        //       Container(
-                        //         child: Text(
-                        //           getAmountWithCurrency(defaultValue(
-                        //                   widget.orderDataModel.subTotal,
-                        //                   "0"))
-                        //               ,
-                        //           style: TextStyle(
-                        //               color: colorTextBlack, fontSize: 16),
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        widget.orderDataModel.deliveryType == 'DELIVERY'
-                            ? Container(
-                                margin: EdgeInsets.only(
-                                    top: 10, left: 20, right: 25),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                        child: Container(
-                                      child: Text(
-                                        "Delivery Charge",
-                                        style: TextStyle(
-                                            color: colorGreen,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 10),
-                                      ),
-                                    )),
-                                    Container(
-                                      child: Text(
-                                        getAmountWithCurrency(defaultValue(
-                                            widget.orderDataModel.deliveryCharge
-                                                .toString(),
-                                            "0")),
-                                        style: TextStyle(
-                                            color: colorGreen,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 10),
-                                      ),
-                                    ),
+                                            children: [
+                                          TextSpan(
+                                              text:
+                                                  "${defaultValue(widget.orderDataModel.userDetails!.firstName, "")} ${defaultValue(widget.orderDataModel.userDetails!.lastName, "")}",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                              )),
+                                        ])),
+                                    SizedBox(height: 8),
+                                    widget.orderDataModel.deliveryType ==
+                                            'DELIVERY'
+                                        ? RichText(
+                                            text: TextSpan(
+                                                text: "Address : ",
+                                                style: TextStyle(
+                                                    color: colorTextBlack,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 10),
+                                                children: [
+                                                TextSpan(
+                                                    text: defaultValue(
+                                                        widget
+                                                            .orderDataModel
+                                                            .userDetails!
+                                                            .address,
+                                                        "N/A"),
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    )),
+                                              ]))
+                                        : SizedBox(),
+                                    SizedBox(height: 8),
+                                    RichText(
+                                        text: TextSpan(
+                                            text: "Contact : ",
+                                            style: TextStyle(
+                                                color: colorTextBlack,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 10),
+                                            children: [
+                                          TextSpan(
+                                              text: defaultValue(
+                                                  widget.orderDataModel
+                                                      .userDetails!.contact,
+                                                  "N/A"),
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                              )),
+                                        ])),
+                                    SizedBox(height: 8),
+                                    widget.orderDataModel.orderTime != null
+                                        ? widget.orderDataModel.deliveryType ==
+                                                'DELIVERY'
+                                            ? RichText(
+                                                text: TextSpan(
+                                                    text: "Delivery Time : ",
+                                                    style: TextStyle(
+                                                        color: colorTextBlack,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 10),
+                                                    children: [
+                                                    TextSpan(
+                                                        text: widget
+                                                            .orderDataModel
+                                                            .orderTime!,
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        )),
+                                                  ]))
+                                            : RichText(
+                                                text: TextSpan(
+                                                    text: "Collection Time : ",
+                                                    style: TextStyle(
+                                                        color: colorTextBlack,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 10),
+                                                    children: [
+                                                    TextSpan(
+                                                        text: widget
+                                                            .orderDataModel
+                                                            .orderTime!,
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        )),
+                                                  ]))
+                                        : SizedBox(),
+                                    // widget.orderDataModel.advanceOrderDate ==
+                                    //         null
+                                    //     ? RichText(
+                                    //         text: TextSpan(
+                                    //             text:
+                                    //                 "Advance Order Date :- ",
+                                    //             style: TextStyle(
+                                    //                 color: colorTextBlack,
+                                    //                 fontSize: 14),
+                                    //             children: [
+                                    //             TextSpan(
+                                    //                 text: widget
+                                    //                     .orderDataModel
+                                    //                     .advanceOrderDate!,
+                                    //                 style: TextStyle(
+                                    //                     color: colorTextBlack,
+                                    //                     fontSize: 14)),
+                                    //           ]))
+                                    //     : SizedBox(),
                                   ],
                                 ),
-                              )
-                            : SizedBox(),
-                        Container(
-                          margin: EdgeInsets.only(top: 10, left: 16, right: 25),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                  child: Container(
-                                child: Text(
-                                  "Discount",
-                                  style: TextStyle(
-                                      color: colorGreen,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 10),
-                                ),
                               )),
                               Container(
-                                child: Text(
-                                  getAmountWithCurrency(defaultValue(
-                                      widget.orderDataModel.discount.toString(),
-                                      "0")),
-                                  style: TextStyle(
-                                      color: colorGreen,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 10),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 10, left: 16, right: 25),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                  child: Container(
-                                child: Text(
-                                  "Tip",
-                                  style: TextStyle(
-                                      color: colorGreen,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 10),
-                                ),
-                              )),
-                              Container(
-                                child: Text(
-                                  widget.orderDataModel.tip!,
-                                  style: TextStyle(
-                                      color: colorGreen,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 10),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        // Container(
-                        //   height: 1,
-                        //   margin: EdgeInsets.only(
-                        //       left: 20, right: 25, top: 14),
-                        //   decoration: BoxDecoration(color: colorBlack),
-                        // ),
-                        Container(
-                          color: Color(0xffDFDEDE),
-                          padding: EdgeInsets.all(10.0),
-                          margin: EdgeInsets.only(top: 15, left: 15, right: 20),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                  child: Container(
-                                child: Text(
-                                  "Grand Total",
-                                  style: TextStyle(
-                                      color: colorTextBlack,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 10),
-                                ),
-                              )),
-                              Container(
-                                child: Text(
-                                  getAmountWithCurrency(widget
-                                      .orderDataModel.totalAmount
-                                      .toString()),
-                                  style: TextStyle(
-                                      color: colorTextBlack,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 10),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        widget.orderDataModel.orderStatus == STATUS_ACCEPTED
-                            ? Text(
-                                "Order Accepted",
-                                style: TextStyle(
-                                    color: Color(0xff51C800),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700),
-                              )
-                            : widget.orderDataModel.orderStatus ==
-                                    STATUS_ACCEPTED
-                                ? Text(
-                                    "Order Declined",
-                                    style: TextStyle(
-                                        color: Color(0xffFCAE03),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w700),
-                                  )
-                                : widget.orderDataModel.orderStatus ==
-                                        STATUS_PENDING
-                                    ? SizedBox()
-                                    : SizedBox(),
-                        checkString(widget.orderDataModel.note)
-                            ? Container()
-                            : Container(
-                                width: MediaQuery.of(context).size.width,
-                                margin: EdgeInsets.only(
-                                    top: 14, left: 20, right: 25),
-                                padding: EdgeInsets.only(
-                                    left: 16, top: 13, bottom: 13, right: 16),
+                                width: 1,
+                                height: 100,
                                 decoration:
-                                    BoxDecoration(color: colorBackground),
+                                    BoxDecoration(color: colorDividerGreen),
+                              ),
+                              Expanded(
+                                  child: Container(
+                                padding: EdgeInsets.only(
+                                    left: 15, right: 15, top: 15, bottom: 0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "Note :-",
-                                      style: TextStyle(
-                                          color: colorTextBlack, fontSize: 16),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      defaultValue(
-                                          widget.orderDataModel.note, "N/A"),
-                                      style: TextStyle(
-                                          color: colorTextBlack, fontSize: 14),
-                                    ),
+                                    RichText(
+                                        text: TextSpan(
+                                            text: "Order Number :- ",
+                                            style: TextStyle(
+                                                color: colorTextBlack,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 10),
+                                            children: [
+                                          TextSpan(
+                                              text: defaultValue(
+                                                  widget.orderDataModel
+                                                      .orderNumber,
+                                                  "N/A"),
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                              )),
+                                        ])),
+                                    SizedBox(height: 8),
+                                    RichText(
+                                        text: TextSpan(
+                                            text: "Order Type ",
+                                            style: TextStyle(
+                                                color: colorTextBlack,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 10),
+                                            children: [
+                                          TextSpan(
+                                              text: widget.orderDataModel
+                                                      .deliveryType![0]
+                                                      .toUpperCase() +
+                                                  widget.orderDataModel
+                                                      .deliveryType!
+                                                      .substring(1),
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                              )),
+                                        ])),
+                                    SizedBox(height: 8),
+                                    RichText(
+                                        text: TextSpan(
+                                            text: "Order Time :- ",
+                                            style: TextStyle(
+                                                color: colorTextBlack,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 10),
+                                            children: [
+                                          TextSpan(
+                                              text: widget.orderDataModel
+                                                  .orderDateTime!,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                              )),
+                                        ])),
+                                    SizedBox(height: 8),
                                   ],
                                 ),
-                              ),
-                        widget.orderDataModel.orderStatus == STATUS_PENDING
-                            ? Container(
-                                margin: EdgeInsets.only(
-                                    top: 15, left: 20, right: 25),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    GestureDetector(
-                                      child: Column(
+                              ))
+                            ],
+                          ),
+                          Container(
+                            height: 1,
+                            decoration: BoxDecoration(color: colorDividerGreen),
+                          ),
+                          widget.orderDataModel.itemDetails == null ||
+                                  widget.orderDataModel.itemDetails!.isEmpty
+                              ? Container()
+                              : ListView.builder(
+                                  controller: ScrollController(),
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount:
+                                      widget.orderDataModel.itemDetails!.length,
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.only(
+                                      left: 15, right: 25, top: 16),
+                                  itemBuilder: (context, index) {
+                                    ItemDetails itemData = widget
+                                        .orderDataModel.itemDetails![index];
+                                    for (int i = 0;
+                                        itemData.toppings!.length > i;
+                                        i++) {
+                                      var qty =
+                                          itemData.toppings![i].toppingCount;
+                                      var price = itemData.toppings![i].price;
+                                      print("Quantity: " + qty.toString());
+                                      print("Price: " + price.toString());
+                                      // getOptionName(itemData.toppings!);
+                                    }
+                                    getOptionName(itemData.toppings!, itemData);
+                                    var toppingsTag = "";
+                                    if (itemData.toppings != null) {
+                                      for (Toppings topping
+                                          in itemData.toppings!) {
+                                        if (toppingsTag.isEmpty) {
+                                          String priceTag = "";
+                                          String quantityTag = "";
+                                          if (double.parse(defaultValue(
+                                                  topping.price.toString(),
+                                                  "0")) >
+                                              0) {
+                                            priceTag =
+                                                "(${getAmountWithCurrency(defaultValue(topping.price.toString(), "0"))})";
+                                            quantityTag =
+                                                "(${defaultValue(topping.toppingCount.toString(), "0")})";
+                                          }
+                                          toppingsTag =
+                                              "${defaultValue(topping.name, "N/A")} $priceTag $quantityTag";
+                                        } else {
+                                          String priceTag = "";
+                                          String quantityTag = "";
+                                          if (double.parse(defaultValue(
+                                                  topping.price.toString(),
+                                                  "0")) >
+                                              0) {
+                                            priceTag =
+                                                "(${getAmountWithCurrency(defaultValue(topping.price.toString(), "0"))})";
+                                            quantityTag =
+                                                "(${defaultValue(topping.toppingCount.toString(), "0")})";
+                                          }
+                                          toppingsTag =
+                                              "$toppingsTag, ${defaultValue(topping.name, "N/A")} $priceTag $quantityTag";
+                                        }
+                                      }
+                                    }
+
+                                    var itemOptSelection = "";
+                                    if (!checkString(itemData.option)) {
+                                      itemOptSelection =
+                                          "(${defaultValue(itemData.option, "N/A")})";
+                                    }
+                                    if (!checkString(toppingsTag)) {
+                                      if (checkString(itemOptSelection)) {
+                                        itemOptSelection = "[$toppingsTag]";
+                                      } else {
+                                        itemOptSelection =
+                                            "$itemOptSelection [$toppingsTag]";
+                                      }
+                                    }
+
+                                    return Container(
+                                      margin: EdgeInsets.only(bottom: 05),
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         children: [
-                                          Stack(
-                                            alignment: Alignment.center,
-                                            children: [
-                                              Icon(Icons.circle,
-                                                  size: 50,
-                                                  color: Color.fromRGBO(
-                                                      234, 234, 234, 1)),
-                                              SvgPicture.asset(icCheck,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.025,
-                                                  color: Color.fromRGBO(
-                                                      81, 200, 0, 1))
-                                            ],
-                                          ),
-                                          Text(
-                                            "Accept",
-                                            style: TextStyle(
-                                                color: colorButtonBlue,
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 15),
+                                          Expanded(
+                                              child: Container(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  itemData.excludeDiscount ==
+                                                          false
+                                                      ? itemData.discount != null &&
+                                                              itemData.discount !=
+                                                                  0
+                                                          ? defaultValue(
+                                                                  itemData.name,
+                                                                  "N/A") +
+                                                              " (${getAmountWithCurrency(defaultValue(itemData.discount.toString(), "0")).replaceAll('€', "% OFF").replaceAll('.0', '')})"
+                                                          : itemData.catDiscount !=
+                                                                      null &&
+                                                                  itemData.catDiscount !=
+                                                                      0
+                                                              ? defaultValue(
+                                                                      itemData
+                                                                          .name,
+                                                                      "N/A") +
+                                                                  " (${getAmountWithCurrency(defaultValue(itemData.catDiscount.toString(), "0")).replaceAll('€', "% OFF").replaceAll('.0', '')})"
+                                                              : itemData.overallDiscount !=
+                                                                          null &&
+                                                                      itemData.overallDiscount !=
+                                                                          0
+                                                                  ? defaultValue(
+                                                                          itemData
+                                                                              .name,
+                                                                          "N/A") +
+                                                                      " (${getAmountWithCurrency(defaultValue(itemData.overallDiscount.toString(), "0")).replaceAll('€', "% OFF").replaceAll('.0', '')})"
+                                                                  : defaultValue(
+                                                                      itemData
+                                                                          .name,
+                                                                      "N/A")
+                                                      : defaultValue(
+                                                          itemData.name, "N/A"),
+                                                  style: TextStyle(
+                                                      color: colorTextBlack,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 10),
+                                                ),
+                                                SizedBox(
+                                                  height: 3,
+                                                ),
+                                                checkString(itemOptSelection)
+                                                    ? Container()
+                                                    : Text(
+                                                        "$itemOptSelection",
+                                                        style: TextStyle(
+                                                          color: colorGreen,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                itemData.variant != null &&
+                                                        itemData.variantPrice !=
+                                                            '0'
+                                                    ? Text(
+                                                        "${itemData.variant} (${itemData.variantPrice.toString()})",
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0xff51C800),
+                                                            fontSize: 14),
+                                                      )
+                                                    : SizedBox(),
+                                                itemData.subVariant != null &&
+                                                        itemData.subVariantPrice !=
+                                                            0
+                                                    ? Text(
+                                                        "${itemData.subVariant} (${itemData.subVariantPrice.toString()})",
+                                                        style: TextStyle(
+                                                            color:
+                                                                colorTextBlack,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 10),
+                                                      )
+                                                    : SizedBox(),
+                                                Text(
+                                                  itemData.note.toString(),
+                                                  style: TextStyle(
+                                                      color: colorTextBlack,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 10),
+                                                ),
+                                              ],
+                                            ),
+                                          )),
+                                          Container(
+                                            child: Text(
+                                              // "",
+                                              "${defaultValue(itemData.quantity.toString(), "1")} X ${getOptionName(itemData.toppings!, itemData) == "" ? getAmountWithCurrency(itemData.price.toString()) : getAmountWithCurrency(getOptionName(itemData.toppings!, itemData).toString())}",
+                                              style: TextStyle(
+                                                  color: colorTextBlack,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 10),
+                                            ),
                                           ),
                                         ],
                                       ),
-                                      onTap: () {
-                                        callUpdateStatusApi(STATUS_ACCEPTED);
-                                      },
-                                      behavior: HitTestBehavior.opaque,
-                                    ),
-                                    SizedBox(
-                                      width: 50,
-                                    ),
-                                    GestureDetector(
-                                      child: Column(
-                                        children: [
-                                          Stack(
-                                            alignment: Alignment.center,
-                                            children: [
-                                              Icon(Icons.circle,
-                                                  size: 50,
-                                                  color: Color.fromRGBO(
-                                                      234, 234, 234, 1)),
-                                              SvgPicture.asset(icCross,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.025,
-                                                  color: Color.fromRGBO(
-                                                      252, 174, 3, 1))
-                                            ],
-                                          ),
-                                          Text(
-                                            "Decline",
-                                            style: TextStyle(
-                                                color: colorButtonBlue,
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 15),
-                                          ),
-                                        ],
-                                      ),
-                                      behavior: HitTestBehavior.opaque,
-                                      onTap: () {
-                                        callUpdateStatusApi(STATUS_DENIED);
-                                      },
-                                    ),
-                                  ],
+                                    );
+                                  },
                                 ),
-                              )
-                            : Container(),
-                        SizedBox(height: 10),
-                        widget.orderDataModel.orderStatus == STATUS_PENDING
-                            ? SizedBox()
-                            :
-                            // : Platform.isAndroid
-                            // ?
-                            GestureDetector(
-                                child: Container(
-                                  alignment: Alignment.center,
+                          Container(
+                            height: 1,
+                            margin: EdgeInsets.only(left: 20, right: 25),
+                            decoration: BoxDecoration(color: colorBlack),
+                          ),
+                          // Container(
+                          //   margin: EdgeInsets.only(
+                          //       top: 16, left: 20, right: 25),
+                          //   child: Row(
+                          //     crossAxisAlignment: CrossAxisAlignment.center,
+                          //     children: [
+                          //       Expanded(
+                          //           child: Container(
+                          //         child: Text(
+                          //           "Total Quantity",
+                          //           style: TextStyle(
+                          //               color: colorTextBlack, fontSize: 16),
+                          //         ),
+                          //       )),
+                          //       Container(
+                          //         child: Text(
+                          //           widget.orderDataModel.itemDetails!.length
+                          //               .toString(),
+                          //           style: TextStyle(
+                          //               color: colorTextBlack, fontSize: 16),
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                          // Container(
+                          //   margin: EdgeInsets.only(
+                          //       top: 16, left: 20, right: 25),
+                          //   child: Row(
+                          //     crossAxisAlignment: CrossAxisAlignment.center,
+                          //     children: [
+                          //       Expanded(
+                          //           child: Container(
+                          //         child: Text(
+                          //           "Subtotal",
+                          //           style: TextStyle(
+                          //               color: colorTextBlack, fontSize: 16),
+                          //         ),
+                          //       )),
+                          //       Container(
+                          //         child: Text(
+                          //           getAmountWithCurrency(defaultValue(
+                          //                   widget.orderDataModel.subTotal,
+                          //                   "0"))
+                          //               ,
+                          //           style: TextStyle(
+                          //               color: colorTextBlack, fontSize: 16),
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                          widget.orderDataModel.deliveryType == 'DELIVERY'
+                              ? Container(
                                   margin: EdgeInsets.only(
-                                      left: 10, right: 10, bottom: 05),
-                                  padding: EdgeInsets.only(top: 10, bottom: 10),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xff0B043A),
-                                    borderRadius: BorderRadius.circular(30.0),
+                                      top: 10, left: 20, right: 25),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                          child: Container(
+                                        child: Text(
+                                          "Delivery Charge",
+                                          style: TextStyle(
+                                              color: colorGreen,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 10),
+                                        ),
+                                      )),
+                                      Container(
+                                        child: Text(
+                                          getAmountWithCurrency(defaultValue(
+                                              widget
+                                                  .orderDataModel.deliveryCharge
+                                                  .toString(),
+                                              "0")),
+                                          style: TextStyle(
+                                              color: colorGreen,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 10),
+                                        ),
+                                      ),
+                                    ],
                                   ),
+                                )
+                              : SizedBox(),
+                          Container(
+                            margin:
+                                EdgeInsets.only(top: 10, left: 16, right: 25),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                    child: Container(
                                   child: Text(
-                                    "Print",
+                                    "Discount",
                                     style: TextStyle(
-                                        color: colorTextWhite,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500),
+                                        color: colorGreen,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 10),
+                                  ),
+                                )),
+                                Container(
+                                  child: Text(
+                                    getAmountWithCurrency(defaultValue(
+                                        widget.orderDataModel.discount
+                                            .toString(),
+                                        "0")),
+                                    style: TextStyle(
+                                        color: colorGreen,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 10),
                                   ),
                                 ),
-                                onTap: () {
-                                  // callUpdateStatusApi(STATUS_ACCEPTED);
-                                  _printOrder();
-                                },
-                                behavior: HitTestBehavior.opaque,
-                              )
-                        // : Container(
-                        //     margin: EdgeInsets.only(bottom: 14),
-                        //   )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.6),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: SvgPicture.asset(
-                    icOrderCross,
-                    height: MediaQuery.of(context).size.height * 0.035,
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin:
+                                EdgeInsets.only(top: 10, left: 16, right: 25),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                    child: Container(
+                                  child: Text(
+                                    "Tip",
+                                    style: TextStyle(
+                                        color: colorGreen,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 10),
+                                  ),
+                                )),
+                                Container(
+                                  child: Text(
+                                    widget.orderDataModel.tip!,
+                                    style: TextStyle(
+                                        color: colorGreen,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 10),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // Container(
+                          //   height: 1,
+                          //   margin: EdgeInsets.only(
+                          //       left: 20, right: 25, top: 14),
+                          //   decoration: BoxDecoration(color: colorBlack),
+                          // ),
+                          Container(
+                            color: Color(0xffDFDEDE),
+                            padding: EdgeInsets.all(10.0),
+                            margin:
+                                EdgeInsets.only(top: 15, left: 15, right: 20),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                    child: Container(
+                                  child: Text(
+                                    "Grand Total",
+                                    style: TextStyle(
+                                        color: colorTextBlack,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 10),
+                                  ),
+                                )),
+                                Container(
+                                  child: Text(
+                                    getAmountWithCurrency(widget
+                                        .orderDataModel.totalAmount
+                                        .toString()),
+                                    style: TextStyle(
+                                        color: colorTextBlack,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 10),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          widget.orderDataModel.orderStatus == STATUS_ACCEPTED
+                              ? Text(
+                                  "Order Accepted",
+                                  style: TextStyle(
+                                      color: Color(0xff51C800),
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700),
+                                )
+                              : widget.orderDataModel.orderStatus ==
+                                      STATUS_ACCEPTED
+                                  ? Text(
+                                      "Order Declined",
+                                      style: TextStyle(
+                                          color: Color(0xffFCAE03),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700),
+                                    )
+                                  : widget.orderDataModel.orderStatus ==
+                                          STATUS_PENDING
+                                      ? SizedBox()
+                                      : SizedBox(),
+                          checkString(widget.orderDataModel.note)
+                              ? Container()
+                              : Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  margin: EdgeInsets.only(
+                                      top: 14, left: 20, right: 25),
+                                  padding: EdgeInsets.only(
+                                      left: 16, top: 13, bottom: 13, right: 16),
+                                  decoration:
+                                      BoxDecoration(color: colorBackground),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Note :-",
+                                        style: TextStyle(
+                                            color: colorTextBlack,
+                                            fontSize: 16),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        defaultValue(
+                                            widget.orderDataModel.note, "N/A"),
+                                        style: TextStyle(
+                                            color: colorTextBlack,
+                                            fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                          widget.orderDataModel.orderStatus == STATUS_PENDING
+                              ? Container(
+                                  margin: EdgeInsets.only(
+                                      top: 15, left: 20, right: 25),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      GestureDetector(
+                                        child: Column(
+                                          children: [
+                                            Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                Icon(Icons.circle,
+                                                    size: 50,
+                                                    color: Color.fromRGBO(
+                                                        234, 234, 234, 1)),
+                                                SvgPicture.asset(icCheck,
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.025,
+                                                    color: Color.fromRGBO(
+                                                        81, 200, 0, 1))
+                                              ],
+                                            ),
+                                            Text(
+                                              "Accept",
+                                              style: TextStyle(
+                                                  color: colorButtonBlue,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 15),
+                                            ),
+                                          ],
+                                        ),
+                                        onTap: () {
+                                          callUpdateStatusApi(STATUS_ACCEPTED);
+                                        },
+                                        behavior: HitTestBehavior.opaque,
+                                      ),
+                                      SizedBox(
+                                        width: 50,
+                                      ),
+                                      GestureDetector(
+                                        child: Column(
+                                          children: [
+                                            Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                Icon(Icons.circle,
+                                                    size: 50,
+                                                    color: Color.fromRGBO(
+                                                        234, 234, 234, 1)),
+                                                SvgPicture.asset(icCross,
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.025,
+                                                    color: Color.fromRGBO(
+                                                        252, 174, 3, 1))
+                                              ],
+                                            ),
+                                            Text(
+                                              "Decline",
+                                              style: TextStyle(
+                                                  color: colorButtonBlue,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 15),
+                                            ),
+                                          ],
+                                        ),
+                                        behavior: HitTestBehavior.opaque,
+                                        onTap: () {
+                                          callUpdateStatusApi(STATUS_DENIED);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Container(),
+                          SizedBox(height: 10),
+                          widget.orderDataModel.orderStatus == STATUS_PENDING
+                              ? SizedBox()
+                              :
+                              // : Platform.isAndroid
+                              // ?
+                              GestureDetector(
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    margin: EdgeInsets.only(
+                                        left: 10, right: 10, bottom: 05),
+                                    padding:
+                                        EdgeInsets.only(top: 10, bottom: 10),
+                                    decoration: BoxDecoration(
+                                      color: Color(0xff0B043A),
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                    child: Text(
+                                      "Print",
+                                      style: TextStyle(
+                                          color: colorTextWhite,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    // callUpdateStatusApi(STATUS_ACCEPTED);
+                                    _printOrder();
+                                  },
+                                  behavior: HitTestBehavior.opaque,
+                                )
+                          // : Container(
+                          //     margin: EdgeInsets.only(bottom: 14),
+                          //   )
+                        ],
+                      )
+                    ],
                   ),
                 ),
-              )
-            ],
-          )),
+                Container(
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.6),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: SvgPicture.asset(
+                      icOrderCross,
+                      height: MediaQuery.of(context).size.height * 0.035,
+                    ),
+                  ),
+                )
+              ],
+            )),
+      ),
     );
   }
 

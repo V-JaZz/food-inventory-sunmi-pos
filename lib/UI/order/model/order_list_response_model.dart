@@ -31,6 +31,7 @@ class OrderListResponseModel {
   }
 }
 
+//ase hogaa
 class OrderDataModel {
   String? sId;
   List<ItemDetails>? itemDetails;
@@ -148,6 +149,20 @@ class OrderDataModel {
     data['orderTime'] = this.orderTime;
     data['tip'] = this.tip;
     return data;
+  }
+}
+
+class AutoPrintOrderModel {
+  bool? success;
+  OrderDataModel? data;
+
+  AutoPrintOrderModel({this.success, this.data});
+
+  AutoPrintOrderModel.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    if (json['data'] != null) {
+      data = new OrderDataModel.fromJson(json['data']);
+    }
   }
 }
 

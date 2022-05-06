@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:food_inventory/constant/validation_util.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 import '../../constant/app_util.dart';
 import '../../constant/image.dart';
+import '../../model/common_model.dart';
 import 'model/order_list_response_model.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -29,6 +31,7 @@ class _OrderState extends State<Order> {
   });
   bool isSocketOrderAdded = false;
   String email = "";
+  late OrderDataModel orderDataModel;
   OrderListResponseModel model = OrderListResponseModel.fromJson({});
   String truncateString(String data, int length) {
     return (data.length >= length) ? '${data.substring(0, length)}' : data;
@@ -67,12 +70,157 @@ class _OrderState extends State<Order> {
     isSocketOrderAdded = false;
   }
 
+  var orderId;
+
   listenToSocket() {
+    socket.on("onAutoPrintOrder", (response) async {
+      if (ApiBaseHelper.autoAccept == true) {
+        print('---Auto Print Order Response---');
+        print(response);
+        orderId = response;
+        await changeOrderStatus(STATUS_ACCEPTED, orderId);
+        print("Change Order Status init");
+        getOrderListtwo(false);
+      }
+    });
     socket.on("onOrderAdded", (response) {
-      print("Socket response");
-      isSocketOrderAdded = true;
-      model = OrderListResponseModel.fromJson(response);
-      getOrderList(false);
+      print("Socket Response Data Order  " + response.toString());
+      if (ApiBaseHelper.autoAccept == false) {
+        print("Socket response");
+        isSocketOrderAdded = true;
+        model = OrderListResponseModel.fromJson(response);
+        getOrderList(false);
+      }
+    });
+  }
+
+  ApiBaseHelper _helper = new ApiBaseHelper();
+
+  changeOrderStatus(String status, orderId) {
+    print("Change Order Status");
+    StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((value) async {
+      StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
+          .then((restaurantId) async {
+        // Dialogs.showLoadingDialog(context, _keyLoader); //invoking login
+        try {
+          final response = await _helper.put(
+              ApiBaseHelper.updateorderstatus + "/" + orderId,
+              jsonEncode(<String, String>{'orderStatus': status}),
+              value,
+              restaurantId);
+          CommonModel model =
+              CommonModel.fromJson(_helper.returnResponse(context, response));
+          // Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
+          if (model.success!) {
+            ApiBaseHelper.pending = ApiBaseHelper.pending - 1;
+            if (ApiBaseHelper.pending < 1) {
+              // playSound();
+              ApiBaseHelper.orderbool = true;
+            }
+            // Navigator.pop(context);
+            // widget.onOrderUpdate();
+          } else {
+            showMessage(model.message!, context);
+          }
+        } catch (e) {
+          print(e.toString());
+          // Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
+        }
+      });
+    });
+  }
+
+  getOrderListtwo(bool isLoad) async {
+    StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
+      StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
+          .then((restaurantId) async {
+        print("Change Order Done");
+
+        print(restaurantId);
+        if (isLoad) {
+          if (mounted) {
+            setState(() {
+              isDataLoad = true;
+            });
+          }
+        }
+        try {
+          String params = "";
+          if (selectedDate.isNotEmpty) {
+            params = "date=$selectedDate";
+          }
+
+          String body = "";
+          if (params.isNotEmpty) {
+            body = "?$params";
+          }
+
+          // if (!isSocketOrderAdded) {
+          await Future.delayed(const Duration(seconds: 3), () async {
+            print("Change Order Api");
+            final response = await ApiBaseHelper()
+                .getwith(ApiBaseHelper.getOrders, token, restaurantId);
+            model = OrderListResponseModel.fromJson(
+                ApiBaseHelper().returnResponse(context, response));
+          });
+          // }
+          // isSocketOrderAdded = false;
+          print("todayresponfirst");
+          print("todayresponfirst");
+          // print(model.data.toString());
+          if (isLoad) {
+            setState(() {
+              isDataLoad = false;
+            });
+          }
+          if (model.success!) {
+            print("todayresponse");
+            print(model.data.toString());
+            if (model.data!.isEmpty) {
+              setState(() {
+                _orderList = [];
+              });
+            } else {
+              setState(() {
+                _orderList = model.data!;
+                for (int i = 0; _orderList.length > i; i++) {
+                  setState(() {
+                    orderDataModel = _orderList[i];
+                    print("ORDER MODEL: " + orderDataModel.toString());
+                  });
+                }
+              });
+            }
+            // widget.onOrderResponse(
+            //     selectedDate,
+            //     model.summaryData == null
+            //         ? SummaryData(
+            //             sId: "0",
+            //             acceptedOrder: "0",
+            //             declinedOrder: "0",
+            //             orderReceived: "0",
+            //             cashOrderAmount: "0",
+            //             onlineOrderAmount: "0",
+            //             totalOrderAmount: "0")
+            //         : model.summaryData!);
+            if (isLoad) {
+              if (model.summaryData != null) {
+                var pendingOrder = int.parse(defaultValue(
+                    model.summaryData?.pendingOrder.toString(), "0"));
+                print("OrderPendngNAme $pendingOrder");
+                if (pendingOrder > 0) {}
+              }
+            }
+          }
+        } catch (e) {
+          print(e.toString());
+          if (mounted) {
+            setState(() {
+              isDataLoad = false;
+            });
+          }
+        }
+      });
     });
   }
 
