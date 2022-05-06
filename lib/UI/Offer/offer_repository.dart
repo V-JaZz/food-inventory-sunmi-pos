@@ -17,18 +17,15 @@ class OfferRepository {
   addOffer(TextEditingController controller,TextEditingController controllerOffer) async {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((value) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!.then((restaurantId) async {
-      Dialogs.showLoadingDialog(context, _keyLoader); //invoking login
+      Dialogs.showLoadingDialog(context, _keyLoader);
       try {
         final response = await _helper.put(
-          /*  ApiBaseHelper.updateDiscount +
-                "?deliveryDiscount=${controller.text.toString().trim()}",*/
             ApiBaseHelper.updateDiscount,
             jsonEncode(<String, String>{
               'deliveryDiscount':controller.text.toString().trim(),
               'collectionDiscount':controllerOffer.text.toString().trim()
             }),
             value,restaurantId);
-
         OfferSuccessModel model = OfferSuccessModel.fromJson(
             _helper.returnResponse(context, response));
         Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
@@ -41,4 +38,5 @@ class OfferRepository {
     });
     });
   }
+  
 }

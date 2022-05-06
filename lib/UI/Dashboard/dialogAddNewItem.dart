@@ -17,12 +17,21 @@ class DialogAddNewItems extends StatefulWidget {
 
 class _DialogAddNewItemsState extends State<DialogAddNewItems> {
   late TextEditingController _addNewController;
+  late TextEditingController _discriptionController;
+  late TextEditingController _discountController;
+  late TextEditingController _variantController;
+  late TextEditingController _optionController;
+  //  late MenuItemRepository _itemRepository;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _addNewController = new TextEditingController();
-
+    _discriptionController = new TextEditingController();
+    _discountController = new TextEditingController();
+    _variantController = new TextEditingController();
+    _optionController = new TextEditingController();
     /* _deleteDataRepository =
         new DeleteDataRepository(context,delId);*/
   }
@@ -190,7 +199,7 @@ class _DialogAddNewItemsState extends State<DialogAddNewItems> {
                     // margin: EdgeInsets.only(left: 18),
                     child: TextField(
                       maxLines: 1,
-                      controller: _addNewController,
+                      controller: _discriptionController,
                       textAlignVertical: TextAlignVertical.center,
                       style: TextStyle(
                           fontSize: 16,
@@ -219,7 +228,7 @@ class _DialogAddNewItemsState extends State<DialogAddNewItems> {
                     // margin: EdgeInsets.only(left: 18),
                     child: TextField(
                       maxLines: 1,
-                      controller: _addNewController,
+                      controller: _discountController,
                       textAlignVertical: TextAlignVertical.center,
                       style: TextStyle(
                           fontSize: 16,
@@ -253,7 +262,7 @@ class _DialogAddNewItemsState extends State<DialogAddNewItems> {
                         Expanded(
                           child: TextField(
                             maxLines: 1,
-                            controller: _addNewController,
+                            controller: _variantController,
                             textAlignVertical: TextAlignVertical.center,
                             style: TextStyle(
                                 fontSize: 16,
@@ -335,7 +344,7 @@ class _DialogAddNewItemsState extends State<DialogAddNewItems> {
                         Expanded(
                           child: TextField(
                             maxLines: 1,
-                            controller: _addNewController,
+                            controller: _optionController,
                             textAlignVertical: TextAlignVertical.center,
                             style: TextStyle(
                                 fontSize: 16,

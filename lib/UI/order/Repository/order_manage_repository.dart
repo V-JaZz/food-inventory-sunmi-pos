@@ -23,7 +23,7 @@ class OrderManageRepository {
   ApiBaseHelper _helper = new ApiBaseHelper();
   late BuildContext context;
   late OrderDetailsDialog widget;
-  
+
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
 
   OrderManageRepository(this.context, this.widget);

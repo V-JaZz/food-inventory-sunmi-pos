@@ -327,11 +327,11 @@ class _OfferDiscountState extends State<OfferDiscount> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (dialogContext) {
+      builder: (buildContext) {
         return ExcluedPage(
           type: type,
           onDialogClose: () {
-            getProfileData();
+            Navigator.pop(context);
           },
         );
       },

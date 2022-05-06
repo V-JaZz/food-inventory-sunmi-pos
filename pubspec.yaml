@@ -61,6 +61,7 @@ dependencies:
   flutter_gifimage: ^1.0.1
   fluttertoast: ^7.1.1
   xml_parser: ^1.0.0
+  flutter_slidable: ^1.2.0
 
 
 

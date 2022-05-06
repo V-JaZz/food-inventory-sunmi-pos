@@ -1035,7 +1035,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
         // });
       },
       child: Container(
-        margin: const EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 0),
+        margin: const EdgeInsets.only(left: 10, top: 05, bottom: 10, right: 0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
