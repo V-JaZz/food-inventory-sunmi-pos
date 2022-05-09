@@ -104,7 +104,6 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
     avatarWidget = Container();
     controller = GifController(vsync: this);
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      // controller.repeat(min: 0, max: 22, period: Duration(milliseconds: 1500));
       controller.value = 0;
       controller.animateTo(22, duration: const Duration(milliseconds: 1500));
     });
@@ -160,12 +159,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
         });
       }
     });
-    // token = (await FirebaseMessaging.instance.getToken())!;
-    // setState(() {
-    //   token = token;
-    // });
     print("raj" + "dfhshdkfjshfhsdjfsjsfdgs");
-    // print("dev" + token);
   }
 
   _getDrawerItemWidget(int pos) {
@@ -202,10 +196,6 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
         (_prefs.getStringList(Constants.backPages) ?? <String>[]);
 
     mOriginaListMain = mList.map((i) => int.parse(i)).toList();
-
-    // if (!_backstack.contains(arguments['page'])) {
-    //   _backstack.add(arguments['page']);
-    // }
 
     if (!mOriginaListMain.contains(index)) {
       mOriginaListMain.add(index);
@@ -262,16 +252,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                 print(pending);
                 print(pendingOrder);
                 if (pending > 0) {
-                  // FlutterRingtonePlayer.playNotification();
-                  // FlutterRingtonePlayer.play(
-                  //   android: AndroidSounds.notification,
-                  //   ios: IosSounds.glass,
-                  //   looping: true,
-                  //   // Android only - API >= 28
-                  //   volume: 0.5,
-                  //   // Android only - API >= 28
-                  //   asAlarm: false, // Android only - all APIs
-                  // );
+                
                   setState(() {
                     pendingOrder = pending;
                   });
@@ -355,10 +336,6 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
 
         List<int> mOriginaList = mList.map((i) => int.parse(i)).toList();
 
-        // if (!_backstack.contains(arguments['page'])) {
-        //   _backstack.add(arguments['page']);
-        // }
-        //
         if (!mOriginaList.contains(arguments['page'])) {
           mOriginaList.add(arguments['page']);
         }
@@ -386,12 +363,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
         resizeToAvoidBottomInset: false,
         drawer: SafeArea(
           child: Container(
-            // decoration: BoxDecoration(
-            //   borderRadius: BorderRadius.only(
-            //       topRight: Radius.circular(15.0),
-            //       bottomRight: Radius.circular(15.0)),
-            //   color: colorButtonBlue,
-            // ),
+           
             width: MediaQuery.of(context).size.width / 1.4,
             child: BackdropFilter(
               filter: ImageFilter.blur(
@@ -462,15 +434,11 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                         ),
                       ),
 
-                      // Container(
-                      //     margin: const EdgeInsets.only(left: 0, top: 10),
-                      //     child: const Divider(color: Colors.black)),
                       SizedBox(height: 20),
                       Expanded(
                         child: SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
                           child: Column(
-                            // mainAxisSize: MainAxisSize.max,
                             children: [
                               drawerItem(
                                 "Order",
@@ -527,7 +495,6 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                         color: colorButtonBlue,
                         child: GestureDetector(
                           child: Container(
-                            // color: colorButtonBlue,
                             child: Row(
                               children: [
                                 SvgPicture.asset(
@@ -598,7 +565,6 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                                 .requestFocus(new FocusNode());
                             Scaffold.of(context).openDrawer();
                             WidgetsBinding.instance!.addPostFrameCallback((_) {
-                              // controller.repeat(min: 0, max: 22, period: Duration(milliseconds: 1500));
                               controller.value = 0;
                               controller.animateTo(22,
                                   duration: const Duration(milliseconds: 1500));
