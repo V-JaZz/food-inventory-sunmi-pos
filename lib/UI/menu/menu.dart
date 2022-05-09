@@ -33,7 +33,6 @@ class _MenuState extends State<Menu> {
   List<Items> initialList = [];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     initialList = itemList;
@@ -95,7 +94,7 @@ class _MenuState extends State<Menu> {
       });
 
       if (body.isNotEmpty) {
-        Dialogs.showLoadingDialog(context, _keyLoader); //invoking login
+        Dialogs.showLoadingDialog(context, _keyLoader);
         try {
           final response =
               await _helper.post(ApiBaseHelper.updateItemPosition, body, token);
@@ -128,7 +127,6 @@ class _MenuState extends State<Menu> {
 
     return Container(
       decoration: BoxDecoration(color: colorBackground),
-      // padding: EdgeInsets.only(left: 40, right: 35, top: 20, bottom: 22),
       child: Column(
         children: [
           Table(
@@ -136,9 +134,6 @@ class _MenuState extends State<Menu> {
                 0: FlexColumnWidth(7.1),
                 1: FlexColumnWidth(5.0),
                 2: FlexColumnWidth(5.0),
-                // 3: FlexColumnWidth(1.7),
-                // 3: FlexColumnWidth(1.5),
-                // 4: FlexColumnWidth(1.5),
               },
               border: TableBorder.all(
                   color: colorYellow,
@@ -154,19 +149,6 @@ class _MenuState extends State<Menu> {
                             topLeft: Radius.circular(15),
                             topRight: Radius.circular(15))),
                     children: [
-                      // Container(
-                      //   padding: EdgeInsets.symmetric(
-                      //       horizontal: 10, vertical: 13),
-                      //   alignment: Alignment.center,
-                      //   decoration: BoxDecoration(color: colorGreen),
-                      //   child: Text(
-                      //     "S. No",
-                      //     style: TextStyle(
-                      //         color: colorTextWhite,
-                      //         fontSize: 16,
-                      //         fontWeight: FontWeight.w500),
-                      //   ),
-                      // ),
                       search
                           ? Card(
                               margin: EdgeInsets.all(3),
@@ -234,10 +216,6 @@ class _MenuState extends State<Menu> {
                           : Container(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 30, vertical: 13),
-                              // decoration: BoxDecoration(
-                              //     // color: colorYellow,
-                              //     borderRadius:
-                              //         BorderRadius.circular(30)),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -267,8 +245,6 @@ class _MenuState extends State<Menu> {
                           ? Container(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 13),
-                              // decoration:
-                              //     BoxDecoration(color: colorYellow),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -301,8 +277,6 @@ class _MenuState extends State<Menu> {
                           : Container(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 13),
-                              // decoration:
-                              //     BoxDecoration(color: colorYellow),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -332,34 +306,9 @@ class _MenuState extends State<Menu> {
                                 ],
                               ),
                             ),
-                      // Container(
-                      //   padding: EdgeInsets.symmetric(
-                      //       horizontal: 10, vertical: 13),
-                      //   // decoration: BoxDecoration(color: colorYellow),
-                      //   child: Text(
-                      //     "Options",
-                      //     style: TextStyle(
-                      //         color: colorTextWhite,
-                      //         fontSize: 16,
-                      //         fontWeight: FontWeight.w500),
-                      //   ),
-                      // ),
-                      // Container(
-                      //   padding: EdgeInsets.symmetric(
-                      //       horizontal: 10, vertical: 13),
-                      //   // decoration: BoxDecoration(color: colorYellow),
-                      //   child: Text(
-                      //     "Toppings Groups",
-                      //     style: TextStyle(
-                      //         color: colorTextWhite,
-                      //         fontSize: 16,
-                      //         fontWeight: FontWeight.w500),
-                      //   ),
-                      // ),
                       Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 13),
-                        // decoration: BoxDecoration(color: colorYellow),
                         alignment: Alignment.center,
                         child: Text(
                           "Price",
@@ -369,18 +318,6 @@ class _MenuState extends State<Menu> {
                               fontWeight: FontWeight.w600),
                         ),
                       ),
-                      // Container(
-                      //   padding: EdgeInsets.symmetric(vertical: 13),
-                      //   // decoration: BoxDecoration(color: colorYellow),
-                      //   alignment: Alignment.center,
-                      //   child: Text(
-                      //     "Action",
-                      //     style: TextStyle(
-                      //         color: colorTextWhite,
-                      //         fontSize: 16,
-                      //         fontWeight: FontWeight.w500),
-                      //   ),
-                      // ),
                     ]),
               ]),
           Expanded(
@@ -396,7 +333,7 @@ class _MenuState extends State<Menu> {
                         BoxDecoration(color: colorTextWhite, boxShadow: [
                       BoxShadow(
                         color: colorYellow,
-                        offset: Offset(0.0, 1.0), //(x,y)
+                        offset: Offset(0.0, 1.0),
                         blurRadius: 1.0,
                       ),
                     ]),
@@ -423,9 +360,7 @@ class _MenuState extends State<Menu> {
                                         : colorTextWhite,
                                     child: Slidable(
                                       endActionPane: ActionPane(
-                                        // A motion is a widget used to control how the pane animates.
                                         motion: const ScrollMotion(),
-                                        // All actions are defined in the children parameter.
                                         children: [
                                           Spacer(),
                                           Container(
@@ -435,7 +370,6 @@ class _MenuState extends State<Menu> {
                                                 0.15,
                                             child: SlidableAction(
                                               onPressed: (context) {
-                                                // print("TAP");
                                                 dialogDeleteType(
                                                     TypeListDataModel(
                                                         TYPE_MENU_ITEM,
@@ -462,7 +396,6 @@ class _MenuState extends State<Menu> {
                                                   colorButtonYellow,
                                               foregroundColor: colorTextWhite,
                                               icon: Icons.delete,
-                                              // label: 'Delete',
                                             ),
                                           ),
                                           Container(
@@ -475,7 +408,6 @@ class _MenuState extends State<Menu> {
                                               backgroundColor: colorTextBlack,
                                               foregroundColor: colorTextWhite,
                                               icon: Icons.edit,
-                                              // label: 'Share',
                                             ),
                                           ),
                                         ],
@@ -488,29 +420,11 @@ class _MenuState extends State<Menu> {
                                             0: FlexColumnWidth(7.1),
                                             1: FlexColumnWidth(5.0),
                                             2: FlexColumnWidth(5.0),
-                                            // 3: FlexColumnWidth(1.7),
-                                            // 3: FlexColumnWidth(1.5),
-                                            // 4: FlexColumnWidth(1.5),
                                           },
-                                          // border: TableBorder.all(
-                                          //     width: 0.8,
-                                          //     color: colorDividerGreen),
                                           defaultVerticalAlignment:
                                               TableCellVerticalAlignment.middle,
                                           children: [
                                             TableRow(children: [
-                                              // Container(
-                                              //   padding: EdgeInsets.symmetric(
-                                              //       horizontal: 10,
-                                              //       vertical: 20),
-                                              //   child: Text(
-                                              //     (index + 1).toString(),
-                                              //     style: TextStyle(
-                                              //       color: colorTextBlack,
-                                              //       fontSize: 14,
-                                              //     ),
-                                              //   ),
-                                              // ),
                                               Container(
                                                 color: i % 2 == 0
                                                     ? Color.fromRGBO(
@@ -548,47 +462,6 @@ class _MenuState extends State<Menu> {
                                                         fontWeight:
                                                             FontWeight.w500)),
                                               ),
-                                              // Container(
-                                              //   padding: EdgeInsets.symmetric(
-                                              //       horizontal: 10, vertical: 20),
-                                              //   child: Text(
-                                              //       getOptionName(data[index]
-                                              //           .items![i]
-                                              //           .options!),
-                                              //       // "None",
-                                              //       style: TextStyle(
-                                              //         color: colorTextBlack,
-                                              //         fontSize: 14,
-                                              //       )),
-                                              // ),
-                                              // for (int j = 0;
-                                              //     data[i]
-                                              //             .items![index]
-                                              //             .toppings!
-                                              //             .length <
-                                              //         j;
-                                              //     j++)
-                                              // Container(
-                                              //   padding: EdgeInsets.symmetric(
-                                              //       horizontal: 10,
-                                              //       vertical: 20),
-                                              //   child: Text(
-                                              //       // defaultValue(
-                                              //       //     data[i]
-                                              //       //         .items![index]
-                                              //       //         .toppings![j]
-                                              //       //         .name,
-                                              //       //     "None"),
-                                              //       getToppingGroupName(
-                                              //           data[index]
-                                              //               .items![i]
-                                              //               .options!),
-                                              //       maxLines: 1,
-                                              //       style: TextStyle(
-                                              //         color: colorTextBlack,
-                                              //         fontSize: 14,
-                                              //       )),
-                                              // ),
                                               Container(
                                                 color: i % 2 == 0
                                                     ? Color.fromRGBO(
@@ -606,7 +479,6 @@ class _MenuState extends State<Menu> {
                                                         data[index]
                                                             .items![i]
                                                             .price!),
-                                                    // "",
                                                     maxLines: 1,
                                                     style: TextStyle(
                                                         color:
@@ -615,56 +487,6 @@ class _MenuState extends State<Menu> {
                                                         fontWeight:
                                                             FontWeight.w500)),
                                               ),
-                                              // Row(
-                                              //   // mainAxisAlignment:
-                                              //   //     MainAxisAlignment
-                                              //   //         aceAround,
-                                              //   children: [
-                                              //     GestureDetector(
-                                              //       child: Text("Edit",
-                                              //           textAlign: TextAlign.center,
-                                              //           style: TextStyle(
-                                              //             color: colorLightRed,
-                                              //             fontSize: 14,
-                                              //           )),
-                                              //       onTap: () {
-                                              //         // editMenuItem(
-                                              //         //     data[index].items![i]);
-                                              //       },
-                                              //     ),
-                                              //     SizedBox(width: 12),
-                                              //     GestureDetector(
-                                              //       child: SvgPicture.asset(
-                                              //         icDelete,
-                                              //         width: 20,
-                                              //         height: 20,
-                                              //       ),
-                                              //       onTap: () {
-                                              //         // dialogDeleteType(
-                                              //         //     TypeListDataModel(
-                                              //         //         TYPE_MENU_ITEM,
-                                              //         //         data[index]
-                                              //         //             .items![i]
-                                              //         //             .sId!,
-                                              //         //         0,
-                                              //         //         data[index]
-                                              //         //             .items![i]
-                                              //         //             .name!,
-                                              //         //         data[index]
-                                              //         //             .items![i]
-                                              //         //             .description!,
-                                              //         //         "",
-                                              //         //         "",
-                                              //         //         [],
-                                              //         //         "",
-                                              //         //         "",
-                                              //         //         "",
-                                              //         //         "",
-                                              //         //         0));
-                                              //       },
-                                              //     ),
-                                              //   ],
-                                              // ),
                                             ]),
                                           ]),
                                     ),
@@ -675,22 +497,7 @@ class _MenuState extends State<Menu> {
                                     if (newIndex > oldIndex) {
                                       newIndex -= 1;
                                     }
-                                    // if (oldIndex < newIndex) {
-                                    // newIndex -= 1;
-                                    // var state1 = data[i]
-                                    //     .items![newIndex - 1]
-                                    //     .category!
-                                    //     .sId;
-                                    // var state2 = data[i]
-                                    //     .items![oldIndex]
-                                    //     .category!
-                                    //     .sId;
-                                    // if (newIndex < oldIndex) {
-                                    //   oldIndex -= 1;
-                                    //   print("OLD INDEX: " +
-                                    //       oldIndex.toString());
-                                    // }
-                                    // if (state1 == state2) {
+
                                     var newPosition =
                                         data[index].items![newIndex].position;
                                     var oldPosition =
@@ -723,14 +530,6 @@ class _MenuState extends State<Menu> {
                                         data[index].items!);
                                     print(
                                         "==========================else 1 ========================");
-                                    // } else {
-                                    //   showMessage(
-                                    //       "Category Not Matched", context);
-                                    // }
-                                    // } else {
-                                    //   print(
-                                    //       "======================NOT MATCHED============================");
-                                    // }
                                   });
                                 }),
                           );
@@ -801,12 +600,10 @@ class _MenuState extends State<Menu> {
         return DialogDeleteType(
           model: model,
           onDialogClose: () {
-            // Navigator.pop(context);
             setState(() {
               data = [];
             });
             getMenuItems();
-            // widget.onAddDeleteSuccess();
           },
         );
       },

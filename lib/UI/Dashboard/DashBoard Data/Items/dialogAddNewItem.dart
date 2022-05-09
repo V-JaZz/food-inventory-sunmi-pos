@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/image.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../constant/colors.dart';
 
 class DialogAddNewItems extends StatefulWidget {
   VoidCallback onDialogClose;
@@ -20,7 +19,6 @@ class DialogAddNewItems extends StatefulWidget {
 }
 
 class _DialogAddNewItemsState extends State<DialogAddNewItems> {
-  
   late TextEditingController _addNewController;
   late TextEditingController _discriptionController;
   late TextEditingController _discountController;
@@ -569,6 +567,5 @@ class _DialogAddNewItemsState extends State<DialogAddNewItems> {
             ),
           )),
     );
-    ;
   }
 }

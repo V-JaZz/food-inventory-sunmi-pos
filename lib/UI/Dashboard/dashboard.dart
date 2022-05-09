@@ -7,7 +7,7 @@ import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:food_inventory/UI/DeliverySettings/deliverySettings.dart';
 import 'package:food_inventory/UI/Offer/offer_discount.dart';
 import 'package:food_inventory/UI/RestaurantDetails/restaurantDetails.dart';
-import 'package:food_inventory/UI/dashboard/dialogAddNewItem.dart';
+
 import 'package:food_inventory/UI/instantAction/instant_action.dart';
 import 'package:food_inventory/UI/menu/menu.dart';
 import 'package:food_inventory/UI/order/order.dart';
@@ -28,6 +28,8 @@ import '../../constant/validation_util.dart';
 import '../OrderHistory/orderHistory.dart';
 import '../itemsTimeSet/itemsTimeSet.dart';
 import '../order/model/order_list_response_model.dart';
+import 'DashBoard Data/Category/dialogAddNewCategory.dart';
+import 'DashBoard Data/Items/dialogAddNewItem.dart';
 import 'logout_repository.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -252,7 +254,6 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                 print(pending);
                 print(pendingOrder);
                 if (pending > 0) {
-                
                   setState(() {
                     pendingOrder = pending;
                   });
@@ -363,7 +364,6 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
         resizeToAvoidBottomInset: false,
         drawer: SafeArea(
           child: Container(
-           
             width: MediaQuery.of(context).size.width / 1.4,
             child: BackdropFilter(
               filter: ImageFilter.blur(
@@ -433,7 +433,6 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                           ],
                         ),
                       ),
-
                       SizedBox(height: 20),
                       Expanded(
                         child: SingleChildScrollView(
@@ -823,7 +822,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                             onTap: () {
                               setState(() {
                                 Navigator.of(context).pop();
-                                // dialogAddNewType(TYPE_CATEGORY);
+                                dialogAddNewCategory(TYPE_CATEGORY);
                               });
                             },
                             child: Card(
@@ -1182,6 +1181,18 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
             //   print("DialogClosed");
             // });
           },
+        );
+      },
+    );
+  }
+
+  void dialogAddNewCategory(String type) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return DialogAddNewCategory(
+          onDialogClose: () {},
         );
       },
     );

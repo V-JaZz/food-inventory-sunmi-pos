@@ -18,7 +18,6 @@ import 'package:food_inventory/networking/api_base_helper.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// import 'package:image_picker/image_picker.dart';
 class Settings extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
@@ -33,7 +32,6 @@ class _SettingsState extends State<Settings> {
   TextEditingController minimumController = new TextEditingController(text: "");
   TextEditingController webSiteUrl = new TextEditingController(text: "");
 
-  // PickedFile? selectedBanner;
   late SharedPreferences prefs;
   bool isDataLoad = false;
   File? cropperFile;
@@ -71,61 +69,9 @@ class _SettingsState extends State<Settings> {
   @override
   void initState() {
     super.initState();
-    // getLocalIP();
+
     sharedPrefs();
-    // if (ApiBaseHelper.autoAccept!) {
-    //   isOpenA = true;
-    //   isCloseA = false;
-    //   print("ONLINE DELIVERY");
-    // } else {
-    //   isOpenA = false;
-    //   isCloseA = true;
-    //   print("ONLINE mkckDELIVERY");
-    // }
-    // if (ApiBaseHelper.autoPrint!) {
-    //   isOpenP = true;
-    //   print("ONLINE PICKUP jnj");
 
-    //   isCloseP = false;
-    // } else {
-    //   isOpenP = false;
-    //   print("ONLINE PICKUP");
-
-    //   isCloseP = true;
-    // }
-    // if (ApiBaseHelper.allowOnlineDelivery!) {
-    //   isOpenOnlineDelivery = true;
-    //   print("ONLINE PICKUP jnj");
-
-    //   isCloseOnlineDelivery = false;
-    // } else {
-    //   isOpenOnlineDelivery = false;
-    //   print("ONLINE PICKUP");
-
-    //   isCloseOnlineDelivery = true;
-    // }
-    // if (ApiBaseHelper.allowOnlinePickup!) {
-    //   isOpenOnlinePickup = true;
-    //   print("ONLINE PICKUP jnj");
-
-    //   isCloseOnlinePickup = false;
-    // } else {
-    //   isOpenOnlinePickup = false;
-    //   print("ONLINE PICKUP");
-
-    //   isCloseOnlinePickup = true;
-    // }
-    // if (ApiBaseHelper.isReservationActive!) {
-    //   isOpenReservation = true;
-    //   print("ONLINE Reservation jnj");
-
-    //   isCloseReservation = false;
-    // } else {
-    //   isOpenReservation = false;
-    //   print("Reservation");
-
-    //   isCloseReservation = true;
-    // }
     getProfileData();
     clearImageCache();
     _restaurantDetailsRepository = new RestaurantDetailsRepository(context);
@@ -153,8 +99,7 @@ class _SettingsState extends State<Settings> {
   bool isOpenOnlineDelivery = true, isCloseOnlineDelivery = false;
   bool isOpenOnlinePickup = true, isCloseOnlinePickup = false;
   bool isOpenReservation = true, isCloseReservation = false;
-  // bool ApiBaseHelper.autoPrint = ApiBaseHelper.autoPrint;
-  // bool ApiBaseHelper.autoAccept = ApiBaseHelper.autoAccept;
+
   bool onlineDelivery = false;
   bool onlinePickup = false;
   bool reservation = false;
@@ -295,7 +240,6 @@ class _SettingsState extends State<Settings> {
               ),
             )
           : Container(
-              // padding: EdgeInsets.symmetric(horizontal: 35),
               child: Column(
                 children: [
                   Expanded(
@@ -305,7 +249,6 @@ class _SettingsState extends State<Settings> {
                     children: [
                       GestureDetector(
                         child: Container(
-                          // margin: EdgeInsets.only(top: 10),
                           padding: EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               color: colorTextWhite,
@@ -374,10 +317,7 @@ class _SettingsState extends State<Settings> {
                             ],
                           ),
                         ),
-                        onTap: () {
-                          // _optionsDialogBox();
-                          // _pickerFile();
-                        },
+                        onTap: () {},
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 30),
@@ -404,7 +344,6 @@ class _SettingsState extends State<Settings> {
                                 ),
                                 onTap: () {
                                   callUploadBanner();
-                                  // print(cropperFile);
                                 },
                               ),
                             ),
@@ -428,9 +367,7 @@ class _SettingsState extends State<Settings> {
                                   ),
                                 ),
                                 onTap: () {
-                                  setState(() {
-                                    // selectedBanner = null;
-                                  });
+                                  setState(() {});
                                 },
                                 behavior: HitTestBehavior.opaque,
                               ),
@@ -677,7 +614,7 @@ class _SettingsState extends State<Settings> {
                                 boxShadow: [
                                   const BoxShadow(
                                     color: Colors.grey,
-                                    offset: const Offset(1.0, 1.0), //(x,y)
+                                    offset: const Offset(1.0, 1.0),
                                     blurRadius: 1.0,
                                   ),
                                 ]),
@@ -713,10 +650,7 @@ class _SettingsState extends State<Settings> {
                                         print("Auto Accept" +
                                             ApiBaseHelper.autoAccept
                                                 .toString());
-                                        // delsetting =
-                                        //     "Open Online Delivery";
                                       });
-                                      // callApi("true", "Del");
                                     }
                                   },
                                   behavior: HitTestBehavior.opaque,
@@ -751,10 +685,7 @@ class _SettingsState extends State<Settings> {
                                         print("Auto Accept" +
                                             ApiBaseHelper.autoAccept
                                                 .toString());
-                                        // delsetting =
-                                        // "Close Online Delivery";
                                       });
-                                      // callApi("false", "Del");
                                     }
                                   },
                                   behavior: HitTestBehavior.opaque,
@@ -786,7 +717,7 @@ class _SettingsState extends State<Settings> {
                                 boxShadow: const [
                                   BoxShadow(
                                     color: Colors.grey,
-                                    offset: Offset(1.0, 1.0), //(x,y)
+                                    offset: Offset(1.0, 1.0),
                                     blurRadius: 1.0,
                                   ),
                                 ]),
@@ -819,10 +750,7 @@ class _SettingsState extends State<Settings> {
                                         isOpenP = true;
                                         isCloseP = false;
                                         ApiBaseHelper.autoPrint = true;
-                                        // delsetting =
-                                        //     "Open Online Delivery";
                                       });
-                                      // callApi("true", "Del");
                                     }
                                   },
                                   behavior: HitTestBehavior.opaque,
@@ -854,10 +782,7 @@ class _SettingsState extends State<Settings> {
                                         isOpenP = false;
                                         isCloseP = true;
                                         ApiBaseHelper.autoPrint = false;
-                                        // delsetting =
-                                        // "Close Online Delivery";
                                       });
-                                      // callApi("false", "Del");
                                     }
                                   },
                                   behavior: HitTestBehavior.opaque,
@@ -865,21 +790,6 @@ class _SettingsState extends State<Settings> {
                               ],
                             ),
                           ),
-                          // Transform.scale(
-                          //   scale: 1.0,
-                          //   child: CupertinoSwitch(
-                          //     value: ApiBaseHelper.autoPrint!,
-                          //     onChanged: (value) {
-                          //       setState(() {
-                          //         ApiBaseHelper.autoPrint =
-                          //             !ApiBaseHelper.autoPrint!;
-                          //         print(ApiBaseHelper.autoPrint);
-                          //       });
-                          //     },
-                          //     activeColor: colorGreen,
-                          //     trackColor: colorSwitchColor,
-                          //   ),
-                          // ),
                         ],
                       ),
                       const SizedBox(height: 30),
@@ -904,7 +814,7 @@ class _SettingsState extends State<Settings> {
                                 boxShadow: const [
                                   BoxShadow(
                                     color: Colors.grey,
-                                    offset: Offset(1.0, 1.0), //(x,y)
+                                    offset: Offset(1.0, 1.0),
                                     blurRadius: 1.0,
                                   ),
                                 ]),
@@ -937,10 +847,7 @@ class _SettingsState extends State<Settings> {
                                         isOpenOnlineDelivery = true;
                                         isCloseOnlineDelivery = false;
                                         onlineDelivery = true;
-                                        // delsetting =
-                                        //     "Open Online Delivery";
                                       });
-                                      // callApi("true", "Del");
                                     }
                                   },
                                   behavior: HitTestBehavior.opaque,
@@ -972,10 +879,7 @@ class _SettingsState extends State<Settings> {
                                         isOpenOnlineDelivery = false;
                                         isCloseOnlineDelivery = true;
                                         onlineDelivery = false;
-                                        // delsetting =
-                                        // "Close Online Delivery";
                                       });
-                                      // callApi("false", "Del");
                                     }
                                   },
                                   behavior: HitTestBehavior.opaque,
@@ -983,21 +887,6 @@ class _SettingsState extends State<Settings> {
                               ],
                             ),
                           ),
-                          // Transform.scale(
-                          //   scale: 1.0,
-                          //   child: CupertinoSwitch(
-                          //     value: ApiBaseHelper.autoPrint!,
-                          //     onChanged: (value) {
-                          //       setState(() {
-                          //         ApiBaseHelper.autoPrint =
-                          //             !ApiBaseHelper.autoPrint!;
-                          //         print(ApiBaseHelper.autoPrint);
-                          //       });
-                          //     },
-                          //     activeColor: colorGreen,
-                          //     trackColor: colorSwitchColor,
-                          //   ),
-                          // ),
                         ],
                       ),
                       const SizedBox(height: 30),
@@ -1022,7 +911,7 @@ class _SettingsState extends State<Settings> {
                                 boxShadow: const [
                                   BoxShadow(
                                     color: Colors.grey,
-                                    offset: const Offset(1.0, 1.0), //(x,y)
+                                    offset: const Offset(1.0, 1.0),
                                     blurRadius: 1.0,
                                   ),
                                 ]),
@@ -1055,10 +944,7 @@ class _SettingsState extends State<Settings> {
                                         isOpenOnlinePickup = true;
                                         isCloseOnlinePickup = false;
                                         onlinePickup = true;
-                                        // delsetting =
-                                        //     "Open Online Delivery";
                                       });
-                                      // callApi("true", "Del");
                                     }
                                   },
                                   behavior: HitTestBehavior.opaque,
@@ -1090,10 +976,7 @@ class _SettingsState extends State<Settings> {
                                         isOpenOnlinePickup = false;
                                         isCloseOnlinePickup = true;
                                         onlinePickup = false;
-                                        // delsetting =
-                                        // "Close Online Delivery";
                                       });
-                                      // callApi("false", "Del");
                                     }
                                   },
                                   behavior: HitTestBehavior.opaque,
@@ -1101,21 +984,6 @@ class _SettingsState extends State<Settings> {
                               ],
                             ),
                           ),
-                          // Transform.scale(
-                          //   scale: 1.0,
-                          //   child: CupertinoSwitch(
-                          //     value: ApiBaseHelper.autoPrint!,
-                          //     onChanged: (value) {
-                          //       setState(() {
-                          //         ApiBaseHelper.autoPrint =
-                          //             !ApiBaseHelper.autoPrint!;
-                          //         print(ApiBaseHelper.autoPrint);
-                          //       });
-                          //     },
-                          //     activeColor: colorGreen,
-                          //     trackColor: colorSwitchColor,
-                          //   ),
-                          // ),
                         ],
                       ),
                       const SizedBox(height: 30),
@@ -1133,7 +1001,6 @@ class _SettingsState extends State<Settings> {
                           Container(
                             height: MediaQuery.of(context).size.height * 0.06,
                             width: MediaQuery.of(context).size.width * 0.8,
-                            // padding: EdgeInsets.all(18),
                             margin: const EdgeInsets.only(top: 19),
                             decoration: BoxDecoration(
                                 color: colorTextWhite,
@@ -1141,7 +1008,7 @@ class _SettingsState extends State<Settings> {
                                 boxShadow: const [
                                   BoxShadow(
                                     color: Colors.grey,
-                                    offset: Offset(1.0, 1.0), //(x,y)
+                                    offset: Offset(1.0, 1.0),
                                     blurRadius: 1.0,
                                   ),
                                 ]),
@@ -1177,7 +1044,6 @@ class _SettingsState extends State<Settings> {
                                         print("object 1" +
                                             reservation.toString());
                                       });
-                                      // callApi("true", "Del");
                                     }
                                   },
                                   behavior: HitTestBehavior.opaque,
@@ -1212,7 +1078,6 @@ class _SettingsState extends State<Settings> {
                                         print(
                                             "object" + reservation.toString());
                                       });
-                                      // callApi("false", "Del");
                                     }
                                   },
                                   behavior: HitTestBehavior.opaque,
@@ -1220,21 +1085,6 @@ class _SettingsState extends State<Settings> {
                               ],
                             ),
                           ),
-                          // Transform.scale(
-                          //   scale: 1.0,
-                          //   child: CupertinoSwitch(
-                          //     value: ApiBaseHelper.autoPrint!,
-                          //     onChanged: (value) {
-                          //       setState(() {
-                          //         ApiBaseHelper.autoPrint =
-                          //             !ApiBaseHelper.autoPrint!;
-                          //         print(ApiBaseHelper.autoPrint);
-                          //       });
-                          //     },
-                          //     activeColor: colorGreen,
-                          //     trackColor: colorSwitchColor,
-                          //   ),
-                          // ),
                         ],
                       ),
                     ],
@@ -1328,14 +1178,6 @@ class _SettingsState extends State<Settings> {
                     ),
                     onTap: () {
                       setState(() async {
-                        // ImagePicker.platform
-                        //     .pickImage(source: ImageSource.camera)
-                        //     .then((value) {
-                        //   setState(() {
-                        //     selectedBanner = value!;
-                        //     _cropImage(selectedBanner!.path);
-                        //   });
-                        // });
                         Navigator.pop(_context);
                       });
                     },
@@ -1348,18 +1190,7 @@ class _SettingsState extends State<Settings> {
                       'Select from gallery',
                       style: TextStyle(color: colorTextBlack, fontSize: 22),
                     ),
-                    onTap: () {
-                      // _pickerFile();
-                      // ImagePicker.platform
-                      //     .pickImage(source: ImageSource.gallery)
-                      //     .then((value) {
-                      //   setState(() {
-                      //     selectedBanner = value!;
-                      //     _cropImage(selectedBanner!.path);
-                      //   });
-                      // });
-                      // Navigator.pop(_context);
-                    },
+                    onTap: () {},
                   ),
                 ],
               ),
@@ -1367,16 +1198,6 @@ class _SettingsState extends State<Settings> {
           );
         });
   }
-
-  // void _pickerFile() async {
-  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
-  //       type: FileType.image, allowedExtensions: ['jpg', 'jpeg,', 'png']);
-  //   if (result == null) return;
-  //   PlatformFile file = result.files.single;
-  //   setState(() {
-  //     cropperFile = File(file.path!);
-  //   });
-  // }
 
   clearImageCache() async {
     resId.isEmpty

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
@@ -8,7 +7,6 @@ import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/constant/validation_util.dart';
 import 'package:food_inventory/model/login_model.dart';
-// import 'package:image_picker/image_picker.dart';
 import '../../main.dart';
 
 class RestaurantDetailsRepository {
@@ -27,40 +25,13 @@ class RestaurantDetailsRepository {
     TextEditingController vatController,
     TextEditingController deliveryTimeController,
     TextEditingController collectionTimeController,
-
-    /*  TimeOfDay? openTime,
-      TimeOfDay? closeTime,
-      String openDay,
-      String closeDay*/
   ) {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((value) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
-        // if (nameController.text.toString().trim().isEmpty) {
-        //   showMessage("Enter Restaurant Name", context);
-        // } else if (addressController.text.toString().trim().isEmpty) {
-        //   showMessage("Enter Full Address", context);
-        // } else if (phoneController.text.toString().trim().isEmpty) {
-        //   showMessage("Enter Phone Number", context);
-        // } else if (emailController.text.toString().trim().isEmpty) {
-        //   showMessage("Enter Email Address", context);
-        // } else if (vatController.text.toString().trim().isEmpty) {
-        //   showMessage("Enter VAT Number", context);
-        // }
         if (collectionTimeController.text.toString().trim().isEmpty) {
           showMessage("Enter Collection Time", context);
-        } /*else if (openTime == null) {
-        showMessage("Select Open Time", context);
-      } else if (closeTime == null) {
-        showMessage("Select Close Time", context);
-      } else if (checkOpenCloseTime(openTime, closeTime)) {
-        showMessage("Open Time must be before Close Time", context);
-      } else if (checkString(openDay)) {
-        showMessage("Select Open Day", context);
-      } else if (checkString(closeDay)) {
-        showMessage("Select Close Day", context);
-      }*/
-        else {
+        } else {
           List<dynamic> postcode = [];
 
           postcode.add(postcodeController.text.toString().trim());
@@ -72,16 +43,11 @@ class RestaurantDetailsRepository {
             'phoneNumber': phoneController.text.toString().trim(),
             'restEmail': emailController.text.toString().trim(),
             'vatNumber': vatController.text.toString().trim(),
-            // 'deliveryTime': deliveryTimeController.text.toString().trim(),
             'collectionTime': collectionTimeController.text.toString().trim(),
-            /* 'openTime': formatTimeOfDay(openTime, 'HH:mm:ss'),
-          'closeTime': formatTimeOfDay(closeTime, 'HH:mm:ss'),
-          'openDay': openDay,
-          'closeDay': closeDay,*/
             'passcode': postcode,
           });
 
-          Dialogs.showLoadingDialog(context, _keyLoader); //invoking login
+          Dialogs.showLoadingDialog(context, _keyLoader);
           try {
             final response = await _helper.put(
                 ApiBaseHelper.editProfile, body, value, restaurantId);
@@ -146,7 +112,7 @@ class RestaurantDetailsRepository {
             "isReservationActive": isReservationActive,
           });
 
-          Dialogs.showLoadingDialog(context, _keyLoader); //invoking login
+          Dialogs.showLoadingDialog(context, _keyLoader);
           try {
             final response = await _helper.put(
                 ApiBaseHelper.restaurantSetting, body, value, restaurantId);
@@ -172,7 +138,7 @@ class RestaurantDetailsRepository {
     String fileName = File(imageFile.path).path.split("/").last;
     String fileType = File(imageFile.path).path.split(".").last;
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((value) async {
-      Dialogs.showLoadingDialog(context, _keyLoader); //invoking login
+      Dialogs.showLoadingDialog(context, _keyLoader);
       try {
         final response = await _helper.putMultiPart(
             ApiBaseHelper.addRestaurantImage,
@@ -181,13 +147,8 @@ class RestaurantDetailsRepository {
             fileType,
             type,
             value);
-        /*CommonModel model =
-        CommonModel.fromJson(_helper.returnResponse(context, response));*/
-        print(response);
-
         Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
       } catch (e) {
-        print(e.toString());
         Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
       }
     });

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_inventory/UI/menu/dialog_type_list_view.dart';
 import 'package:food_inventory/UI/menu/repository/delete_data_repository.dart';
 import 'package:food_inventory/constant/app_util.dart';
