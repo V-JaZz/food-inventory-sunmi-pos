@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_import, avoid_print
+
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,95 +10,95 @@ import 'app_exception.dart';
 import 'package:http_parser/http_parser.dart';
 
 class ApiBaseHelper {
-  static final String baseURL =
+  static const String baseURL =
       "https://demo-foodinventoryde.herokuapp.com/v1/";
-  static final String login = "ownerService/login";
-  static final String logout = "ownerService/logout";
-  static final String editProfile = "ownerService/editProfile";
-  static final String resetPassword = "ownerService/resetPassword";
-  static final String instanceAction = "restaurantService/instanceAction";
-  static final String restaurantSetting = "restaurantService/restaurantSetting";
-  static final String addRestaurantImage =
+  static const String login = "ownerService/login";
+  static const String logout = "ownerService/logout";
+  static const String editProfile = "ownerService/editProfile";
+  static const String resetPassword = "ownerService/resetPassword";
+  static const String instanceAction = "restaurantService/instanceAction";
+  static const String restaurantSetting = "restaurantService/restaurantSetting";
+  static const String addRestaurantImage =
       "restaurantService/addRestaurantImage";
-  static final String profile = "restaurantService/profile";
-  static final String updateDiscount = "restaurantService/updateDiscount";
-  static final String downloadRestaurantImage =
+  static const String profile = "restaurantService/profile";
+  static const String updateDiscount = "restaurantService/updateDiscount";
+  static const String downloadRestaurantImage =
       "restaurantService/downloadRestaurantImage";
-  static final String addToppings = "menuService/addToppings";
-  static final String getToppings = "menuService/getToppings";
-  static final String deleteTopping = "menuService/deleteTopping";
-  static final String updateTopping = "menuService/updateTopping";
-  static final String addCategories = "menuService/addCategories";
-  static final String getCategories = "menuService/getCategories";
-  static final String deletecategory = "menuService/deletecategory";
-  static final String updatecategory = "menuService/updatecategory";
-  static final String addOptions = "menuService/addOptions";
-  static final String getOptions = "menuService/getOptions";
-  static final String deleteOption = "menuService/deleteOption";
-  static final String updateoption = "menuService/updateoption";
-  static final String addToppingGroups = "menuService/addToppingGroups";
-  static final String getToppingGroups = "menuService/getToppingGroups";
-  static final String deleteToppingGroup = "menuService/deleteToppingGroup";
-  static final String updateToppingGroup = "menuService/updateToppingGroup";
-  static final String additems = "menuService/additems";
-  static final String updateitem = "menuService/updateitem";
-  static final String getItems = "menuService/getItems";
-  static final String deleteitem = "menuService/deleteitem";
-  static final String getTimeZone = "RestaurantService/getTimeZones";
-  static final String getItemsTimeZone = "MenuService/getItems";
-  static final String addItemsTimeZone = "RestaurantService/addTimeZone";
-  static final String getCategoriesTimeZone = "MenuService/getCategories";
-  static final String deleteTimeZone = "RestaurantService/deleteTimeZone";
-  static final String updateTimeZone = "RestaurantService/updateTimeZone";
-  static final String statusTimeZone = "RestaurantService/updateTimeZoneStatus";
-  static final String getRestaurantTimeSlot = "restaurantService/getTimeSlots";
-  static final String addRestaurantTimeSlot = "restaurantService/addTimeSlot";
-  static final String updateRestaurantTimeSlot =
+  static const String addToppings = "menuService/addToppings";
+  static const String getToppings = "menuService/getToppings";
+  static const String deleteTopping = "menuService/deleteTopping";
+  static const String updateTopping = "menuService/updateTopping";
+  static const String addCategories = "menuService/addCategories";
+  static const String getCategories = "menuService/getCategories";
+  static const String deletecategory = "menuService/deletecategory";
+  static const String updatecategory = "menuService/updatecategory";
+  static const String addOptions = "menuService/addOptions";
+  static const String getOptions = "menuService/getOptions";
+  static const String deleteOption = "menuService/deleteOption";
+  static const String updateoption = "menuService/updateoption";
+  static const String addToppingGroups = "menuService/addToppingGroups";
+  static const String getToppingGroups = "menuService/getToppingGroups";
+  static const String deleteToppingGroup = "menuService/deleteToppingGroup";
+  static const String updateToppingGroup = "menuService/updateToppingGroup";
+  static const String additems = "menuService/additems";
+  static const String updateitem = "menuService/updateitem";
+  static const String getItems = "menuService/getItems";
+  static const String deleteitem = "menuService/deleteitem";
+  static const String getTimeZone = "RestaurantService/getTimeZones";
+  static const String getItemsTimeZone = "MenuService/getItems";
+  static const String addItemsTimeZone = "RestaurantService/addTimeZone";
+  static const String getCategoriesTimeZone = "MenuService/getCategories";
+  static const String deleteTimeZone = "RestaurantService/deleteTimeZone";
+  static const String updateTimeZone = "RestaurantService/updateTimeZone";
+  static const String statusTimeZone = "RestaurantService/updateTimeZoneStatus";
+  static const String getRestaurantTimeSlot = "restaurantService/getTimeSlots";
+  static const String addRestaurantTimeSlot = "restaurantService/addTimeSlot";
+  static const String updateRestaurantTimeSlot =
       "restaurantService/updateTimeSlot";
-  static final String updateStatusRestaurantTimeSlot =
+  static const String updateStatusRestaurantTimeSlot =
       "restaurantService/updateTimeSlotStatus";
-  static final String deleteRestaurantTimeSlot =
+  static const String deleteRestaurantTimeSlot =
       "restaurantService/deleteTimeSlot";
-  static final String updateItemPosition = "menuService/updateItemPosition";
-  static final String updateCategoryPosition =
+  static const String updateItemPosition = "menuService/updateItemPosition";
+  static const String updateCategoryPosition =
       "menuService/updateCategoryPosition";
-  static final String getAllergies = "menuService/getAllergies";
-  static final String updateAllergies = "menuService/updateAllergy";
-  static final String deleteAllergies = "menuService/deleteAllergy";
-  static final String addAllergies = "menuService/addAllergy";
-  static final String getAllergiesGroup = "menuService/getAllergyGroups";
-  static final String addAllergiesGroup = "menuService/addAllergyGroup";
-  static final String updateAllergiesGroup = "menuService/updateAllergyGroup";
-  static final String deleteAllergiesGroup = "menuService/deleteAllergyGroup";
-  static final String getOrders = "orderService/getOrders";
-  static final String orderHistory = "orderService/orderHistory";
-  static final String updateorderstatus = "orderService/updateorderstatus";
-  static final String updateTableorderstatus =
+  static const String getAllergies = "menuService/getAllergies";
+  static const String updateAllergies = "menuService/updateAllergy";
+  static const String deleteAllergies = "menuService/deleteAllergy";
+  static const String addAllergies = "menuService/addAllergy";
+  static const String getAllergiesGroup = "menuService/getAllergyGroups";
+  static const String addAllergiesGroup = "menuService/addAllergyGroup";
+  static const String updateAllergiesGroup = "menuService/updateAllergyGroup";
+  static const String deleteAllergiesGroup = "menuService/deleteAllergyGroup";
+  static const String getOrders = "orderService/getOrders";
+  static const String orderHistory = "orderService/orderHistory";
+  static const String updateorderstatus = "orderService/updateorderstatus";
+  static const String updateTableorderstatus =
       "orderService/updateTableOrderStatus";
-  static final String getDeliveryData = "restaurantService/profile";
-  static final String addDeliveryData = "restaurantService/addRestDistance";
-  static final String updateDeliveryData =
+  static const String getDeliveryData = "restaurantService/profile";
+  static const String addDeliveryData = "restaurantService/addRestDistance";
+  static const String updateDeliveryData =
       "restaurantService/updateRestDistance";
-  static final String deleteDeliveryData =
+  static const String deleteDeliveryData =
       "restaurantService/deleteRestDistance";
-  static final String updateItemDiscountStatus =
+  static const String updateItemDiscountStatus =
       "menuService/updateItemDiscountStatus";
-  static final String getVariantsList = "menuService/getVariants";
-  static final String addVariants = "menuService/addVariants";
-  static final String getVariantGroups = "menuService/getVariantGroups";
-  static final String addVariantGroups = "menuService/addVariantGroups";
-  static final String updateVariantGroup = "menuService/updateVariantGroup";
-  static final String deleteVariantGroup = "menuService/deleteVariantGroup";
-  static final String deleteVariant = "menuService/deleteVariant";
-  static final String updateVariant = "menuService/updateVariant";
-  static final String downloadMenuImage = "menuService/downloadMenuImage";
-  static final String getOrderPerUser = "orderService/getOrder";
-  static final String getTableOrders = "orderService/getTableOrders";
-  static final String getTableOrdersPerUser = "orderService/getTableOrder";
+  static const String getVariantsList = "menuService/getVariants";
+  static const String addVariants = "menuService/addVariants";
+  static const String getVariantGroups = "menuService/getVariantGroups";
+  static const String addVariantGroups = "menuService/addVariantGroups";
+  static const String updateVariantGroup = "menuService/updateVariantGroup";
+  static const String deleteVariantGroup = "menuService/deleteVariantGroup";
+  static const String deleteVariant = "menuService/deleteVariant";
+  static const String updateVariant = "menuService/updateVariant";
+  static const String downloadMenuImage = "menuService/downloadMenuImage";
+  static const String getOrderPerUser = "orderService/getOrder";
+  static const String getTableOrders = "orderService/getTableOrders";
+  static const String getTableOrdersPerUser = "orderService/getTableOrder";
 
-  static final String ip = 'ip';
-  static final String port = 'port';
-  static final String url = 'url';
+  static const String ip = 'ip';
+  static const String port = 'port';
+  static const String url = 'url';
   static bool orderbool = true;
   static String status = 'status';
   static bool autoAccept = true;
@@ -111,7 +113,7 @@ class ApiBaseHelper {
   Future<dynamic> get(String url, String token) async {
     print('Api Post, url $url');
     print('Api PUT, Token $token');
-    var response;
+    http.Response response;
     try {
       Map<String, String> header;
       if (token.isEmpty) {
@@ -139,7 +141,7 @@ class ApiBaseHelper {
   Future<dynamic> getwith(String url, String token, String restaurantid) async {
     print('Api Post, url $url');
     print('Api PUT, Token $token');
-    var response;
+    http.Response response;
     try {
       Map<String, String> header;
       if (token.isEmpty) {
@@ -151,8 +153,8 @@ class ApiBaseHelper {
         header = {
           'Content-type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': "Bearer " + '$token',
-          'restaurant': '$restaurantid'
+          'Authorization': "Bearer " + token,
+          'restaurant': restaurantid
         };
       }
 
@@ -169,7 +171,7 @@ class ApiBaseHelper {
     print('Api Post, url $url');
     print('Api POST, Token $token');
     print('Api Post, body : $body');
-    var response;
+    http.Response response;
     try {
       Map<String, String> header;
       if (token.isEmpty) {
@@ -200,7 +202,7 @@ class ApiBaseHelper {
     print('Api Post, url $url');
     print('Api POST, Token $token');
     print('Api Post, body : $body');
-    var response;
+    http.Response response;
     try {
       Map<String, String> header;
       if (token.isEmpty) {
@@ -213,7 +215,7 @@ class ApiBaseHelper {
           'Content-type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Bearer $token',
-          'restaurantId': '$restorantid'
+          'restaurantId': restorantid
         };
       }
 
@@ -232,7 +234,7 @@ class ApiBaseHelper {
     print('Api PUT, url $url');
     print('Api PUT, Token $token');
     print('Api Post, body : $body');
-    var response;
+    http.Response response;
     try {
       Map<String, String> header;
       if (token.isEmpty) {
@@ -245,7 +247,7 @@ class ApiBaseHelper {
           'Content-type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Bearer $token',
-          'restaurantId': '$restorantid'
+          'restaurantId': restorantid
         };
       }
 
@@ -263,7 +265,7 @@ class ApiBaseHelper {
     print('Api PUT, url $url');
     print('Api PUT, Token $token');
     print('Api Post, body : $body');
-    var response;
+    http.Response response;
     try {
       Map<String, String> header;
       if (token.isEmpty) {
@@ -296,7 +298,7 @@ class ApiBaseHelper {
     print('Api PUT, FilePath ${pickedImage.path.split(".").last}');
     print('Api PUT, Token $token');
     print('Api PUT, ImageType $imageType');
-    var respStr;
+    String respStr;
     try {
       var request = http.MultipartRequest(
           "PUT",
@@ -310,7 +312,7 @@ class ApiBaseHelper {
       request.fields['pratyush'] = 'this is image test';
       request.files.add(await http.MultipartFile.fromPath(
           'file', pickedImage.path,
-          filename: fileName, contentType: new MediaType('image', fileType)));
+          filename: fileName, contentType: MediaType('image', fileType)));
 
       var response = await request.send();
       respStr = await response.stream.bytesToString();
@@ -327,7 +329,7 @@ class ApiBaseHelper {
     print('Api PUT, url $url');
     print('Api PUT, Token $token');
     print('Api PUT, ImageType $name');
-    var respStr;
+    http.Response respStr;
     try {
       var request = http.MultipartRequest("POST", Uri.parse(baseURL + url));
       request.headers['Authorization'] = 'Bearer $token';
@@ -339,7 +341,7 @@ class ApiBaseHelper {
       //     'file', pickedImage.path,
       //     filename: fileName, contentType: new MediaType('image', fileType)));
       var response = await request.send();
-      respStr = await await http.Response.fromStream(response);
+      respStr = await http.Response.fromStream(response);
     } on SocketException {
       print('No net');
       // print(respStr);
@@ -360,10 +362,10 @@ class ApiBaseHelper {
       String discount,
       String token) async {
     print('Api PUT, url $url');
-    print('Api PUT, FilePath ${pickedImage}');
+    print('Api PUT, FilePath $pickedImage');
     print('Api PUT, Token $token');
     print('Api PUT, ImageType $name');
-    var respStr;
+    http.Response respStr;
     try {
       var request = http.MultipartRequest("POST", Uri.parse(baseURL + url));
       request.headers['Authorization'] = 'Bearer $token';
@@ -373,9 +375,9 @@ class ApiBaseHelper {
       request.fields['discount'] = discount;
       request.files.add(await http.MultipartFile.fromPath(
           'file', pickedImage.path,
-          filename: fileName, contentType: new MediaType('image', fileType)));
+          filename: fileName, contentType: MediaType('image', fileType)));
       var response = await request.send();
-      respStr = await await http.Response.fromStream(response);
+      respStr = await http.Response.fromStream(response);
     } on SocketException {
       print('No net');
       // print(respStr);
@@ -401,11 +403,11 @@ class ApiBaseHelper {
     String token,
   ) async {
     print('Api PUT, url $url');
-    print('Api PUT, FilePath ${pickedImage}');
+    print('Api PUT, FilePath $pickedImage');
     print('Api PUT, Token $token');
     print('Api PUT, ImageType}' + variants.toString());
 
-    var respStr;
+    http.Response respStr;
     try {
       var request = http.MultipartRequest("POST", Uri.parse(baseURL + url));
       request.headers['Authorization'] = 'Bearer $token';
@@ -420,9 +422,9 @@ class ApiBaseHelper {
       request.fields['allergyGroup'] = allergyGroup;
       request.files.add(await http.MultipartFile.fromPath(
           'file', pickedImage.path,
-          filename: fileName, contentType: new MediaType('image', fileType)));
+          filename: fileName, contentType: MediaType('image', fileType)));
       var response = await request.send();
-      respStr = await await http.Response.fromStream(response);
+      respStr = await http.Response.fromStream(response);
     } on SocketException {
       print('No net');
       // print(respStr);
@@ -450,7 +452,7 @@ class ApiBaseHelper {
     print('Api PUT, ImageType $name');
     print('Api PUT, varient $price');
 
-    var respStr;
+    http.Response respStr;
     try {
       var request = http.MultipartRequest("POST", Uri.parse(baseURL + url));
       request.headers['Authorization'] = 'Bearer $token';
@@ -468,7 +470,7 @@ class ApiBaseHelper {
       //     'file', pickedImage.path,
       //     filename: fileName, contentType: new MediaType('image', fileType)));
       var response = await request.send();
-      respStr = await await http.Response.fromStream(response);
+      respStr = await http.Response.fromStream(response);
     } on SocketException {
       print('No net');
       // print(respStr);
@@ -489,10 +491,10 @@ class ApiBaseHelper {
       String discount,
       String token) async {
     print('Api PUT, url $url');
-    print('Api PUT, FilePath ${pickedImage}');
+    print('Api PUT, FilePath $pickedImage');
     print('Api PUT, Token $token');
     print('Api PUT, ImageType $name');
-    var respStr;
+    http.Response respStr;
     try {
       var request = http.MultipartRequest("PUT", Uri.parse(baseURL + url));
       request.headers['Authorization'] = 'Bearer $token';
@@ -503,9 +505,9 @@ class ApiBaseHelper {
       request.fields["imageType"] = "category";
       request.files.add(await http.MultipartFile.fromPath(
           'file', pickedImage.path,
-          filename: fileName, contentType: new MediaType('image', fileType)));
+          filename: fileName, contentType: MediaType('image', fileType)));
       var response = await request.send();
-      respStr = await await http.Response.fromStream(response);
+      respStr = await http.Response.fromStream(response);
     } on SocketException {
       print('No net');
       // print(respStr);
@@ -522,7 +524,7 @@ class ApiBaseHelper {
 
     print('Api PUT, Token $token');
     print('Api PUT, ImageType $name');
-    var respStr;
+    http.Response respStr;
     try {
       var request = http.MultipartRequest("PUT", Uri.parse(baseURL + url));
       request.headers['Authorization'] = 'Bearer $token';
@@ -533,7 +535,7 @@ class ApiBaseHelper {
       request.fields["imageType"] = "category";
 
       var response = await request.send();
-      respStr = await await http.Response.fromStream(response);
+      respStr = await http.Response.fromStream(response);
     } on SocketException {
       print('No net');
       // print(respStr);
@@ -560,10 +562,10 @@ class ApiBaseHelper {
       String token,
       restorantid) async {
     print('Api PUT, url $url');
-    print('Api PUT, FilePath ${pickedImage}');
+    print('Api PUT, FilePath $pickedImage');
     print('Api PUT, Token $token');
     print('Api PUT, ImageType $name');
-    var respStr;
+    http.Response respStr;
     try {
       var request = http.MultipartRequest("PUT", Uri.parse(baseURL + url));
       request.headers['Authorization'] = 'Bearer $token';
@@ -580,9 +582,9 @@ class ApiBaseHelper {
       request.fields["imageType"] = "item";
       request.files.add(await http.MultipartFile.fromPath(
           'file', pickedImage.path,
-          filename: fileName, contentType: new MediaType('image', fileType)));
+          filename: fileName, contentType: MediaType('image', fileType)));
       var response = await request.send();
-      respStr = await await http.Response.fromStream(response);
+      respStr = await http.Response.fromStream(response);
     } on SocketException {
       print('No net');
       // print(respStr);
@@ -609,7 +611,7 @@ class ApiBaseHelper {
 
     print('Api PUT, Token $token');
     print('Api PUT, ImageType $name');
-    var respStr;
+    http.Response respStr;
     try {
       var request = http.MultipartRequest("PUT", Uri.parse(baseURL + url));
       request.headers['Authorization'] = 'Bearer $token';
@@ -626,7 +628,7 @@ class ApiBaseHelper {
       request.fields["imageType"] = "item";
 
       var response = await request.send();
-      respStr = await await http.Response.fromStream(response);
+      respStr = await http.Response.fromStream(response);
     } on SocketException {
       print('No net');
       // print(respStr);
@@ -639,7 +641,7 @@ class ApiBaseHelper {
   Future<dynamic> delete(String url, String token) async {
     print('Api delete, url $url');
     print('Api delete, Token $token');
-    var response;
+    http.Response response;
     try {
       Map<String, String> header;
       if (token.isEmpty) {
@@ -664,6 +666,7 @@ class ApiBaseHelper {
     return response;
   }
 
+  // ignore: unused_element
   dynamic _returnResponse(http.Response response) {
     print(response.statusCode.toString());
     print(response.body.toString());
@@ -676,16 +679,12 @@ class ApiBaseHelper {
         return responseJson;
       case 400:
         return responseJson;
-        throw BadRequestException(response.body.toString());
       case 401:
       case 403:
         return responseJson;
-        throw UnauthorisedException(response.body.toString());
       case 500:
       default:
         return responseJson;
-        throw FetchDataException(
-            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
     }
   }
 
@@ -706,7 +705,7 @@ class ApiBaseHelper {
         throw UnauthorisedException(response.body.toString());
       case 500:
       default:
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text("Something wants wrong!"),
         ));
         throw FetchDataException(

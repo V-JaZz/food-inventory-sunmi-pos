@@ -20,7 +20,7 @@ class DialogAddNewItems extends StatefulWidget {
 
 class _DialogAddNewItemsState extends State<DialogAddNewItems> {
   late TextEditingController _addNewController;
-  late TextEditingController _discriptionController;
+  late TextEditingController _descriptionController;
   late TextEditingController _discountController;
   late TextEditingController _variantController;
   late TextEditingController _optionController;
@@ -114,7 +114,7 @@ class _DialogAddNewItemsState extends State<DialogAddNewItems> {
   void initState() {
     super.initState();
     _addNewController = new TextEditingController();
-    _discriptionController = new TextEditingController();
+    _descriptionController = new TextEditingController();
     _discountController = new TextEditingController();
     _variantController = new TextEditingController();
     _optionController = new TextEditingController();
@@ -302,7 +302,7 @@ class _DialogAddNewItemsState extends State<DialogAddNewItems> {
                     // margin: EdgeInsets.only(left: 18),
                     child: TextField(
                       maxLines: 1,
-                      controller: _discriptionController,
+                      controller: _descriptionController,
                       textAlignVertical: TextAlignVertical.center,
                       style: TextStyle(
                           fontSize: 16,

@@ -1,24 +1,33 @@
+// ignore_for_file: unused_import
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:food_inventory/UI/dashboard/DashBoard%20Data/Category/repository/category_repository.dart';
 import 'package:food_inventory/UI/dashboard/DashBoard%20Data/Category/seeAll.dart';
 import 'package:food_inventory/constant/colors.dart';
+import 'package:food_inventory/constant/validation_util.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-class DialogAddNewCategory extends StatefulWidget {
+import 'edit_category.dart';
+
+// ignore: must_be_immutable
+class AddNewCategory extends StatefulWidget {
   VoidCallback onDialogClose;
   late String delId;
 
-  DialogAddNewCategory({required this.onDialogClose});
+  AddNewCategory({Key? key, required this.onDialogClose}) : super(key: key);
   @override
-  State<DialogAddNewCategory> createState() => _DialogAddNewCategoryState();
+  State<AddNewCategory> createState() => _AddNewCategoryState();
 }
 
-class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
-  late TextEditingController _categoryNameController;
-  late TextEditingController _addDiscountController;
-  late TextEditingController _discriptionController;
+class _AddNewCategoryState extends State<AddNewCategory> {
+  late CategoryRepository _categoryRepository;
+
+  late TextEditingController _nameController;
+  late TextEditingController _discountController;
+  late TextEditingController _descriptionController;
   File? cropperFile;
   Future<void> _cropImage(path) async {
     ImageCropper imageCropper = ImageCropper();
@@ -31,13 +40,13 @@ class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
           CropAspectRatioPreset.ratio4x3,
           CropAspectRatioPreset.ratio16x9
         ],
-        androidUiSettings: AndroidUiSettings(
+        androidUiSettings: const AndroidUiSettings(
             toolbarTitle: '',
             toolbarColor: colorButtonYellow,
             toolbarWidgetColor: colorButtonBlue,
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: false),
-        iosUiSettings: IOSUiSettings(
+        iosUiSettings: const IOSUiSettings(
           minimumAspectRatio: 1.0,
         ));
 
@@ -45,6 +54,7 @@ class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
       cropperFile = croppedfile;
       setState(() {});
     } else {
+      // ignore: avoid_print
       print("Image is not cropped.");
     }
   }
@@ -56,16 +66,17 @@ class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
         barrierDismissible: true,
         builder: (BuildContext _context) {
           return AlertDialog(
-            content: new SingleChildScrollView(
-              child: new ListBody(
+            content:  SingleChildScrollView(
+              child:  ListBody(
                 children: <Widget>[
                   GestureDetector(
-                    child: new Text(
+                    child:  const Text(
                       'Take a picture',
                       style: TextStyle(color: colorTextBlack, fontSize: 16),
                     ),
                     onTap: () {
                       // setState(() async {
+                      // ignore: invalid_use_of_visible_for_testing_member
                       ImagePicker.platform
                           .pickImage(source: ImageSource.camera)
                           .then((value) {
@@ -78,15 +89,16 @@ class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
                       });
                     },
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.all(8.0),
                   ),
                   GestureDetector(
-                    child: new Text(
+                    child: const Text(
                       'Select from gallery',
                       style: TextStyle(color: colorTextBlack, fontSize: 16),
                     ),
                     onTap: () {
+                      // ignore: invalid_use_of_visible_for_testing_member
                       ImagePicker.platform
                           .pickImage(source: ImageSource.gallery)
                           .then((value) {
@@ -108,24 +120,37 @@ class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
   @override
   void initState() {
     super.initState();
-    _categoryNameController = new TextEditingController();
-    _addDiscountController = new TextEditingController();
-    _discriptionController = new TextEditingController();
+    _categoryRepository = CategoryRepository(context);
+    _nameController = TextEditingController();
+    _discountController = TextEditingController();
+    _descriptionController = TextEditingController();
+  }
+
+  callAddCategoryApi() async {
+    cropperFile == null
+        ? _categoryRepository.addCategorywithoutImage(_nameController.text,
+            _descriptionController.text, _discountController.text)
+        : _categoryRepository.addCategory(
+            _nameController.text,
+            _descriptionController.text,
+            _discountController.text,
+            cropperFile!);
+    // imageupload(selectedBanner!);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: new BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
+      decoration: const BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
       child: Dialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          insetPadding: EdgeInsets.all(15.0),
+          insetPadding: const EdgeInsets.all(15.0),
           elevation: 0,
           // backgroundColor: Colors.transparent,
           child: Container(
             // height: MediaQuery.of(context).size.height * 0.65,
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             decoration: BoxDecoration(
                 color: colorTextWhite, borderRadius: BorderRadius.circular(13)),
             child: ListView(
@@ -134,7 +159,7 @@ class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       "Add New Category",
                       style: TextStyle(
                           color: colorTextBlack,
@@ -145,14 +170,14 @@ class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
-                        seeAllDialog("See All Category");
+                        categoryList("See All Category");
                       },
                       child: Container(
-                        padding: EdgeInsets.all(5.0),
+                        padding: const EdgeInsets.all(5.0),
                         decoration: BoxDecoration(
                             color: colorButtonYellow,
                             borderRadius: BorderRadius.circular(30.0)),
-                        child: Text("See All",
+                        child: const Text("See All",
                             style: TextStyle(
                                 color: colorTextWhite,
                                 fontWeight: FontWeight.w500,
@@ -161,26 +186,26 @@ class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Container(
-                    padding: EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(15.0),
                     decoration: BoxDecoration(
-                        color: Color.fromRGBO(223, 221, 239, 1),
+                        color: const Color.fromRGBO(223, 221, 239, 1),
                         borderRadius: BorderRadius.circular(05)),
 
                     // margin: EdgeInsets.only(left: 18),
                     child: TextField(
                       maxLines: 1,
-                      controller: _categoryNameController,
+                      controller: _nameController,
                       textAlignVertical: TextAlignVertical.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.normal,
                           color: colorTextBlack),
                       cursorColor: colorTextBlack,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           contentPadding: EdgeInsets.all(0),
                           isDense: true,
                           hintText: "Category Name",
@@ -190,26 +215,26 @@ class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
                               fontWeight: FontWeight.w400),
                           border: InputBorder.none),
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Container(
-                    padding: EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(15.0),
                     decoration: BoxDecoration(
-                        color: Color.fromRGBO(223, 221, 239, 1),
+                        color: const Color.fromRGBO(223, 221, 239, 1),
                         borderRadius: BorderRadius.circular(05)),
 
                     // margin: EdgeInsets.only(left: 18),
                     child: TextField(
                       maxLines: 1,
-                      controller: _addDiscountController,
+                      controller: _discountController,
                       textAlignVertical: TextAlignVertical.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.normal,
                           color: colorTextBlack),
                       cursorColor: colorTextBlack,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           contentPadding: EdgeInsets.all(0),
                           isDense: true,
                           hintText: "Add Discount",
@@ -224,25 +249,25 @@ class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500))),
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Container(
                     height: MediaQuery.of(context).size.height * 0.15,
-                    padding: EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(15.0),
                     decoration: BoxDecoration(
-                        color: Color.fromRGBO(223, 221, 239, 1),
+                        color: const Color.fromRGBO(223, 221, 239, 1),
                         borderRadius: BorderRadius.circular(05)),
                     child: TextField(
                       maxLines: 1,
-                      controller: _discriptionController,
+                      controller: _descriptionController,
                       textAlignVertical: TextAlignVertical.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.normal,
                           color: colorTextBlack),
                       cursorColor: colorTextBlack,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           contentPadding: EdgeInsets.all(0),
                           isDense: true,
                           hintText: "Add Discription",
@@ -252,7 +277,7 @@ class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
                               fontWeight: FontWeight.w400),
                           border: InputBorder.none),
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Row(
@@ -268,7 +293,7 @@ class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.rectangle,
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                                    const BorderRadius.all(Radius.circular(10)),
                                 image: DecorationImage(
                                     image: FileImage(cropperFile!),
                                     fit: BoxFit.cover),
@@ -279,29 +304,29 @@ class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
                             onTap: () {
                               _optionsDialogBox();
                             },
-                            child: Icon(Icons.add_circle,
+                            child: const Icon(Icons.add_circle,
                                 size: 32, color: colorButtonYellow)),
-                    SizedBox(width: 10),
-                    Text("Add Category Image",
+                    const SizedBox(width: 10),
+                    const Text("Add Category Image",
                         style: TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w700))
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Container(
-                  margin: EdgeInsets.only(top: 10, bottom: 10),
+                  margin: const EdgeInsets.only(top: 10, bottom: 10),
                   child: Row(
                     children: [
                       Expanded(
                         child: GestureDetector(
                           child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 14),
+                            padding: const EdgeInsets.symmetric(vertical: 14),
                             alignment: Alignment.center,
-                            margin: EdgeInsets.only(left: 30, right: 10),
+                            margin: const EdgeInsets.only(left: 30, right: 10),
                             decoration: BoxDecoration(
                                 color: colorButtonYellow,
                                 borderRadius: BorderRadius.circular(30)),
-                            child: Text(
+                            child: const Text(
                               "Add",
                               style: TextStyle(
                                   color: colorTextWhite,
@@ -309,19 +334,30 @@ class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
                                   fontSize: 12),
                             ),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            // if (_nameController.text.isEmpty) {
+                            //   showMessage("Enter Category Name", context);
+                            // } else if (_descriptionController.text.isEmpty) {
+                            //   showMessage("Enter Discription Name", context);
+                            // } else if (_discountController.text.isEmpty) {
+                            //   showMessage("Enter Discount Name", context);
+                            // } else {
+                            //   callAddCategoryApi();
+                            // }
+                            callAddCategoryApi();
+                          },
                         ),
                       ),
                       Expanded(
                         child: GestureDetector(
                           child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 14),
+                            padding: const EdgeInsets.symmetric(vertical: 14),
                             alignment: Alignment.center,
-                            margin: EdgeInsets.only(left: 8, right: 30),
+                            margin: const EdgeInsets.only(left: 8, right: 30),
                             decoration: BoxDecoration(
                                 color: colorGrey,
                                 borderRadius: BorderRadius.circular(30)),
-                            child: Text(
+                            child: const Text(
                               "Cancel",
                               style: TextStyle(
                                   color: colorTextWhite,
@@ -344,7 +380,7 @@ class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
     );
   }
 
-  void seeAllDialog(String type) {
+  void categoryList(String type) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -355,4 +391,6 @@ class _DialogAddNewCategoryState extends State<DialogAddNewCategory> {
       },
     );
   }
+
+ 
 }

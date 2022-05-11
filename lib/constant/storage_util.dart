@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageUtil {
-  static final String keyLoginData = "loginData";
-  static final String keyLoginToken = "loginToken";
-  static final String keyEmail = "email";
-  static final String keyRestaurantId = "restaurantId";
-  static final String dataList = 'dataList';
+  static const String keyLoginData = "loginData";
+  static const String keyLoginToken = "loginToken";
+  static const String keyEmail = "email";
+  static const String keyRestaurantId = "restaurantId";
+  static const String dataList = 'dataList';
   static Future<bool> setData(String key, dynamic value) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     if (value is String) {
@@ -46,6 +46,7 @@ class StorageUtil {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.clear();
   }
+
   static bool equalsIgnoreCase(String string1, String string2) {
     return string1.toLowerCase() == string2.toLowerCase();
   }

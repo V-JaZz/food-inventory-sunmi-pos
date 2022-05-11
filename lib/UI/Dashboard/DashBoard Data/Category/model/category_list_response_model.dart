@@ -9,14 +9,14 @@ class CategoryListResponseModel {
     if (json['data'] != null) {
       data = <CategoryListData>[];
       json['data'].forEach((v) {
-        data!.add(new CategoryListData.fromJson(v));
+        data!.add(CategoryListData.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }

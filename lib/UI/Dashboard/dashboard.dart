@@ -28,8 +28,11 @@ import '../../constant/validation_util.dart';
 import '../OrderHistory/orderHistory.dart';
 import '../itemsTimeSet/itemsTimeSet.dart';
 import '../order/model/order_list_response_model.dart';
-import 'DashBoard Data/Category/dialogAddNewCategory.dart';
+import 'DashBoard Data/Allergy/add_new_allergy.dart';
+import 'DashBoard Data/Category/add_new_category.dart';
 import 'DashBoard Data/Items/dialogAddNewItem.dart';
+import 'DashBoard Data/Option/add_option.dart';
+import 'DashBoard Data/Toppings/add_topping.dart';
 import 'logout_repository.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -550,75 +553,90 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                   padding:
                       const EdgeInsets.only(top: 05, bottom: 05, right: 10),
                   color: colorButtonBlue,
-                  child: Row(children: [
-                    Center(
-                      child: Container(
-                        child: FlatButton(
-                          minWidth: 20,
-                          padding: const EdgeInsets.all(10),
-                          child: SvgPicture.asset(
-                            icMenuHam,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(children: [
+                          Center(
+                            child: Container(
+                              child: FlatButton(
+                                minWidth: 20,
+                                padding: const EdgeInsets.all(10),
+                                child: SvgPicture.asset(
+                                  icMenuHam,
+                                ),
+                                onPressed: () {
+                                  FocusScope.of(context)
+                                      .requestFocus(new FocusNode());
+                                  Scaffold.of(context).openDrawer();
+                                  WidgetsBinding.instance!
+                                      .addPostFrameCallback((_) {
+                                    controller.value = 0;
+                                    controller.animateTo(22,
+                                        duration:
+                                            const Duration(milliseconds: 1500));
+                                  });
+                                },
+                                shape: const CircleBorder(),
+                              ),
+                            ),
                           ),
-                          onPressed: () {
-                            FocusScope.of(context)
-                                .requestFocus(new FocusNode());
-                            Scaffold.of(context).openDrawer();
-                            WidgetsBinding.instance!.addPostFrameCallback((_) {
-                              controller.value = 0;
-                              controller.animateTo(22,
-                                  duration: const Duration(milliseconds: 1500));
-                            });
-                          },
-                          shape: const CircleBorder(),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 0,
-                      child: Container(
-                        child: Text(
-                          restaurantName,
-                          maxLines: 1,
-                          overflow: TextOverflow.fade,
-                          softWrap: false,
-                          style: const TextStyle(
-                              color: colorTextWhite,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 30),
-                    const Text(
-                      "14 June, 2021",
-                      style: TextStyle(
-                          color: colorTextWhite,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15),
-                    ),
-                    const SizedBox(width: 15),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => OrderHistory()));
-                      },
-                      child: SvgPicture.asset(
-                        icCalendar,
-                        height: MediaQuery.of(context).size.height * 0.021,
-                        width: MediaQuery.of(context).size.width * 0.021,
-                        color: Colors.amber,
-                      ),
-                    ),
-                    const SizedBox(width: 15),
-                    GestureDetector(
-                      child: SvgPicture.asset(
-                        icDashRate,
-                        height: MediaQuery.of(context).size.height * 0.021,
-                        width: MediaQuery.of(context).size.width * 0.021,
-                        color: colorTextWhite,
-                      ),
-                    ),
-                  ]),
+                          Container(
+                            child: Text(
+                              restaurantName,
+                              maxLines: 1,
+                              overflow: TextOverflow.fade,
+                              softWrap: false,
+                              style: const TextStyle(
+                                  color: colorTextWhite,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                          )
+                        ]),
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const OrderHistory()));
+                              },
+                              child: Row(
+                                children: [
+                                  Text(
+                                    getCurrentDateInFormat(),
+                                    style: TextStyle(
+                                        color: colorTextWhite,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15),
+                                  ),
+                                  const SizedBox(width: 15),
+                                  SvgPicture.asset(
+                                    icCalendar,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.021,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.021,
+                                    color: Colors.amber,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 15),
+                            GestureDetector(
+                              child: SvgPicture.asset(
+                                icDashRate,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.021,
+                                width:
+                                    MediaQuery.of(context).size.width * 0.021,
+                                color: colorTextWhite,
+                              ),
+                            ),
+                          ],
+                        )
+                      ]),
                 ),
                 Expanded(
                     child: Container(
@@ -649,7 +667,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
         bottomNavigationBar: BottomAppBar(
           // color: colorTextWhite,
           elevation: 10,
-          shape: CircularNotchedRectangle(),
+          shape: const CircularNotchedRectangle(),
           notchMargin: 05,
           child: Container(
             padding: EdgeInsets.only(left: 10, right: 10),
@@ -663,9 +681,10 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SvgPicture.asset(icOrder,
-                          height: 20, color: Color.fromRGBO(124, 117, 175, 1)),
-                      SizedBox(height: 05),
-                      Text(
+                          height: 20,
+                          color: const Color.fromRGBO(124, 117, 175, 1)),
+                      const SizedBox(height: 05),
+                      const Text(
                         "Orders",
                         style: TextStyle(
                             color: colorTextBlack,
@@ -676,16 +695,16 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(right: 60),
+                  padding: const EdgeInsets.only(right: 60),
                   child: GestureDetector(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SvgPicture.asset(icButton2,
                             height: 20,
-                            color: Color.fromRGBO(124, 117, 175, 1)),
-                        SizedBox(height: 05),
-                        Text(
+                            color: const Color.fromRGBO(124, 117, 175, 1)),
+                        const SizedBox(height: 05),
+                        const Text(
                           "Table Order",
                           style: TextStyle(
                               color: colorTextBlack,
@@ -697,16 +716,16 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(right: 15),
+                  padding: const EdgeInsets.only(right: 15),
                   child: GestureDetector(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SvgPicture.asset(icButton3,
                             height: 20,
-                            color: Color.fromRGBO(124, 117, 175, 1)),
-                        SizedBox(height: 05),
-                        Text(
+                            color: const Color.fromRGBO(124, 117, 175, 1)),
+                        const SizedBox(height: 05),
+                        const Text(
                           "Menu",
                           style: TextStyle(
                               color: colorTextBlack,
@@ -722,9 +741,10 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SvgPicture.asset(icButton4,
-                          height: 20, color: Color.fromRGBO(124, 117, 175, 1)),
-                      SizedBox(height: 05),
-                      Text(
+                          height: 20,
+                          color: const Color.fromRGBO(124, 117, 175, 1)),
+                      const SizedBox(height: 05),
+                      const Text(
                         "Reports",
                         style: TextStyle(
                             color: colorTextBlack,
@@ -847,7 +867,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                         onTap: () {
                           setState(() {
                             Navigator.of(context).pop();
-                            // dialogAddNewType(TYPE_OPTION);
+                            dialogAddNewOption(TYPE_OPTION);
                           });
                         },
                         child: Card(
@@ -876,7 +896,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                             onTap: () {
                               setState(() {
                                 Navigator.of(context).pop();
-                                // dialogAddNewType(TYPE_TOPPINGS);
+                                dialogAddNewTopping(TYPE_TOPPINGS);
                               });
                             },
                             child: Card(
@@ -930,7 +950,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                             onTap: () {
                               setState(() {
                                 Navigator.of(context).pop();
-                                // addAllergyMenu(TYPE_ALLERGY);
+                                dialogAddNewAllergy(TYPE_ALLERGY);
                               });
                             },
                             child: Card(
@@ -1191,7 +1211,43 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
       context: context,
       barrierDismissible: false,
       builder: (dialogContext) {
-        return DialogAddNewCategory(
+        return AddNewCategory(
+          onDialogClose: () {},
+        );
+      },
+    );
+  }
+
+  void dialogAddNewAllergy(String type) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return AddNewAllergy(
+          onDialogClose: () {},
+        );
+      },
+    );
+  }
+
+  void dialogAddNewOption(String type) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return AddOption(
+          onDialogClose: () {},
+        );
+      },
+    );
+  }
+
+  void dialogAddNewTopping(String type) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return AddToppings(
           onDialogClose: () {},
         );
       },

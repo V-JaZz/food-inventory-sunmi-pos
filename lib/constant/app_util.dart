@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 const String TYPE_OPTION = "Option";
 const String TYPE_CATEGORY = "Category";
 const String TYPE_TOPPINGS = "Topping";

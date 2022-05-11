@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -44,6 +46,7 @@ enum _SwitchType { material, adaptive }
 ///  * [Slider], for selecting a value in a range.
 ///  * <https://material.io/design/components/selection-controls.html#switches>
 class Switch extends StatelessWidget {
+  // ignore: duplicate_ignore
   /// Creates a material design switch.
   ///
   /// The switch itself does not maintain any state. Instead, when the state of

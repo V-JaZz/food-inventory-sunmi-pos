@@ -1,77 +1,59 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:food_inventory/UI/dashboard/DashBoard%20Data/Allergy/model/allergy_list_response.dart';
 import 'package:food_inventory/UI/menu/dialog_delete_type.dart';
 import 'package:food_inventory/UI/menu/dialog_type_list_view.dart';
 import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
-import 'edit_category.dart';
-import 'model/category_list_response_model.dart';
+import 'edit_allergy.dart';
 
 // ignore: must_be_immutable
-class ListAllPage extends StatefulWidget {
+class AllergyList extends StatefulWidget {
   var type;
   VoidCallback onDialogClose;
 
-  ListAllPage({Key? key, this.type, required this.onDialogClose})
+  AllergyList({Key? key, this.type, required this.onDialogClose})
       : super(key: key);
 
   @override
-  _ListAllPageState createState() => _ListAllPageState();
+  _AllergyListState createState() => _AllergyListState();
 }
 
-class _ListAllPageState extends State<ListAllPage> {
+class _AllergyListState extends State<AllergyList> {
   List<TypeListDataModel> dataList = [];
-  List<CategoryListData> data = [];
-  getCategories() async {
+  getAllergy() async {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
       setState(() {
         isDataLoad = true;
       });
       try {
         final response =
-            await ApiBaseHelper().get(ApiBaseHelper.getCategories, token);
-        CategoryListResponseModel model = CategoryListResponseModel.fromJson(
+            await ApiBaseHelper().get(ApiBaseHelper.getAllergies, token);
+        AllergyListResponseModel model = AllergyListResponseModel.fromJson(
             ApiBaseHelper().returnResponse(context, response));
         setState(() {
           isDataLoad = false;
         });
         if (model.success!) {
           if (model.data!.isNotEmpty) {
-            for (CategoryListData data in model.data!) {
-              if (data.description != null) {
-                dataList.add(TypeListDataModel(
-                    TYPE_CATEGORY,
-                    data.sId!,
-                    data.position!,
-                    data.name!,
-                    "",
-                    data.description!,
-                    data.imageName!,
-                    [],
-                    "",
-                    "",
-                    "",
-                    "",
-                    data.discount ?? 0));
-              } else {
-                dataList.add(TypeListDataModel(
-                    widget.type,
-                    data.sId!,
-                    data.position!,
-                    data.name!,
-                    "",
-                    "",
-                    "",
-                    [],
-                    "",
-                    "",
-                    "",
-                    "",
-                    data.discount ?? 0));
-              }
+            for (AllergyListData data in model.data!) {
+              dataList.add(TypeListDataModel(
+                  TYPE_ALLERGY,
+                  data.sId!,
+                  0,
+                  data.name!,
+                  "",
+                  data.description!,
+                  "",
+                  [],
+                  "",
+                  "",
+                  "",
+                  "",
+                  0));
             }
           }
         }
@@ -87,7 +69,7 @@ class _ListAllPageState extends State<ListAllPage> {
   @override
   void initState() {
     super.initState();
-    getCategories();
+    getAllergy();
   }
 
   bool isDataLoad = false;
@@ -144,7 +126,7 @@ class _ListAllPageState extends State<ListAllPage> {
                                   left: 15,
                                 ),
                                 child: Text(
-                                  "My Category",
+                                  "My Allergy",
                                   style: TextStyle(
                                       color: colorTextBlack,
                                       fontSize: 16,
@@ -194,14 +176,11 @@ class _ListAllPageState extends State<ListAllPage> {
                                         child: SlidableAction(
                                           onPressed: (context) {
                                             Navigator.of(context).pop();
-                                            editCategory(
-                                                dataList[index].description,
-                                                dataList[index]
-                                                    .discount
-                                                    .toString(),
-                                                dataList[index].id,
-                                                dataList[index].name,
-                                                dataList[index].imageType);
+                                            editAllergy(
+                                              dataList[index].description,
+                                              dataList[index].id.toString(),
+                                              dataList[index].name,
+                                            );
                                           },
                                           backgroundColor: colorTextBlack,
                                           foregroundColor: colorTextWhite,
@@ -264,31 +243,33 @@ class _ListAllPageState extends State<ListAllPage> {
             setState(() {
               dataList = [];
             });
-            getCategories();
+            getAllergy();
           },
         );
       },
     );
   }
 
-  void editCategory(String description, String discount, String id, String name,
-      String image) {
+  void editAllergy(
+    String description,
+    String id,
+    String name,
+  ) {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (dialogContext) {
-        return EditCategory(
-            onDialogClose: () {
-              setState(() {
-                dataList = [];
-              });
-              getCategories();
-            },
-            id: id,
-            name: name,
-            description: description,
-            discount: discount,
-            image: image);
+        return EditAllergy(
+          onDialogClose: () {
+            setState(() {
+              dataList = [];
+            });
+            getAllergy();
+          },
+          id: id,
+          name: name,
+          description: description,
+        );
       },
     );
   }

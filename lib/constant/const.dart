@@ -1,5 +1,4 @@
 class Constants {
-
   static const String isLoggedIn = 'isLoggedIn';
   static const String pass = 'pass';
   static const String user = 'user';
@@ -18,6 +17,7 @@ class Constants {
   static const String token = 'token';
   static const String createdAt = 'createdAt';
   static const String updatedAt = 'updatedAt';
+  // ignore: constant_identifier_names
   static const String ultimo_acceso = 'ultimo_acceso';
   static const String data = 'data';
   static const String horario = 'horario';
@@ -52,6 +52,7 @@ class Constants {
   static const String rfc = 'rFC';
   static const String backPages = 'backPages';
   static const String alerts = 'alerts';
+  // ignore: constant_identifier_names
   static const String language_code = 'language_code';
   static const String fcmToken = 'fcmToken';
 }

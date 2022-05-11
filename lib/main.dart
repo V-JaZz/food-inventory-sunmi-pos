@@ -1,12 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
-import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 // import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_inventory/UI/Dashboard/dashboard.dart';
 import 'package:food_inventory/UI/Login/login.dart';
 import 'constant/colors.dart';
@@ -30,23 +30,25 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Map<int, Color> color = {
-      50: Color.fromRGBO(255, 255, 255, .1),
-      100: Color.fromRGBO(255, 255, 255, .2),
-      200: Color.fromRGBO(255, 255, 255, .3),
-      300: Color.fromRGBO(255, 255, 255, .4),
-      400: Color.fromRGBO(255, 255, 255, .5),
-      500: Color.fromRGBO(255, 255, 255, .6),
-      600: Color.fromRGBO(255, 255, 255, .7),
-      700: Color.fromRGBO(255, 255, 255, .8),
-      800: Color.fromRGBO(255, 255, 255, .9),
-      900: Color.fromRGBO(255, 255, 255, 1),
+      50: const Color.fromRGBO(255, 255, 255, .1),
+      100: const Color.fromRGBO(255, 255, 255, .2),
+      200: const Color.fromRGBO(255, 255, 255, .3),
+      300: const Color.fromRGBO(255, 255, 255, .4),
+      400: const Color.fromRGBO(255, 255, 255, .5),
+      500: const Color.fromRGBO(255, 255, 255, .6),
+      600: const Color.fromRGBO(255, 255, 255, .7),
+      700: const Color.fromRGBO(255, 255, 255, .8),
+      800: const Color.fromRGBO(255, 255, 255, .9),
+      900: const Color.fromRGBO(255, 255, 255, 1),
     };
 
     MaterialColor colorCustom = MaterialColor(0xFF51C800, color);
@@ -59,13 +61,15 @@ class MyApp extends StatelessWidget {
           primarySwatch: colorCustom,
           fontFamily: 'Roboto',
           visualDensity: VisualDensity.adaptivePlatformDensity),
-      home: MainPage(),
+      home: const MainPage(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
+
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -102,10 +106,10 @@ class _MainPageState extends State<MainPage> {
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
     AndroidInitializationSettings initializationSettingsAndroid =
-        new AndroidInitializationSettings('@mipmap/ic_launcher');
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
     IOSInitializationSettings initializationSettingsIOS =
-        new IOSInitializationSettings(requestBadgePermission: true);
-    InitializationSettings initializationSettings = new InitializationSettings(
+        const IOSInitializationSettings(requestBadgePermission: true);
+    InitializationSettings initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
@@ -174,8 +178,8 @@ class _MainPageState extends State<MainPage> {
   }
 
   startTime() async {
-    var duration = new Duration(seconds: 1);
-    return new Timer(duration, route);
+    var duration = const Duration(seconds: 1);
+    return Timer(duration, route);
   }
 
   route() {
@@ -203,7 +207,7 @@ class _MainPageState extends State<MainPage> {
           )
         ],
       ),
-      decoration: BoxDecoration(color: colorBackground),
+      decoration: const BoxDecoration(color: colorBackground),
     ));
   }
 }
@@ -215,12 +219,12 @@ class Dialogs {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return new WillPopScope(
+          return WillPopScope(
               onWillPop: () async => false,
               child: SimpleDialog(
                   key: key,
                   backgroundColor: Colors.transparent,
-                  children: <Widget>[
+                  children: const <Widget>[
                     Center(
                       child: CircularProgressIndicator(
                         strokeWidth: 5.0,

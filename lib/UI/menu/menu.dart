@@ -180,19 +180,10 @@ class _MenuState extends State<Menu> {
                                       padding: EdgeInsets.only(bottom: 03.5),
                                       height: 55,
                                       child: TextField(
-                                        onEditingComplete: () {
-                                          setState(() {
-                                            filterCars(
-                                                _searchFieldController.text);
-                                          });
-                                        },
-                                        onSubmitted: (value) => setState(() {
-                                          filterCars(
-                                              _searchFieldController.text);
-                                        }),
                                         onChanged: (value) => setState(() {
                                           filterCars(
                                               _searchFieldController.text);
+                                          getMenuItems();
                                         }),
                                         controller: _searchFieldController,
                                         textAlignVertical:

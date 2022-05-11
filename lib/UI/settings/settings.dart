@@ -405,7 +405,7 @@ class _SettingsState extends State<Settings> {
                                     fontSize: 18,
                                     fontWeight: FontWeight.w400),
                                 decoration: const InputDecoration(
-                                  contentPadding: const EdgeInsets.all(0),
+                                  contentPadding: EdgeInsets.all(0),
                                   isDense: true,
                                   hintText: "Enter IP Address",
                                   hintStyle: TextStyle(

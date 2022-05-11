@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, import_of_legacy_library_into_null_safe
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -24,7 +26,7 @@ class Utils {
     String p =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
-    RegExp regExp = new RegExp(p);
+    RegExp regExp = RegExp(p);
 
     return regExp.hasMatch(email);
   }
@@ -47,7 +49,7 @@ class Utils {
     //       min: 0.0, max: 109.0, period: Duration(milliseconds: 2500));
     // });
 
-    AlertDialog alert = AlertDialog(
+    AlertDialog alert = const AlertDialog(
         backgroundColor: Colors.transparent,
         elevation: 0,
         // content: GifImage(
