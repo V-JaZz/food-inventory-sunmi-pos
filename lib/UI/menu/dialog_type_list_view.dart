@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_inventory/UI/menu/dialog_delete_type.dart';
 import 'package:food_inventory/UI/menu/model/topping_group_list_response_model.dart';

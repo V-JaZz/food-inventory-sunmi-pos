@@ -28,11 +28,15 @@ import '../../constant/validation_util.dart';
 import '../OrderHistory/orderHistory.dart';
 import '../itemsTimeSet/itemsTimeSet.dart';
 import '../order/model/order_list_response_model.dart';
-import 'DashBoard Data/Allergy/add_new_allergy.dart';
-import 'DashBoard Data/Category/add_new_category.dart';
-import 'DashBoard Data/Items/dialogAddNewItem.dart';
-import 'DashBoard Data/Option/add_option.dart';
-import 'DashBoard Data/Toppings/add_topping.dart';
+import 'forms/Allergy/add_new_allergy.dart';
+import 'forms/AllergyGroup/add_allergyGroup.dart';
+import 'forms/Category/add_new_category.dart';
+import 'forms/Items/dialogAddNewItem.dart';
+import 'forms/Option/add_option.dart';
+import 'forms/Toppings/add_topping.dart';
+import 'forms/Varient/add_new_varient.dart';
+import 'forms/VarientGroup/add_varientGroup.dart';
+import 'forms/toppingGroup/add_toppingGroup.dart';
 import 'logout_repository.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -919,7 +923,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                             onTap: () {
                               setState(() {
                                 Navigator.of(context).pop();
-                                // dialogAddNewType(TYPE_GROUP_TOPPINGS);
+                                dialogAddNewToppingGroup(TYPE_GROUP_TOPPINGS);
                               });
                             },
                             child: Card(
@@ -973,7 +977,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                             onTap: () {
                               setState(() {
                                 Navigator.of(context).pop();
-                                // addAllergyMenuGroup(TYPE_ALLERGY_GROUP);
+                                dialogAddNewAllergyGroup(TYPE_ALLERGY_GROUP);
                               });
                             },
                             child: Card(
@@ -1004,9 +1008,8 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                             onTap: () {
                               setState(() {
                                 Navigator.of(context).pop();
-                                // dialogAddNewType(TYPE_VERIANT);
+                                dialogAddNewVarient(TYPE_VERIANT);
                               });
-                              // addAllergyMenuGroup(TYPE_ALLERGY_GROUP);
                             },
                             child: Card(
                               color: colorButtonBlue,
@@ -1028,7 +1031,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                             onTap: () {
                               setState(() {
                                 Navigator.of(context).pop();
-                                // dialogAddNewType(TYPE_VARIANT_GROUP);
+                                dialogAddNewVarientGroup(TYPE_VARIANT_GROUP);
                               });
                             },
                             child: Card(
@@ -1248,6 +1251,54 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
       barrierDismissible: false,
       builder: (dialogContext) {
         return AddToppings(
+          onDialogClose: () {},
+        );
+      },
+    );
+  }
+
+  void dialogAddNewToppingGroup(String type) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return AddToppingGroups(
+          onDialogClose: () {},
+        );
+      },
+    );
+  }
+
+  void dialogAddNewAllergyGroup(String type) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return AddAllergyGroups(
+          onDialogClose: () {},
+        );
+      },
+    );
+  }
+
+  void dialogAddNewVarient(String type) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return AddNewVarient(
+          onDialogClose: () {},
+        );
+      },
+    );
+  }
+
+  void dialogAddNewVarientGroup(String type) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return AddVarientGroups(
           onDialogClose: () {},
         );
       },
