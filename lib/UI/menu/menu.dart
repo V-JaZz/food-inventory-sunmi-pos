@@ -1,11 +1,13 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_inventory/UI/dashboard/forms/Items/model/menu_items.dart';
 import 'package:food_inventory/UI/menu/dialog_delete_type.dart';
 import 'package:food_inventory/UI/menu/dialog_type_list_view.dart';
-import 'package:food_inventory/UI/menu/model/menu_items.dart';
 import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/image.dart';
@@ -126,24 +128,24 @@ class _MenuState extends State<Menu> {
     filterCars(_searchFieldController.text);
 
     return Container(
-      decoration: BoxDecoration(color: colorBackground),
+      decoration: const BoxDecoration(color: colorBackground),
       child: Column(
         children: [
           Table(
               columnWidths: {
-                0: FlexColumnWidth(7.1),
-                1: FlexColumnWidth(5.0),
-                2: FlexColumnWidth(5.0),
+                0: const FlexColumnWidth(7.1),
+                1: const FlexColumnWidth(5.0),
+                2: const FlexColumnWidth(5.0),
               },
               border: TableBorder.all(
                   color: colorYellow,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(15),
                       topRight: Radius.circular(15))),
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
               children: [
                 TableRow(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         color: colorYellow,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(15),
@@ -151,7 +153,7 @@ class _MenuState extends State<Menu> {
                     children: [
                       search
                           ? Card(
-                              margin: EdgeInsets.all(3),
+                              margin: const EdgeInsets.all(3),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5)),
                               child: Row(
@@ -169,15 +171,15 @@ class _MenuState extends State<Menu> {
                                         getMenuItems();
                                       });
                                     },
-                                    child: Icon(Icons.arrow_back,
+                                    child: const Icon(Icons.arrow_back,
                                         size: 28, color: colorBlack),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 05,
                                   ),
                                   Flexible(
                                     child: Container(
-                                      padding: EdgeInsets.only(bottom: 03.5),
+                                      padding: const EdgeInsets.only(bottom: 03.5),
                                       height: 55,
                                       child: TextField(
                                         onChanged: (value) => setState(() {
@@ -188,11 +190,11 @@ class _MenuState extends State<Menu> {
                                         controller: _searchFieldController,
                                         textAlignVertical:
                                             TextAlignVertical.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w600,
                                             color: colorTextBlack),
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           fillColor: Colors.white,
                                           border: InputBorder.none,
                                         ),
@@ -205,13 +207,13 @@ class _MenuState extends State<Menu> {
                               ),
                             )
                           : Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 30, vertical: 13),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Item Name",
                                     style: TextStyle(
                                         color: colorTextWhite,
@@ -226,7 +228,7 @@ class _MenuState extends State<Menu> {
                                         print('object one');
                                       });
                                     },
-                                    child: Icon(Icons.search,
+                                    child: const Icon(Icons.search,
                                         size: 18, color: colorTextWhite),
                                   )
                                 ],
@@ -234,13 +236,13 @@ class _MenuState extends State<Menu> {
                             ),
                       filter
                           ? Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 13),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Categories",
                                     style: TextStyle(
                                         color: colorTextWhite,
@@ -248,7 +250,7 @@ class _MenuState extends State<Menu> {
                                         fontWeight: FontWeight.w600),
                                   ),
                                   GestureDetector(
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.arrow_upward,
                                       size: 18,
                                       color: Colors.white,
@@ -266,13 +268,13 @@ class _MenuState extends State<Menu> {
                               ),
                             )
                           : Container(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 13),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Categories",
                                     style: TextStyle(
                                         color: colorTextWhite,
@@ -280,7 +282,7 @@ class _MenuState extends State<Menu> {
                                         fontWeight: FontWeight.w600),
                                   ),
                                   GestureDetector(
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.arrow_downward,
                                       size: 18,
                                       color: Colors.white,
@@ -299,9 +301,9 @@ class _MenuState extends State<Menu> {
                             ),
                       Container(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 13),
+                            const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
                         alignment: Alignment.center,
-                        child: Text(
+                        child: const Text(
                           "Price",
                           style: TextStyle(
                               color: colorTextWhite,
@@ -313,7 +315,7 @@ class _MenuState extends State<Menu> {
               ]),
           Expanded(
             child: isDataLoad
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(
                       strokeWidth: 5.0,
                       color: colorYellow,
@@ -321,7 +323,7 @@ class _MenuState extends State<Menu> {
                   )
                 : Container(
                     decoration:
-                        BoxDecoration(color: colorTextWhite, boxShadow: [
+                        const BoxDecoration(color: colorTextWhite, boxShadow: [
                       BoxShadow(
                         color: colorYellow,
                         offset: Offset(0.0, 1.0),
@@ -330,7 +332,7 @@ class _MenuState extends State<Menu> {
                     ]),
                     child: ListView.builder(
                         primary: false,
-                        physics: BouncingScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemCount: data.length,
                         itemBuilder: (context, index) {
@@ -353,7 +355,7 @@ class _MenuState extends State<Menu> {
                                       endActionPane: ActionPane(
                                         motion: const ScrollMotion(),
                                         children: [
-                                          Spacer(),
+                                          const Spacer(),
                                           Container(
                                             width: MediaQuery.of(context)
                                                     .size
@@ -408,9 +410,9 @@ class _MenuState extends State<Menu> {
                                           key: ValueKey(
                                               data[index].items![i].name),
                                           columnWidths: {
-                                            0: FlexColumnWidth(7.1),
-                                            1: FlexColumnWidth(5.0),
-                                            2: FlexColumnWidth(5.0),
+                                            0: const FlexColumnWidth(7.1),
+                                            1: const FlexColumnWidth(5.0),
+                                            2: const FlexColumnWidth(5.0),
                                           },
                                           defaultVerticalAlignment:
                                               TableCellVerticalAlignment.middle,
@@ -418,16 +420,16 @@ class _MenuState extends State<Menu> {
                                             TableRow(children: [
                                               Container(
                                                 color: i % 2 == 0
-                                                    ? Color.fromRGBO(
+                                                    ? const Color.fromRGBO(
                                                         228, 225, 246, 1)
                                                     : colorTextWhite,
-                                                padding: EdgeInsets.symmetric(
+                                                padding: const EdgeInsets.symmetric(
                                                     horizontal: 10,
                                                     vertical: 15),
                                                 child: Text(
                                                     data[index].items![i].name!,
                                                     maxLines: 1,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         color: colorTextBlack,
                                                         fontSize: 12,
                                                         fontWeight:
@@ -435,10 +437,10 @@ class _MenuState extends State<Menu> {
                                               ),
                                               Container(
                                                 color: i % 2 == 0
-                                                    ? Color.fromRGBO(
+                                                    ? const Color.fromRGBO(
                                                         228, 225, 246, 1)
                                                     : colorTextWhite,
-                                                padding: EdgeInsets.symmetric(
+                                                padding: const EdgeInsets.symmetric(
                                                     horizontal: 10,
                                                     vertical: 15),
                                                 child: Text(
@@ -447,7 +449,7 @@ class _MenuState extends State<Menu> {
                                                         .category!
                                                         .name!,
                                                     maxLines: 1,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         color: colorTextBlack,
                                                         fontSize: 12,
                                                         fontWeight:
@@ -455,10 +457,10 @@ class _MenuState extends State<Menu> {
                                               ),
                                               Container(
                                                 color: i % 2 == 0
-                                                    ? Color.fromRGBO(
+                                                    ? const Color.fromRGBO(
                                                         228, 225, 246, 1)
                                                     : colorTextWhite,
-                                                padding: EdgeInsets.symmetric(
+                                                padding: const EdgeInsets.symmetric(
                                                     horizontal: 10,
                                                     vertical: 15),
                                                 alignment: Alignment.center,
@@ -471,7 +473,7 @@ class _MenuState extends State<Menu> {
                                                             .items![i]
                                                             .price!),
                                                     maxLines: 1,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         color:
                                                             colorButtonYellow,
                                                         fontSize: 12,

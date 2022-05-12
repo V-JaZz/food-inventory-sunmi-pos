@@ -1,7 +1,6 @@
-// ignore_for_file: unnecessary_import, avoid_print
+// ignore_for_file: avoid_print, prefer_typing_uninitialized_variables, prefer_adjacent_string_concatenation, unnecessary_string_interpolations, await_only_futures, unnecessary_brace_in_string_interps, prefer_const_constructors, dead_code
 
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -113,7 +112,7 @@ class ApiBaseHelper {
   Future<dynamic> get(String url, String token) async {
     print('Api Post, url $url');
     print('Api PUT, Token $token');
-    http.Response response;
+    var response;
     try {
       Map<String, String> header;
       if (token.isEmpty) {
@@ -141,7 +140,7 @@ class ApiBaseHelper {
   Future<dynamic> getwith(String url, String token, String restaurantid) async {
     print('Api Post, url $url');
     print('Api PUT, Token $token');
-    http.Response response;
+    var response;
     try {
       Map<String, String> header;
       if (token.isEmpty) {
@@ -153,8 +152,8 @@ class ApiBaseHelper {
         header = {
           'Content-type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': "Bearer " + token,
-          'restaurant': restaurantid
+          'Authorization': "Bearer " + '$token',
+          'restaurant': '$restaurantid'
         };
       }
 
@@ -171,7 +170,7 @@ class ApiBaseHelper {
     print('Api Post, url $url');
     print('Api POST, Token $token');
     print('Api Post, body : $body');
-    http.Response response;
+    var response;
     try {
       Map<String, String> header;
       if (token.isEmpty) {
@@ -202,7 +201,7 @@ class ApiBaseHelper {
     print('Api Post, url $url');
     print('Api POST, Token $token');
     print('Api Post, body : $body');
-    http.Response response;
+    var response;
     try {
       Map<String, String> header;
       if (token.isEmpty) {
@@ -215,7 +214,7 @@ class ApiBaseHelper {
           'Content-type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Bearer $token',
-          'restaurantId': restorantid
+          'restaurantId': '$restorantid'
         };
       }
 
@@ -234,7 +233,7 @@ class ApiBaseHelper {
     print('Api PUT, url $url');
     print('Api PUT, Token $token');
     print('Api Post, body : $body');
-    http.Response response;
+    var response;
     try {
       Map<String, String> header;
       if (token.isEmpty) {
@@ -247,7 +246,7 @@ class ApiBaseHelper {
           'Content-type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Bearer $token',
-          'restaurantId': restorantid
+          'restaurantId': '$restorantid'
         };
       }
 
@@ -265,7 +264,7 @@ class ApiBaseHelper {
     print('Api PUT, url $url');
     print('Api PUT, Token $token');
     print('Api Post, body : $body');
-    http.Response response;
+    var response;
     try {
       Map<String, String> header;
       if (token.isEmpty) {
@@ -298,7 +297,7 @@ class ApiBaseHelper {
     print('Api PUT, FilePath ${pickedImage.path.split(".").last}');
     print('Api PUT, Token $token');
     print('Api PUT, ImageType $imageType');
-    String respStr;
+    var respStr;
     try {
       var request = http.MultipartRequest(
           "PUT",
@@ -329,7 +328,7 @@ class ApiBaseHelper {
     print('Api PUT, url $url');
     print('Api PUT, Token $token');
     print('Api PUT, ImageType $name');
-    http.Response respStr;
+    var respStr;
     try {
       var request = http.MultipartRequest("POST", Uri.parse(baseURL + url));
       request.headers['Authorization'] = 'Bearer $token';
@@ -341,7 +340,7 @@ class ApiBaseHelper {
       //     'file', pickedImage.path,
       //     filename: fileName, contentType: new MediaType('image', fileType)));
       var response = await request.send();
-      respStr = await http.Response.fromStream(response);
+      respStr = await await http.Response.fromStream(response);
     } on SocketException {
       print('No net');
       // print(respStr);
@@ -362,10 +361,10 @@ class ApiBaseHelper {
       String discount,
       String token) async {
     print('Api PUT, url $url');
-    print('Api PUT, FilePath $pickedImage');
+    print('Api PUT, FilePath ${pickedImage}');
     print('Api PUT, Token $token');
     print('Api PUT, ImageType $name');
-    http.Response respStr;
+    var respStr;
     try {
       var request = http.MultipartRequest("POST", Uri.parse(baseURL + url));
       request.headers['Authorization'] = 'Bearer $token';
@@ -377,7 +376,7 @@ class ApiBaseHelper {
           'file', pickedImage.path,
           filename: fileName, contentType: MediaType('image', fileType)));
       var response = await request.send();
-      respStr = await http.Response.fromStream(response);
+      respStr = await await http.Response.fromStream(response);
     } on SocketException {
       print('No net');
       // print(respStr);
@@ -388,31 +387,33 @@ class ApiBaseHelper {
   }
 
   Future<dynamic> postMultiPartItems(
-    String url,
-    File pickedImage,
-    String fileName,
-    String fileType,
-    String name,
-    String category,
-    String description,
-    String discount,
-    String price,
-    variants,
-    options,
-    allergyGroup,
-    String token,
-  ) async {
+      String url,
+      File pickedImage,
+      String fileName,
+      String fileType,
+      String name,
+      String category,
+      String description,
+      String discount,
+      String price,
+      variants,
+      options,
+      allergyGroup,
+      String token,
+      String menuType) async {
     print('Api PUT, url $url');
-    print('Api PUT, FilePath $pickedImage');
+    print('Api PUT, FilePath ${pickedImage}');
     print('Api PUT, Token $token');
     print('Api PUT, ImageType}' + variants.toString());
 
-    http.Response respStr;
+    var respStr;
     try {
       var request = http.MultipartRequest("POST", Uri.parse(baseURL + url));
       request.headers['Authorization'] = 'Bearer $token';
       request.headers['Content-Type'] = 'multipart/form-data';
       request.fields['name'] = name;
+      request.fields['menuType'] = menuType;
+
       request.fields['category'] = category;
       request.fields['description'] = description;
       request.fields['discount'] = discount;
@@ -424,7 +425,7 @@ class ApiBaseHelper {
           'file', pickedImage.path,
           filename: fileName, contentType: MediaType('image', fileType)));
       var response = await request.send();
-      respStr = await http.Response.fromStream(response);
+      respStr = await await http.Response.fromStream(response);
     } on SocketException {
       print('No net');
       // print(respStr);
@@ -436,7 +437,7 @@ class ApiBaseHelper {
 
   Future<dynamic> postMultiPartItemswithoutImage(
       String url,
-      // String fileName,
+      String menuType,
       // String fileType,
       String name,
       String category,
@@ -452,12 +453,14 @@ class ApiBaseHelper {
     print('Api PUT, ImageType $name');
     print('Api PUT, varient $price');
 
-    http.Response respStr;
+    var respStr;
     try {
       var request = http.MultipartRequest("POST", Uri.parse(baseURL + url));
       request.headers['Authorization'] = 'Bearer $token';
       request.headers['Content-Type'] = 'multipart/form-data';
       request.fields['name'] = name;
+      request.fields['menuType'] = menuType;
+
       request.fields['category'] = category;
       request.fields['description'] = description;
       request.fields['discount'] = discount;
@@ -470,7 +473,7 @@ class ApiBaseHelper {
       //     'file', pickedImage.path,
       //     filename: fileName, contentType: new MediaType('image', fileType)));
       var response = await request.send();
-      respStr = await http.Response.fromStream(response);
+      respStr = await await http.Response.fromStream(response);
     } on SocketException {
       print('No net');
       // print(respStr);
@@ -491,10 +494,10 @@ class ApiBaseHelper {
       String discount,
       String token) async {
     print('Api PUT, url $url');
-    print('Api PUT, FilePath $pickedImage');
+    print('Api PUT, FilePath ${pickedImage}');
     print('Api PUT, Token $token');
     print('Api PUT, ImageType $name');
-    http.Response respStr;
+    var respStr;
     try {
       var request = http.MultipartRequest("PUT", Uri.parse(baseURL + url));
       request.headers['Authorization'] = 'Bearer $token';
@@ -507,7 +510,7 @@ class ApiBaseHelper {
           'file', pickedImage.path,
           filename: fileName, contentType: MediaType('image', fileType)));
       var response = await request.send();
-      respStr = await http.Response.fromStream(response);
+      respStr = await await http.Response.fromStream(response);
     } on SocketException {
       print('No net');
       // print(respStr);
@@ -524,7 +527,7 @@ class ApiBaseHelper {
 
     print('Api PUT, Token $token');
     print('Api PUT, ImageType $name');
-    http.Response respStr;
+    var respStr;
     try {
       var request = http.MultipartRequest("PUT", Uri.parse(baseURL + url));
       request.headers['Authorization'] = 'Bearer $token';
@@ -535,7 +538,7 @@ class ApiBaseHelper {
       request.fields["imageType"] = "category";
 
       var response = await request.send();
-      respStr = await http.Response.fromStream(response);
+      respStr = await await http.Response.fromStream(response);
     } on SocketException {
       print('No net');
       // print(respStr);
@@ -560,18 +563,21 @@ class ApiBaseHelper {
       options,
       String allergyGroup,
       String token,
-      restorantid) async {
+      restorantid,
+      String menuType) async {
     print('Api PUT, url $url');
-    print('Api PUT, FilePath $pickedImage');
+    print('Api PUT, FilePath ${pickedImage}');
     print('Api PUT, Token $token');
     print('Api PUT, ImageType $name');
-    http.Response respStr;
+    var respStr;
     try {
       var request = http.MultipartRequest("PUT", Uri.parse(baseURL + url));
       request.headers['Authorization'] = 'Bearer $token';
       request.headers['Content-Type'] = 'multipart/form-data';
       request.headers['restaurantId'] = '$restorantid';
       request.fields['name'] = name;
+      request.fields['menuType'] = menuType;
+
       request.fields['description'] = description;
       request.fields['discount'] = discount;
       request.fields['category'] = category;
@@ -584,7 +590,7 @@ class ApiBaseHelper {
           'file', pickedImage.path,
           filename: fileName, contentType: MediaType('image', fileType)));
       var response = await request.send();
-      respStr = await http.Response.fromStream(response);
+      respStr = await await http.Response.fromStream(response);
     } on SocketException {
       print('No net');
       // print(respStr);
@@ -606,18 +612,21 @@ class ApiBaseHelper {
       options,
       String allergyGroup,
       String token,
-      restorantid) async {
+      restorantid,
+      String menuType) async {
     print('Api PUT, url $url');
 
     print('Api PUT, Token $token');
     print('Api PUT, ImageType $name');
-    http.Response respStr;
+    var respStr;
     try {
       var request = http.MultipartRequest("PUT", Uri.parse(baseURL + url));
       request.headers['Authorization'] = 'Bearer $token';
       request.headers['Content-Type'] = 'multipart/form-data';
       request.headers['restaurantId'] = '$restorantid';
       request.fields['name'] = name;
+      request.fields['menuType'] = menuType;
+
       request.fields['description'] = description;
       request.fields['discount'] = discount;
       request.fields['category'] = category;
@@ -628,7 +637,7 @@ class ApiBaseHelper {
       request.fields["imageType"] = "item";
 
       var response = await request.send();
-      respStr = await http.Response.fromStream(response);
+      respStr = await await http.Response.fromStream(response);
     } on SocketException {
       print('No net');
       // print(respStr);
@@ -641,7 +650,7 @@ class ApiBaseHelper {
   Future<dynamic> delete(String url, String token) async {
     print('Api delete, url $url');
     print('Api delete, Token $token');
-    http.Response response;
+    var response;
     try {
       Map<String, String> header;
       if (token.isEmpty) {
@@ -666,7 +675,6 @@ class ApiBaseHelper {
     return response;
   }
 
-  // ignore: unused_element
   dynamic _returnResponse(http.Response response) {
     print(response.statusCode.toString());
     print(response.body.toString());
@@ -679,12 +687,16 @@ class ApiBaseHelper {
         return responseJson;
       case 400:
         return responseJson;
+        throw BadRequestException(response.body.toString());
       case 401:
       case 403:
         return responseJson;
+        throw UnauthorisedException(response.body.toString());
       case 500:
       default:
         return responseJson;
+        throw FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
     }
   }
 
@@ -705,7 +717,7 @@ class ApiBaseHelper {
         throw UnauthorisedException(response.body.toString());
       case 500:
       default:
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("Something wants wrong!"),
         ));
         throw FetchDataException(

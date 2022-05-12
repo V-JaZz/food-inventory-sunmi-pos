@@ -9,14 +9,14 @@ class VarientGroupListModel {
     if (json['data'] != null) {
       data = <VarientGroupList>[];
       json['data'].forEach((v) {
-        data!.add(new VarientGroupList.fromJson(v));
+        data!.add(VarientGroupList.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -50,7 +50,7 @@ class VarientGroupList {
     if (json['variants'] != null) {
       variants = <VariantsGroup>[];
       json['variants'].forEach((v) {
-        variants!.add(new VariantsGroup.fromJson(v));
+        variants!.add(VariantsGroup.fromJson(v));
       });
     }
     createdOn = json['createdOn'];
@@ -64,18 +64,18 @@ class VarientGroupList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.variants != null) {
-      data['variants'] = this.variants!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (variants != null) {
+      data['variants'] = variants!.map((v) => v.toJson()).toList();
     }
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['restaurantId'] = this.restaurantId;
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['variantIds'] = this.variantIds;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['restaurantId'] = restaurantId;
+    data['_id'] = sId;
+    data['name'] = name;
+    data['variantIds'] = variantIds;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }
@@ -118,17 +118,17 @@ class VariantsGroup {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['variantGroup'] = this.variantGroup;
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['restaurantId'] = this.restaurantId;
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['price'] = this.price;
-    data['__v'] = this.iV;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['variantGroup'] = variantGroup;
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['restaurantId'] = restaurantId;
+    data['_id'] = sId;
+    data['name'] = name;
+    data['price'] = price;
+    data['__v'] = iV;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }

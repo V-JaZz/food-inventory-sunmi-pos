@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, unnecessary_const, unused_element
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -24,13 +26,13 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  TextEditingController wifiController = new TextEditingController(text: "");
+  TextEditingController wifiController = TextEditingController(text: "");
   TextEditingController wifiPortController =
-      new TextEditingController(text: "");
+      TextEditingController(text: "");
   TextEditingController deliveryController =
-      new TextEditingController(text: "");
-  TextEditingController minimumController = new TextEditingController(text: "");
-  TextEditingController webSiteUrl = new TextEditingController(text: "");
+      TextEditingController(text: "");
+  TextEditingController minimumController = TextEditingController(text: "");
+  TextEditingController webSiteUrl = TextEditingController(text: "");
 
   late SharedPreferences prefs;
   bool isDataLoad = false;
@@ -74,7 +76,7 @@ class _SettingsState extends State<Settings> {
 
     getProfileData();
     clearImageCache();
-    _restaurantDetailsRepository = new RestaurantDetailsRepository(context);
+    _restaurantDetailsRepository = RestaurantDetailsRepository(context);
   }
 
   sharedPrefs() async {
@@ -123,15 +125,15 @@ class _SettingsState extends State<Settings> {
             StorageUtil.setData(
                 StorageUtil.keyLoginData, json.encode(model.data));
             setState(() {
-              wifiController = new TextEditingController(
+              wifiController = TextEditingController(
                   text: defaultValue(model.data!.wifiPrinterIP, ""));
-              wifiPortController = new TextEditingController(
+              wifiPortController = TextEditingController(
                   text: defaultValue(model.data!.wifiPrinterPort, ""));
-              deliveryController = new TextEditingController(
+              deliveryController = TextEditingController(
                   text: defaultValue(model.data!.deliveryRadius, ""));
-              minimumController = new TextEditingController(
+              minimumController = TextEditingController(
                   text: defaultValue(model.data!.minimumOrder, ""));
-              webSiteUrl = new TextEditingController(
+              webSiteUrl = TextEditingController(
                   text: defaultValue(model.data!.websiteURL, ""));
               ApiBaseHelper.autoAccept = model.data!.autoAccept!;
               ApiBaseHelper.autoPrint = model.data!.autoPrint!;
@@ -249,11 +251,11 @@ class _SettingsState extends State<Settings> {
                     children: [
                       GestureDetector(
                         child: Container(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               color: colorTextWhite,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
+                                  const BorderRadius.all(const Radius.circular(5)),
                               border: Border.all(
                                   color: colorDividerGreen, width: 1)),
                           child: Column(
@@ -265,7 +267,7 @@ class _SettingsState extends State<Settings> {
                                     MediaQuery.of(context).size.height * 0.15,
                                 child: cropperFile == null
                                     ? resId.isEmpty
-                                        ? SizedBox()
+                                        ? const SizedBox()
                                         : CachedNetworkImage(
                                             imageUrl:
                                                 getImageURL(IMAGE_COVER, resId),
@@ -275,8 +277,8 @@ class _SettingsState extends State<Settings> {
                                                 decoration: BoxDecoration(
                                                   shape: BoxShape.rectangle,
                                                   borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(5)),
+                                                      const BorderRadius.all(
+                                                          const Radius.circular(5)),
                                                   image: DecorationImage(
                                                       image: imageProvider,
                                                       fit: BoxFit.cover),
@@ -296,20 +298,20 @@ class _SettingsState extends State<Settings> {
                                     : Container(
                                         decoration: BoxDecoration(
                                           shape: BoxShape.rectangle,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10)),
+                                          borderRadius: const BorderRadius.all(
+                                              const Radius.circular(10)),
                                           image: DecorationImage(
                                               image: FileImage(cropperFile!),
                                               fit: BoxFit.cover),
                                         ),
                                       ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 17,
                               ),
-                              Text(
+                              const Text(
                                 "Select your Cover Image",
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: colorTextBlack,
                                     fontSize: 16,
                                     fontWeight: FontWeight.normal),
@@ -320,7 +322,7 @@ class _SettingsState extends State<Settings> {
                         onTap: () {},
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 30),
+                        margin: const EdgeInsets.only(top: 30),
                         child: Row(
                           children: [
                             Expanded(
@@ -334,9 +336,9 @@ class _SettingsState extends State<Settings> {
                                   decoration: BoxDecoration(
                                       color: colorButtonYellow,
                                       borderRadius: BorderRadius.circular(30)),
-                                  child: Text(
+                                  child: const Text(
                                     "Upload",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: colorTextWhite,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 18),
@@ -358,9 +360,9 @@ class _SettingsState extends State<Settings> {
                                   decoration: BoxDecoration(
                                       color: colorGrey,
                                       borderRadius: BorderRadius.circular(30)),
-                                  child: Text(
+                                  child: const Text(
                                     "Reset",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: colorTextWhite,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 18),
@@ -375,7 +377,7 @@ class _SettingsState extends State<Settings> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       const Text(
                         "Add WiFi Printer",
                         style: TextStyle(

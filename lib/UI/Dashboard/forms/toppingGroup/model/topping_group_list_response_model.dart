@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_new
+
 class ToppingsGroupListResponseModel {
   bool? success;
   List<ToppingsGroupListData>? data;
@@ -16,7 +18,7 @@ class ToppingsGroupListResponseModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -61,15 +63,15 @@ class ToppingsGroupListData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.toppings != null) {
-      data['toppings'] = this.toppings!.map((v) => v.toJson()).toList();
+    if (toppings != null) {
+      data['toppings'] = toppings!.map((v) => v.toJson()).toList();
     }
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['price'] = this.price;
-    data['toppingIds'] = this.toppingIds;
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['_id'] = sId;
+    data['name'] = name;
+    data['price'] = price;
+    data['toppingIds'] = toppingIds;
     return data;
   }
 }
@@ -101,12 +103,12 @@ class ToppingsData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['price'] = this.price;
-    data['__v'] = this.iV;
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['_id'] = sId;
+    data['name'] = name;
+    data['price'] = price;
+    data['__v'] = iV;
     return data;
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_const
+
 import 'dart:convert';
 import 'dart:ui';
 
@@ -25,7 +27,7 @@ class OfferDiscount extends StatefulWidget {
 class _OfferDiscountState extends State<OfferDiscount> {
   late OfferRepository _offerRepository;
 
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
   late TextEditingController _offerController;
   late TextEditingController _collectionController;
 
@@ -35,8 +37,8 @@ class _OfferDiscountState extends State<OfferDiscount> {
     super.initState();
     _offerRepository = OfferRepository(context);
     getProfileData();
-    _offerController = new TextEditingController(text: "");
-    _collectionController = new TextEditingController(text: "");
+    _offerController = TextEditingController(text: "");
+    _collectionController = TextEditingController(text: "");
   }
 
   getProfileData() async {
@@ -54,10 +56,10 @@ class _OfferDiscountState extends State<OfferDiscount> {
                 StorageUtil.keyLoginData, json.encode(model.data));
 
             setState(() {
-              _offerController = new TextEditingController(
+              _offerController = TextEditingController(
                   text: defaultValue(
                       model.data!.deliveryDiscount.toString(), ""));
-              _collectionController = new TextEditingController(
+              _collectionController = TextEditingController(
                   text: defaultValue(
                       model.data!.collectionDiscount.toString(), ""));
             });
@@ -78,13 +80,13 @@ class _OfferDiscountState extends State<OfferDiscount> {
   Widget build(BuildContext context) {
     return Container(
       // color: colorBackgroundyellow,
-      padding: EdgeInsets.only(top: 10, right: 10),
+      padding: const EdgeInsets.only(top: 10, right: 10),
       child: ListView(
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             "Add Delivery Discount",
-            style: TextStyle(
+            style: const TextStyle(
               color: colorButtonBlue,
               fontWeight: FontWeight.w400,
               fontSize: 18,
@@ -95,21 +97,21 @@ class _OfferDiscountState extends State<OfferDiscount> {
               Container(
                 width: MediaQuery.of(context).size.width * 0.85,
                 height: MediaQuery.of(context).size.height * 0.056,
-                margin: EdgeInsets.symmetric(vertical: 20),
-                decoration: BoxDecoration(
+                margin: const EdgeInsets.symmetric(vertical: 20),
+                decoration: const BoxDecoration(
                   color: colorTextWhite,
                   // border: Border.all(color: colorButtonYellow, width: 1),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(const Radius.circular(10)),
                 ),
                 child: Row(
                   children: [
                     Container(
                       alignment: Alignment.center,
-                      padding: EdgeInsets.all(15),
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.all(15),
+                      decoration: const BoxDecoration(
                         color: colorButtonYellow,
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
+                            topLeft: const Radius.circular(10),
                             bottomLeft: Radius.circular(10)),
                       ),
                       child: SvgPicture.asset(
@@ -121,17 +123,17 @@ class _OfferDiscountState extends State<OfferDiscount> {
                     ),
                     Expanded(
                       child: Container(
-                          margin: EdgeInsets.only(left: 18),
+                          margin: const EdgeInsets.only(left: 18),
                           child: TextField(
                             maxLines: 1,
                             controller: _offerController,
                             textAlignVertical: TextAlignVertical.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,
                                 color: colorTextBlack),
                             cursorColor: colorTextBlack,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.all(0),
                                 isDense: true,
                                 hintText: "0.00",
@@ -144,15 +146,15 @@ class _OfferDiscountState extends State<OfferDiscount> {
                     ),
                     GestureDetector(
                       child: Container(
-                        padding: EdgeInsets.only(left: 15, right: 15),
+                        padding: const EdgeInsets.only(left: 15, right: 15),
                         alignment: Alignment.center,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: colorButtonBlue,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               topRight: Radius.circular(10),
                               bottomRight: Radius.circular(10)),
                         ),
-                        child: Text(
+                        child: const Text(
                           "Exclude",
                           style: TextStyle(
                               color: colorTextWhite,
@@ -169,7 +171,7 @@ class _OfferDiscountState extends State<OfferDiscount> {
               ),
             ],
           ),
-          Text(
+          const Text(
             "Add Collection Discount",
             style: TextStyle(
                 color: colorTextBlack,
@@ -181,22 +183,22 @@ class _OfferDiscountState extends State<OfferDiscount> {
               Container(
                 width: MediaQuery.of(context).size.width * 0.85,
                 height: MediaQuery.of(context).size.height * 0.056,
-                margin: EdgeInsets.symmetric(vertical: 20),
-                decoration: BoxDecoration(
+                margin: const EdgeInsets.symmetric(vertical: 20),
+                decoration: const BoxDecoration(
                   color: colorTextWhite,
                   // border: Border.all(color: colorButtonYellow, width: 1),
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
                 child: Row(
                   children: [
                     Container(
                       alignment: Alignment.center,
-                      padding: EdgeInsets.all(15),
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.all(15),
+                      decoration: const BoxDecoration(
                         color: colorButtonYellow,
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(10),
-                            bottomLeft: Radius.circular(10)),
+                            bottomLeft: const Radius.circular(10)),
                       ),
                       child: SvgPicture.asset(
                         icPercentage,
@@ -207,17 +209,17 @@ class _OfferDiscountState extends State<OfferDiscount> {
                     ),
                     Expanded(
                       child: Container(
-                          margin: EdgeInsets.only(left: 18),
+                          margin: const EdgeInsets.only(left: 18),
                           child: TextField(
                             maxLines: 1,
                             controller: _collectionController,
                             textAlignVertical: TextAlignVertical.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,
                                 color: colorTextBlack),
                             cursorColor: colorTextBlack,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 contentPadding: EdgeInsets.all(0),
                                 isDense: true,
                                 hintText: "0.00",
@@ -232,16 +234,16 @@ class _OfferDiscountState extends State<OfferDiscount> {
                       child: Container(
                         // width: MediaQuery.of(context).size.width * 0.7,
                         // height: MediaQuery.of(context).size.height * 0.0,
-                        padding: EdgeInsets.only(left: 15, right: 15),
+                        padding: const EdgeInsets.only(left: 15, right: 15),
                         alignment: Alignment.center,
                         // margin: EdgeInsets.only(left: 20),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: colorButtonBlue,
                           borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
+                              topRight: const Radius.circular(10),
                               bottomRight: Radius.circular(10)),
                         ),
-                        child: Text(
+                        child: const Text(
                           "Exclude",
                           style: TextStyle(
                               color: colorTextWhite,
@@ -265,15 +267,15 @@ class _OfferDiscountState extends State<OfferDiscount> {
                 Expanded(
                   child: GestureDetector(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       alignment: Alignment.center,
-                      margin: EdgeInsets.only(right: 15, left: 25),
+                      margin: const EdgeInsets.only(right: 15, left: 25),
                       decoration: BoxDecoration(
                           color: colorGreen,
                           borderRadius: BorderRadius.circular(5)),
-                      child: Text(
+                      child: const Text(
                         "Add",
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: colorTextWhite,
                             fontWeight: FontWeight.w500,
                             fontSize: 18),
@@ -292,13 +294,13 @@ class _OfferDiscountState extends State<OfferDiscount> {
                 Expanded(
                   child: GestureDetector(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       alignment: Alignment.center,
-                      margin: EdgeInsets.only(right: 25, left: 15),
+                      margin: const EdgeInsets.only(right: 25, left: 15),
                       decoration: BoxDecoration(
                           color: colorGrey,
                           borderRadius: BorderRadius.circular(5)),
-                      child: Text(
+                      child: const Text(
                         "Cancel",
                         style: TextStyle(
                             color: colorTextWhite,
@@ -308,8 +310,8 @@ class _OfferDiscountState extends State<OfferDiscount> {
                     ),
                     onTap: () {
                       setState(() {
-                        _offerController = new TextEditingController();
-                        _collectionController = new TextEditingController();
+                        _offerController = TextEditingController();
+                        _collectionController = TextEditingController();
                       });
                     },
                     behavior: HitTestBehavior.opaque,

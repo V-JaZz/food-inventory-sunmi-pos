@@ -10,22 +10,22 @@ class OrderListResponseModel {
     if (json['data'] != null) {
       data = <OrderDataModel>[];
       json['data'].forEach((v) {
-        data!.add(new OrderDataModel.fromJson(v));
+        data!.add(OrderDataModel.fromJson(v));
       });
     }
     summaryData = json['summaryData'] != null
-        ? new SummaryData.fromJson(json['summaryData'])
+        ? SummaryData.fromJson(json['summaryData'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    if (this.summaryData != null) {
-      data['summaryData'] = this.summaryData!.toJson();
+    if (summaryData != null) {
+      data['summaryData'] = summaryData!.toJson();
     }
     return data;
   }
@@ -88,7 +88,7 @@ class OrderDataModel {
     if (json['itemDetails'] != null) {
       itemDetails = <ItemDetails>[];
       json['itemDetails'].forEach((v) {
-        itemDetails!.add(new ItemDetails.fromJson(v));
+        itemDetails!.add(ItemDetails.fromJson(v));
       });
     }
     createdOn = json['createdOn'];
@@ -103,7 +103,7 @@ class OrderDataModel {
     deliveryDatetime = json['deliveryDatetime'];
     orderDateTime = json['orderDateTime'];
     userDetails = (json['userDetails'] != null
-        ? new UserDetails.fromJson(json['userDetails'])
+        ? UserDetails.fromJson(json['userDetails'])
         : null);
     orderNumber = json['orderNumber'];
     iV = json['__v'].toString();
@@ -119,35 +119,35 @@ class OrderDataModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    if (this.itemDetails != null) {
-      data['itemDetails'] = this.itemDetails!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    if (itemDetails != null) {
+      data['itemDetails'] = itemDetails!.map((v) => v.toJson()).toList();
     }
-    data['createdOn'] = this.createdOn;
-    data['orderStatus'] = this.orderStatus;
-    data['note'] = this.note;
-    data['isDeleted'] = this.isDeleted;
-    data['deliveryType'] = this.deliveryType;
-    data['paymentMode'] = this.paymentMode;
-    data['deliveryAddress'] = this.deliveryAddress;
-    data['advanceOrderDate'] = this.advanceOrderDate;
-    data['totalAmount'] = this.totalAmount;
-    data['deliveryDatetime'] = this.deliveryDatetime;
-    data['orderDateTime'] = this.orderDateTime;
-    if (this.userDetails != null) {
-      data['userDetails'] = this.userDetails!.toJson();
+    data['createdOn'] = createdOn;
+    data['orderStatus'] = orderStatus;
+    data['note'] = note;
+    data['isDeleted'] = isDeleted;
+    data['deliveryType'] = deliveryType;
+    data['paymentMode'] = paymentMode;
+    data['deliveryAddress'] = deliveryAddress;
+    data['advanceOrderDate'] = advanceOrderDate;
+    data['totalAmount'] = totalAmount;
+    data['deliveryDatetime'] = deliveryDatetime;
+    data['orderDateTime'] = orderDateTime;
+    if (userDetails != null) {
+      data['userDetails'] = userDetails!.toJson();
     }
-    data['orderNumber'] = this.orderNumber;
-    data['__v'] = this.iV;
-    data['subTotal'] = this.subTotal;
-    data['discount'] = this.discount;
-    data['deliveryCharge'] = this.deliveryCharge;
-    data['isPaid'] = this.isPaid;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['orderTime'] = this.orderTime;
-    data['tip'] = this.tip;
+    data['orderNumber'] = orderNumber;
+    data['__v'] = iV;
+    data['subTotal'] = subTotal;
+    data['discount'] = discount;
+    data['deliveryCharge'] = deliveryCharge;
+    data['isPaid'] = isPaid;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['orderTime'] = orderTime;
+    data['tip'] = tip;
     return data;
   }
 }
@@ -161,7 +161,7 @@ class AutoPrintOrderModel {
   AutoPrintOrderModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     if (json['data'] != null) {
-      data = new OrderDataModel.fromJson(json['data']);
+      data = OrderDataModel.fromJson(json['data']);
     }
   }
 }
@@ -208,7 +208,7 @@ class ItemDetails {
     if (json['toppings'] != null) {
       toppings = [];
       json['toppings'].forEach((v) {
-        toppings!.add(new Toppings.fromJson(v));
+        toppings!.add(Toppings.fromJson(v));
       });
     }
     quantity = json['quantity'].toString();
@@ -223,24 +223,24 @@ class ItemDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['option'] = this.option;
-    data['price'] = this.price;
-    data['note'] = this.note;
-    if (this.toppings != null) {
-      data['toppings'] = this.toppings!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['name'] = name;
+    data['option'] = option;
+    data['price'] = price;
+    data['note'] = note;
+    if (toppings != null) {
+      data['toppings'] = toppings!.map((v) => v.toJson()).toList();
     }
-    data['quantity'] = this.quantity;
-    data['catDiscount'] = this.catDiscount;
-    data['discount'] = this.discount;
-    data['excludeDiscount'] = this.excludeDiscount;
-    data['overallDiscount'] = this.overallDiscount;
-    data['variant'] = this.variant;
-    data['variantPrice'] = this.variantPrice.toString();
-    data['subVariant'] = this.subVariant;
-    data['subVariantPrice'] = this.subVariantPrice;
+    data['quantity'] = quantity;
+    data['catDiscount'] = catDiscount;
+    data['discount'] = discount;
+    data['excludeDiscount'] = excludeDiscount;
+    data['overallDiscount'] = overallDiscount;
+    data['variant'] = variant;
+    data['variantPrice'] = variantPrice.toString();
+    data['subVariant'] = subVariant;
+    data['subVariantPrice'] = subVariantPrice;
     return data;
   }
 }
@@ -280,16 +280,16 @@ class Toppings {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['name'] = this.name;
-    data['price'] = this.price;
-    data['__v'] = this.iV;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['toppingCount'] = this.toppingCount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['name'] = name;
+    data['price'] = price;
+    data['__v'] = iV;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['toppingCount'] = toppingCount;
     return data;
   }
 }
@@ -326,15 +326,15 @@ class UserDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['isDelete'] = this.isDelete;
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['email'] = this.email;
-    data['address'] = this.address;
-    data['city'] = this.city;
-    data['passcode'] = this.passcode;
-    data['contact'] = this.contact;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['isDelete'] = isDelete;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['email'] = email;
+    data['address'] = address;
+    data['city'] = city;
+    data['passcode'] = passcode;
+    data['contact'] = contact;
     return data;
   }
 }
@@ -371,15 +371,15 @@ class SummaryData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['acceptedOrder'] = this.acceptedOrder;
-    data['declinedOrder'] = this.declinedOrder;
-    data['pendingOrder'] = this.pendingOrder;
-    data['orderReceived'] = this.orderReceived;
-    data['onlineOrderAmount'] = this.onlineOrderAmount;
-    data['cashOrderAmount'] = this.cashOrderAmount;
-    data['totalOrderAmount'] = this.totalOrderAmount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['acceptedOrder'] = acceptedOrder;
+    data['declinedOrder'] = declinedOrder;
+    data['pendingOrder'] = pendingOrder;
+    data['orderReceived'] = orderReceived;
+    data['onlineOrderAmount'] = onlineOrderAmount;
+    data['cashOrderAmount'] = cashOrderAmount;
+    data['totalOrderAmount'] = totalOrderAmount;
     return data;
   }
 }

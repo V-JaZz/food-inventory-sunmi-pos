@@ -38,6 +38,7 @@ class LogoutRepository {
       try {
         final response = await _helper.post(ApiBaseHelper.logout,
             jsonEncode(<String, String>{'email': email}), "");
+        // ignore: avoid_print
         print("posting pramas");
         print(jsonEncode.toString());
         CommonModel model =

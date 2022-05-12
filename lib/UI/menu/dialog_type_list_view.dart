@@ -1,10 +1,17 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_inventory/UI/Dashboard/forms/Allergy/model/allergy_list_response.dart';
+import 'package:food_inventory/UI/Dashboard/forms/AllergyGroup/model/allergy_group_list_response.dart';
+import 'package:food_inventory/UI/Dashboard/forms/Varient/model/veriant_list.dart';
+import 'package:food_inventory/UI/dashboard/forms/Category/model/category_list_response_model.dart';
+import 'package:food_inventory/UI/dashboard/forms/Option/model/option_list_response_model.dart';
+import 'package:food_inventory/UI/dashboard/forms/Toppings/model/toppings_list_response_model.dart';
+import 'package:food_inventory/UI/dashboard/forms/VarientGroup/model/veriant_group_list_model.dart';
+import 'package:food_inventory/UI/dashboard/forms/toppingGroup/model/topping_group_list_response_model.dart';
 import 'package:food_inventory/UI/menu/dialog_delete_type.dart';
-import 'package:food_inventory/UI/menu/model/topping_group_list_response_model.dart';
-import 'package:food_inventory/UI/menu/model/toppings_list_response_model.dart';
-import 'package:food_inventory/UI/menu/model/veriant_group_list_model.dart';
 import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/image.dart';
@@ -13,11 +20,7 @@ import 'package:food_inventory/constant/validation_util.dart';
 import 'package:food_inventory/main.dart';
 import 'package:food_inventory/model/common_model.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
-import 'model/allergy_group_list_response.dart';
-import 'model/allergy_list_response.dart';
-import 'model/category_list_response_model.dart';
-import 'model/option_list_response_model.dart';
-import 'model/veriant_list.dart';
+
 
 class DialogTypeListView extends StatefulWidget {
   var type;
@@ -447,8 +450,8 @@ class _DialogTypeListViewState extends State<DialogTypeListView> {
         backgroundColor: Colors.transparent,
         child: Container(
           width: 560,
-          margin: EdgeInsets.only(top: 10, right: 20),
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+          margin: const EdgeInsets.only(top: 10, right: 20),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
           decoration: BoxDecoration(
               color: colorTextWhite, borderRadius: BorderRadius.circular(13)),
           child: ListView(
@@ -465,10 +468,10 @@ class _DialogTypeListViewState extends State<DialogTypeListView> {
                       width: 40,
                       height: 40,
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Text(
                       "My ${widget.type}",
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: colorTextBlack,
                           fontWeight: FontWeight.bold,
                           fontSize: 22),
@@ -476,11 +479,11 @@ class _DialogTypeListViewState extends State<DialogTypeListView> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               isDataLoad
-                  ? Center(
+                  ? const Center(
                       child: CircularProgressIndicator(
                         strokeWidth: 5.0,
                         color: colorYellow,
@@ -500,7 +503,7 @@ class _DialogTypeListViewState extends State<DialogTypeListView> {
                                 key: ValueKey(dataList[index].id),
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.symmetric(vertical: 15),
+                                    padding: const EdgeInsets.symmetric(vertical: 15),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
@@ -513,7 +516,7 @@ class _DialogTypeListViewState extends State<DialogTypeListView> {
                                                     text: TextSpan(
                                                         text: dataList[index]
                                                             .name,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color:
                                                                 colorTextBlack,
                                                             fontSize: 16),
@@ -521,7 +524,7 @@ class _DialogTypeListViewState extends State<DialogTypeListView> {
                                                     TextSpan(
                                                         text:
                                                             " (€${dataList[index].price})",
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color:
                                                                 colorLightRed,
                                                             fontSize: 16)),
@@ -529,16 +532,16 @@ class _DialogTypeListViewState extends State<DialogTypeListView> {
                                             : Expanded(
                                                 child: Text(
                                                 dataList[index].name,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: colorTextBlack,
                                                     fontSize: 16),
                                               )),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 10,
                                         ),
                                         GestureDetector(
-                                          child: Text("Edit",
-                                              style: TextStyle(
+                                          child: const Text("Edit",
+                                              style: const TextStyle(
                                                   color: colorYellow,
                                                   fontSize: 16)),
                                           onTap: () {
@@ -569,7 +572,7 @@ class _DialogTypeListViewState extends State<DialogTypeListView> {
                                           },
                                           behavior: HitTestBehavior.opaque,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 16,
                                         ),
                                         GestureDetector(

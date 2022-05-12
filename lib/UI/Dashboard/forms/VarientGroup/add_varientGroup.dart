@@ -81,9 +81,9 @@ class _AddVarientGroupsState extends State<AddVarientGroups> {
                   height: 15,
                 ),
                 Container(
-                    padding: EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(15.0),
                     decoration: BoxDecoration(
-                        color: Color.fromRGBO(223, 221, 239, 1),
+                        color: const Color.fromRGBO(223, 221, 239, 1),
                         borderRadius: BorderRadius.circular(05)),
 
                     // margin: EdgeInsets.only(left: 18),
@@ -91,13 +91,13 @@ class _AddVarientGroupsState extends State<AddVarientGroups> {
                       maxLines: 1,
                       controller: _nameController,
                       textAlignVertical: TextAlignVertical.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.normal,
                           color: colorTextBlack),
                       cursorColor: colorTextBlack,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(0),
+                      decoration: const InputDecoration(
+                          contentPadding: const EdgeInsets.all(0),
                           isDense: true,
                           hintText: "Enter New Allergy Group Name",
                           hintStyle: TextStyle(

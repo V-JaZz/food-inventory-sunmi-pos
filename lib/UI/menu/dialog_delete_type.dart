@@ -61,7 +61,7 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
         child: Container(
           // width: Media/,
           // margin: EdgeInsets.only(top: 20, right: 20),
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
           decoration: BoxDecoration(
               color: colorTextWhite, borderRadius: BorderRadius.circular(13)),
           child: ListView(
@@ -69,39 +69,39 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
             children: [
               Text(
                 widget.model.name,
-                style: TextStyle(
+                style: const TextStyle(
                     color: colorYellow,
                     fontWeight: FontWeight.w700,
                     fontSize: 20),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(
                 "Are you sure Delete this ${widget.model.type}?",
-                style: TextStyle(
+                style: const TextStyle(
                     color: colorTextBlack,
                     fontWeight: FontWeight.w700,
                     fontSize: 16),
                 textAlign: TextAlign.center,
               ),
               Container(
-                margin: EdgeInsets.only(top: 15),
+                margin: const EdgeInsets.only(top: 15),
                 child: Row(
                   children: [
                     Expanded(
                       child: GestureDetector(
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 10),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
                           alignment: Alignment.center,
-                          margin: EdgeInsets.only(right: 8),
+                          margin: const EdgeInsets.only(right: 8),
                           decoration: BoxDecoration(
                               color: colorYellow,
                               borderRadius: BorderRadius.circular(30)),
-                          child: Text(
+                          child: const Text(
                             "Delete",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: colorTextWhite,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18),
@@ -115,13 +115,13 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
                     Expanded(
                       child: GestureDetector(
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 10),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
                           alignment: Alignment.center,
-                          margin: EdgeInsets.only(left: 8),
+                          margin: const EdgeInsets.only(left: 8),
                           decoration: BoxDecoration(
                               color: colorGrey,
                               borderRadius: BorderRadius.circular(30)),
-                          child: Text(
+                          child: const Text(
                             "Cancel",
                             style: TextStyle(
                                 color: colorTextWhite,

@@ -16,7 +16,7 @@ class ToppingsListResponseModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -50,11 +50,11 @@ class ToppingsListData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['price'] = this.price;
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['_id'] = sId;
+    data['name'] = name;
+    data['price'] = price;
     return data;
   }
 }

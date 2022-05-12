@@ -105,13 +105,13 @@ class _VarientListPageState extends State<VarientListPage> {
         sigmaY: 3.0,
       ),
       child: Container(
-        decoration: new BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
+        decoration: new BoxDecoration(color: const Color.fromRGBO(11, 4, 58, 0.7)),
         child: Dialog(
             alignment: Alignment.topCenter,
             elevation: 0,
             backgroundColor: Colors.transparent,
             child: isDataLoad
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(
                       strokeWidth: 5.0,
                       color: colorGreen,
@@ -124,25 +124,25 @@ class _VarientListPageState extends State<VarientListPage> {
                     decoration: BoxDecoration(
                         color: colorTextWhite,
                         borderRadius: BorderRadius.circular(13)),
-                    margin: EdgeInsets.only(top: 200),
+                    margin: const EdgeInsets.only(top: 200),
                     height: MediaQuery.of(context).size.height * 0.37,
                     child: Column(
                       children: [
                         Container(
                           height: 45,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               // color: colorGreen,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(14),
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: const Radius.circular(14),
                                   topRight: Radius.circular(14))),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                padding: EdgeInsets.only(left: 15),
+                                padding: const EdgeInsets.only(left: 15),
                                 child: Text(
                                   widget.name,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: colorTextBlack,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700),
@@ -152,7 +152,7 @@ class _VarientListPageState extends State<VarientListPage> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(bottom: 05),
+                          margin: const EdgeInsets.only(bottom: 05),
                           height: MediaQuery.of(context).size.height * 0.24,
                           child: ListView.builder(
                             itemCount: selectionData.length,
@@ -163,10 +163,10 @@ class _VarientListPageState extends State<VarientListPage> {
                                   Container(
                                     width:
                                         MediaQuery.of(context).size.width * 0.8,
-                                    padding: EdgeInsets.only(left: 15),
+                                    padding: const EdgeInsets.only(left: 15),
                                     decoration: BoxDecoration(
                                         color: index % 2 == 0
-                                            ? Color.fromRGBO(228, 225, 246, 1)
+                                            ? const Color.fromRGBO(228, 225, 246, 1)
                                             : colorTextWhite),
                                     child: Row(
                                       mainAxisAlignment:
@@ -181,7 +181,7 @@ class _VarientListPageState extends State<VarientListPage> {
                                             selectionData[index].name,
                                             overflow: TextOverflow.ellipsis,
                                             softWrap: true,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: colorTextBlack,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 13),
@@ -212,7 +212,7 @@ class _VarientListPageState extends State<VarientListPage> {
                         ),
                         Container(
                           // margin: EdgeInsets.only(top: 20, right: 22, left: 10),
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: 20,
                           ),
                           // width: 480,
@@ -221,16 +221,16 @@ class _VarientListPageState extends State<VarientListPage> {
                               Expanded(
                                 child: GestureDetector(
                                   child: Container(
-                                    padding: EdgeInsets.symmetric(vertical: 14),
+                                    padding: const EdgeInsets.symmetric(vertical: 14),
                                     alignment: Alignment.center,
-                                    margin: EdgeInsets.only(right: 8),
+                                    margin: const EdgeInsets.only(right: 8),
                                     decoration: BoxDecoration(
                                         color: colorGreen,
                                         borderRadius:
                                             BorderRadius.circular(30)),
-                                    child: Text(
+                                    child: const Text(
                                       "Save",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: colorTextWhite,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 12),
@@ -248,14 +248,14 @@ class _VarientListPageState extends State<VarientListPage> {
                               Expanded(
                                 child: GestureDetector(
                                   child: Container(
-                                    padding: EdgeInsets.symmetric(vertical: 14),
+                                    padding: const EdgeInsets.symmetric(vertical: 14),
                                     alignment: Alignment.center,
-                                    margin: EdgeInsets.only(left: 8),
+                                    margin: const EdgeInsets.only(left: 8),
                                     decoration: BoxDecoration(
                                         color: colorGrey,
                                         borderRadius:
                                             BorderRadius.circular(30)),
-                                    child: Text(
+                                    child: const Text(
                                       "Cancel",
                                       style: TextStyle(
                                           color: colorTextWhite,

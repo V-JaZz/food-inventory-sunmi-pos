@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -332,7 +334,7 @@ class _DialogMenuDataSelectionState extends State<DialogMenuDataSelection> {
                   children: [
                     Text(
                       "Select ${widget.type}",
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: colorTextBlack,
                           fontWeight: FontWeight.w700,
                           fontSize: 18),
@@ -350,11 +352,11 @@ class _DialogMenuDataSelectionState extends State<DialogMenuDataSelection> {
                                     : getDefaultButton()
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 isDataLoad
-                    ? Center(
+                    ? const Center(
                         child: CircularProgressIndicator(
                           strokeWidth: 5.0,
                           color: colorGreen,
@@ -362,14 +364,14 @@ class _DialogMenuDataSelectionState extends State<DialogMenuDataSelection> {
                       )
                     : ListView.builder(
                         itemCount: dataList.length,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (listContext, index) {
                           return Column(
                             children: [
                               GestureDetector(
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 15),
+                                  padding: const EdgeInsets.symmetric(vertical: 15),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -381,25 +383,25 @@ class _DialogMenuDataSelectionState extends State<DialogMenuDataSelection> {
                                                   text: TextSpan(
                                                       text:
                                                           dataList[index].name,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           color: colorTextBlack,
                                                           fontSize: 16),
                                                       children: [
                                                   TextSpan(
                                                       text:
                                                           " (€${dataList[index].price})",
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           color: colorLightRed,
                                                           fontSize: 16)),
                                                 ])))
                                           : Expanded(
                                               child: Text(
                                               dataList[index].name,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: colorTextBlack,
                                                   fontSize: 16),
                                             )),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
                                       SvgPicture.asset(
@@ -420,7 +422,7 @@ class _DialogMenuDataSelectionState extends State<DialogMenuDataSelection> {
                               Container(
                                 height: 1,
                                 decoration:
-                                    BoxDecoration(color: colorDividerGreen),
+                                    const BoxDecoration(color: colorDividerGreen),
                               )
                             ],
                           );
@@ -428,7 +430,7 @@ class _DialogMenuDataSelectionState extends State<DialogMenuDataSelection> {
                       ),
                 GestureDetector(
                   child: Container(
-                    margin: EdgeInsets.only(top: 20),
+                    margin: const EdgeInsets.only(top: 20),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -438,10 +440,10 @@ class _DialogMenuDataSelectionState extends State<DialogMenuDataSelection> {
                           width: 40,
                           height: 40,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
-                        Text(
+                        const Text(
                           "Back",
                           style: TextStyle(
                               color: colorTextBlack,
@@ -468,7 +470,7 @@ class _DialogMenuDataSelectionState extends State<DialogMenuDataSelection> {
         decoration: BoxDecoration(
             color: colorButtonYellow,
             borderRadius: BorderRadius.circular(30.0)),
-        child: Text("Default",
+        child: const Text("Default",
             style: TextStyle(
                 color: colorTextWhite,
                 fontWeight: FontWeight.w500,

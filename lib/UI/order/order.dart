@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:ui';
 
@@ -322,8 +324,8 @@ class _OrderState extends State<Order> {
     return Container(
         color: colorBackgroundyellow,
         child: isDataLoad
-            ? Center(
-                child: CircularProgressIndicator(
+            ? const Center(
+                child: const CircularProgressIndicator(
                   strokeWidth: 5.0,
                   color: colorGreen,
                 ),
@@ -361,7 +363,7 @@ class _OrderState extends State<Order> {
                                 RichText(
                                   text: TextSpan(
                                     text: 'Order: ',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: colorTextBlack,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 12),
@@ -370,7 +372,7 @@ class _OrderState extends State<Order> {
                                           text: truncateString(
                                               "${orderObj.orderNumber!.trimRight()}",
                                               16),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.w400,
                                           )),
                                     ],
@@ -388,12 +390,12 @@ class _OrderState extends State<Order> {
                                       color: colorButtonYellow,
                                     ),
                                   ),
-                                  SizedBox(width: 05),
+                                  const SizedBox(width: 05),
                                   Text(
                                     "${orderObj.orderDateTime}",
                                     softWrap: false,
                                     overflow: TextOverflow.clip,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: colorTextBlack,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 12),
@@ -401,7 +403,7 @@ class _OrderState extends State<Order> {
                                 ])
                               ],
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -412,7 +414,7 @@ class _OrderState extends State<Order> {
                                     RichText(
                                       text: TextSpan(
                                         text: 'Delivery Time: ',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: colorTextBlack,
                                             fontWeight: FontWeight.w400,
                                             fontSize: 12),
@@ -420,24 +422,24 @@ class _OrderState extends State<Order> {
                                           TextSpan(
                                               text:
                                                   "${orderObj.deliveryDatetime ?? ""}",
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontWeight: FontWeight.w600,
                                               )),
                                         ],
                                       ),
                                     ),
-                                    SizedBox(height: 05),
+                                    const SizedBox(height: 05),
                                     RichText(
                                       text: TextSpan(
                                         text: 'Delivery Type: ',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: colorTextBlack,
                                             fontWeight: FontWeight.w400,
                                             fontSize: 12),
                                         children: <TextSpan>[
                                           TextSpan(
                                               text: orderObj.deliveryType,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontWeight: FontWeight.w600,
                                               )),
                                         ],
@@ -489,7 +491,7 @@ class _OrderState extends State<Order> {
                                                       STATUS_DENIED
                                                   ? "Declined"
                                                   : "View",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: colorTextBlack,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 12),

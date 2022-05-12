@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, unnecessary_string_interpolations, prefer_adjacent_string_concatenation
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../networking/api_base_helper.dart';
@@ -13,7 +15,7 @@ String defaultValue(String? value, String def) {
 bool checkEmailValid(String value) {
   Pattern pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-  RegExp regExp = new RegExp(pattern.toString());
+  RegExp regExp = RegExp(pattern.toString());
   return !regExp.hasMatch(value);
 }
 
@@ -64,18 +66,18 @@ String getSendableDate(DateTime selectedDate) {
 
 String getCurrentDateInFormat() {
   final DateFormat formatter = DateFormat('dd MMMM, yyyy');
-  return formatter.format(new DateTime.now());
+  return formatter.format(DateTime.now());
 }
 
 String formatTimeOfDay(TimeOfDay tod, String stFormat) {
-  final now = new DateTime.now();
+  final now = DateTime.now();
   final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
   final format = DateFormat(stFormat); //"6:00 AM"
   return format.format(dt);
 }
 
 bool checkOpenCloseTime(TimeOfDay openTime, TimeOfDay closTime) {
-  final now = new DateTime.now();
+  final now = DateTime.now();
   final openDate =
       DateTime(now.year, now.month, now.day, openTime.hour, openTime.minute);
   final closeDate =

@@ -56,16 +56,16 @@ class CategoryListData {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['_id'] = this.sId;
-    data['name'] = this.name;
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['_id'] = sId;
+    data['name'] = name;
     if (data['description'] != null) {
-      data['description'] = this.description;
+      data['description'] = description;
     }
-    data['imageName'] = this.imageName;
-    data['position'] = this.position;
-    data['discount'] = this.discount;
+    data['imageName'] = imageName;
+    data['position'] = position;
+    data['discount'] = discount;
     return data;
   }
 }

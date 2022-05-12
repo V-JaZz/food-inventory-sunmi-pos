@@ -72,8 +72,8 @@ class _InstantActionState extends State<InstantAction> {
     return ListView(
       // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 10),
-        Text(
+        const SizedBox(height: 10),
+        const Text(
           "Select Instant Action",
           style: TextStyle(
             color: colorTextBlack,
@@ -84,14 +84,14 @@ class _InstantActionState extends State<InstantAction> {
         Container(
           height: 57,
           width: 280,
-          margin: EdgeInsets.only(top: 20, right: 50),
+          margin: const EdgeInsets.only(top: 20, right: 50),
           decoration: BoxDecoration(
               color: colorTextWhite,
               borderRadius: BorderRadius.circular(46),
               boxShadow: [
-                BoxShadow(
+                const BoxShadow(
                   color: Colors.grey,
-                  offset: Offset(1.0, 1.0), //(x,y)
+                  offset: const Offset(1.0, 1.0), //(x,y)
                   blurRadius: 1.0,
                 ),
               ]),

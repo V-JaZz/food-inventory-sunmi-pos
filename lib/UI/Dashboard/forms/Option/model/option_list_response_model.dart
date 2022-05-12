@@ -9,14 +9,14 @@ class OptionListResponseModel {
     if (json['data'] != null) {
       data = <OptionListData>[];
       json['data'].forEach((v) {
-        data!.add(new OptionListData.fromJson(v));
+        data!.add(OptionListData.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -61,32 +61,32 @@ class OptionListData {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     toppingGroups = json['toppingGroups'] != null
-        ? new ToppingGroups.fromJson(json['toppingGroups'])
+        ? ToppingGroups.fromJson(json['toppingGroups'])
         : null;
     if (json['toppings'] != null) {
       toppings = <Toppings>[];
       json['toppings'].forEach((v) {
-        toppings!.add(new Toppings.fromJson(v));
+        toppings!.add(Toppings.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['minToppings'] = this.minToppings;
-    data['maxToppings'] = this.maxToppings;
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['restaurantId'] = this.restaurantId;
-    data['name'] = this.name;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    if (this.toppingGroups != null) {
-      data['toppingGroups'] = this.toppingGroups!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['minToppings'] = minToppings;
+    data['maxToppings'] = maxToppings;
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['restaurantId'] = restaurantId;
+    data['name'] = name;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    if (toppingGroups != null) {
+      data['toppingGroups'] = toppingGroups!.toJson();
     }
-    if (this.toppings != null) {
-      data['toppings'] = this.toppings!.map((v) => v.toJson()).toList();
+    if (toppings != null) {
+      data['toppings'] = toppings!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -104,9 +104,9 @@ class ToppingGroups {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['name'] = name;
     return data;
   }
 }
@@ -146,16 +146,16 @@ class Toppings {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['restaurantId'] = this.restaurantId;
-    data['name'] = this.name;
-    data['price'] = this.price;
-    data['__v'] = this.iV;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['restaurantId'] = restaurantId;
+    data['name'] = name;
+    data['price'] = price;
+    data['__v'] = iV;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }

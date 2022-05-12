@@ -11,9 +11,9 @@ class CommonModel{
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data['success'] = this.success;
-    if (this.message != null) {
-      data['message'] = this.message!;
+    data['success'] = success;
+    if (message != null) {
+      data['message'] = message!;
     }
     return data;
   }

@@ -89,15 +89,15 @@ class _AllergyListGroupState extends State<AllergyListGroup> {
       ),
       child: Container(
         alignment: Alignment.topCenter,
-        decoration: new BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
+        decoration: const BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
         child: Dialog(
-            insetPadding: EdgeInsets.all(20.0),
+            insetPadding: const EdgeInsets.all(20.0),
             elevation: 0,
             alignment: Alignment.center,
             backgroundColor: Colors.transparent,
             child: isDataLoad
-                ? Center(
-                    child: CircularProgressIndicator(
+                ? const Center(
+                    child: const CircularProgressIndicator(
                       strokeWidth: 5.0,
                       color: colorGreen,
                     ),
@@ -116,7 +116,7 @@ class _AllergyListGroupState extends State<AllergyListGroup> {
                       children: [
                         Container(
                           padding:
-                              EdgeInsets.only(left: 15, top: 10, bottom: 10),
+                              const EdgeInsets.only(left: 15, top: 10, bottom: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -125,15 +125,15 @@ class _AllergyListGroupState extends State<AllergyListGroup> {
                                   onTap: () {
                                     Navigator.of(context).pop(context);
                                   },
-                                  child: Icon(Icons.arrow_back,
+                                  child: const Icon(Icons.arrow_back,
                                       color: colorButtonYellow)),
                               Container(
-                                padding: EdgeInsets.only(
+                                padding: const EdgeInsets.only(
                                   left: 15,
                                 ),
-                                child: Text(
+                                child: const Text(
                                   "My Allergy Group",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: colorTextBlack,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700),
@@ -143,7 +143,7 @@ class _AllergyListGroupState extends State<AllergyListGroup> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(bottom: 05),
+                          margin: const EdgeInsets.only(bottom: 05),
                           height: MediaQuery.of(context).size.height * 0.43,
                           child: ListView.builder(
                             itemCount: dataList.length,
@@ -189,22 +189,22 @@ class _AllergyListGroupState extends State<AllergyListGroup> {
                                     ],
                                   ),
                                   child: Container(
-                                    padding: EdgeInsets.only(left: 15),
+                                    padding: const EdgeInsets.only(left: 15),
                                     decoration: BoxDecoration(
                                         color: index % 2 == 0
-                                            ? Color.fromRGBO(228, 225, 246, 1)
+                                            ? const Color.fromRGBO(228, 225, 246, 1)
                                             : colorTextWhite),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          padding: EdgeInsets.all(10.0),
+                                          padding: const EdgeInsets.all(10.0),
                                           child: Text(
                                             dataList[index].name,
                                             overflow: TextOverflow.ellipsis,
                                             softWrap: true,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: colorTextBlack,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 12),

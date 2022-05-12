@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:food_inventory/UI/dashboard/forms/Allergy/repository/allergy_repository.dart';

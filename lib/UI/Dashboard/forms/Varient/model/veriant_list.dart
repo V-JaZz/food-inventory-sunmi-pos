@@ -9,14 +9,14 @@ class VarantListData {
     if (json['data'] != null) {
       data = <VariantsList>[];
       json['data'].forEach((v) {
-        data!.add(new VariantsList.fromJson(v));
+        data!.add(VariantsList.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -58,31 +58,31 @@ class VariantsList {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     variantGroups = json['variantGroups'] != null
-        ? new VariantGroups.fromJson(json['variantGroups'])
+        ? VariantGroups.fromJson(json['variantGroups'])
         : null;
     if (json['variants'] != null) {
       variants = <Variants>[];
       json['variants'].forEach((v) {
-        variants!.add(new Variants.fromJson(v));
+        variants!.add(Variants.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['restaurantId'] = this.restaurantId;
-    data['name'] = this.name;
-    data['price'] = this.price.toString();
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    if (this.variantGroups != null) {
-      data['variantGroups'] = this.variantGroups!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['restaurantId'] = restaurantId;
+    data['name'] = name;
+    data['price'] = price.toString();
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    if (variantGroups != null) {
+      data['variantGroups'] = variantGroups!.toJson();
     }
-    if (this.variants != null) {
-      data['variants'] = this.variants!.map((v) => v.toJson()).toList();
+    if (variants != null) {
+      data['variants'] = variants!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -100,9 +100,9 @@ class VariantGroups {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId.toString();
-    data['name'] = this.name.toString();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId.toString();
+    data['name'] = name.toString();
     return data;
   }
 }
@@ -145,17 +145,17 @@ class Variants {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['variantGroup'] = this.variantGroup;
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['restaurantId'] = this.restaurantId;
-    data['name'] = this.name;
-    data['price'] = this.price.toString();
-    data['__v'] = this.iV;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['variantGroup'] = variantGroup;
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['restaurantId'] = restaurantId;
+    data['name'] = name;
+    data['price'] = price.toString();
+    data['__v'] = iV;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }

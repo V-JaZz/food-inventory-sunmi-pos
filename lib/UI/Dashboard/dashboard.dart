@@ -1,3 +1,5 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe, avoid_print
+
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
@@ -31,6 +33,7 @@ import '../order/model/order_list_response_model.dart';
 import 'forms/Allergy/add_new_allergy.dart';
 import 'forms/AllergyGroup/add_allergyGroup.dart';
 import 'forms/Category/add_new_category.dart';
+import 'forms/Items/dialogMenu.dart';
 import 'forms/Items/dialogAddNewItem.dart';
 import 'forms/Option/add_option.dart';
 import 'forms/Toppings/add_topping.dart';
@@ -106,8 +109,8 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
     // clearImageCache();
     getLoginData();
     initPreferences();
-    _newItemDashController = new TextEditingController();
-    _addDesDashController = new TextEditingController();
+    _newItemDashController = TextEditingController();
+    _addDesDashController = TextEditingController();
     _logoutRepository = LogoutRepository(context);
 
     avatarWidget = Container();
@@ -174,23 +177,23 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return new Order();
+        return const Order();
       case 1:
-        return new InstantAction();
+        return const InstantAction();
       case 2:
-        return new OfferDiscount();
+        return const OfferDiscount();
       case 3:
-        return new Menu();
+        return const Menu();
       case 4:
-        return new ItemsTimeSet();
+        return const ItemsTimeSet();
       case 5:
-        return new RestaurantTimeSet();
+        return const RestaurantTimeSet();
       case 6:
-        return new DeliverySetting();
+        return const DeliverySetting();
       case 7:
-        return new RestaurantDetails();
+        return const RestaurantDetails();
       case 8:
-        return new Settings();
+        return Settings();
     }
   }
 
@@ -306,25 +309,25 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
   Future<bool> _onWillPop() async {
     return (await showDialog(
           context: context,
-          builder: (context) => new AlertDialog(
-            content: new Text('Are you sure you want to exit?',
+          builder: (context) => AlertDialog(
+            content: const Text('Are you sure you want to exit?',
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontWeight: FontWeight.bold)),
+                style: TextStyle(fontWeight: FontWeight.bold)),
             actions: <Widget>[
-              new FlatButton(
+              FlatButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: new Text('No',
+                child: Text('No',
                     style: TextStyle(
                         color: Colors.lightBlue.shade700,
                         fontWeight: FontWeight.bold)),
               ),
-              new FlatButton(
+              FlatButton(
                 onPressed: () async {
                   // Utils.hideLoader(context);
                   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
                 },
-                child: new Text('Yes',
-                    style: const TextStyle(
+                child: const Text('Yes',
+                    style: TextStyle(
                         color: Colors.red, fontWeight: FontWeight.bold)),
               ),
             ],
@@ -396,11 +399,11 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.only(top: 15),
+                        padding: const EdgeInsets.only(top: 15),
                         child: Row(
                           children: [
                             Container(
-                              padding: EdgeInsets.only(left: 15),
+                              padding: const EdgeInsets.only(left: 15),
                               width: 55,
                               height: 60,
                               child: CachedNetworkImage(
@@ -426,7 +429,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Text(
                               restaurantName,
                               maxLines: 1,
@@ -440,7 +443,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                           ],
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Expanded(
                         child: SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
@@ -571,7 +574,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                                 ),
                                 onPressed: () {
                                   FocusScope.of(context)
-                                      .requestFocus(new FocusNode());
+                                      .requestFocus(FocusNode());
                                   Scaffold.of(context).openDrawer();
                                   WidgetsBinding.instance!
                                       .addPostFrameCallback((_) {
@@ -610,7 +613,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                                 children: [
                                   Text(
                                     getCurrentDateInFormat(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: colorTextWhite,
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15),
@@ -644,7 +647,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                 ),
                 Expanded(
                     child: Container(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             left: 10, top: 10, right: 15, bottom: 10),
                         color: colorBackgroundyellow,
                         child: _getDrawerItemWidget(_selectedDrawerIndex))),
@@ -661,8 +664,8 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
           child: Container(
             width: 60,
             height: 60,
-            child: Icon(Icons.add),
-            decoration: BoxDecoration(
+            child: const Icon(Icons.add),
+            decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: LinearGradient(colors: [colorGreen2, colorGreen1])),
           ),
@@ -674,7 +677,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
           shape: const CircularNotchedRectangle(),
           notchMargin: 05,
           child: Container(
-            padding: EdgeInsets.only(left: 10, right: 10),
+            padding: const EdgeInsets.only(left: 10, right: 10),
             height: MediaQuery.of(context).size.height * 0.075,
             child: Row(
               mainAxisSize: MainAxisSize.max,
@@ -805,14 +808,14 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
             children: [
               Container(
                 decoration:
-                    new BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
-                padding: EdgeInsets.only(
+                    const BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
+                padding: const EdgeInsets.only(
                     left: 20.0, right: 20.0, top: 200.0, bottom: 200.0),
                 child: Container(
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(30)),
-                  padding: EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -830,7 +833,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                               color: colorButtonBlue,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0)),
-                              child: Padding(
+                              child: const Padding(
                                 padding: EdgeInsets.all(18.0),
                                 child: Text(
                                   "Add New Item",
@@ -853,7 +856,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                               color: colorButtonBlue,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0)),
-                              child: Padding(
+                              child: const Padding(
                                 padding: EdgeInsets.all(18.0),
                                 child: Text(
                                   "Add New Category",
@@ -878,7 +881,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                           color: colorButtonBlue,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0)),
-                          child: Padding(
+                          child: const Padding(
                             padding: EdgeInsets.all(18.0),
                             child: Text(
                               "Add Option",
@@ -890,7 +893,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                           ),
                         ),
                       ),
-                      Divider(
+                      const Divider(
                         color: colorButtonBlue,
                         height: 20,
                       ),
@@ -907,7 +910,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                               color: colorButtonBlue,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0)),
-                              child: Padding(
+                              child: const Padding(
                                 padding: EdgeInsets.all(18.0),
                                 child: Text(
                                   "Add Toppings",
@@ -930,7 +933,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                               color: colorButtonBlue,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0)),
-                              child: Padding(
+                              child: const Padding(
                                 padding: EdgeInsets.all(18.0),
                                 child: Text(
                                   "Add Toppings Group",
@@ -944,7 +947,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                           ),
                         ],
                       ),
-                      Divider(
+                      const Divider(
                         color: colorButtonBlue,
                         height: 20,
                       ),
@@ -961,7 +964,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                               color: colorButtonBlue,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0)),
-                              child: Padding(
+                              child: const Padding(
                                 padding: EdgeInsets.all(18.0),
                                 child: Text(
                                   "Add Allergy",
@@ -984,7 +987,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                               color: colorButtonBlue,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0)),
-                              child: Padding(
+                              child: const Padding(
                                 padding: EdgeInsets.all(18.0),
                                 child: Text(
                                   "Add Allergy Group",
@@ -998,7 +1001,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                           ),
                         ],
                       ),
-                      Divider(
+                      const Divider(
                         color: colorButtonBlue,
                         height: 20,
                       ),
@@ -1015,7 +1018,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                               color: colorButtonBlue,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0)),
-                              child: Padding(
+                              child: const Padding(
                                 padding: EdgeInsets.all(18.0),
                                 child: Text(
                                   "Add Varient",
@@ -1038,7 +1041,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                               color: colorButtonBlue,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0)),
-                              child: Padding(
+                              child: const Padding(
                                 padding: EdgeInsets.all(18.0),
                                 child: Text(
                                   "Add Varient Group",
@@ -1052,7 +1055,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                           ),
                         ],
                       ),
-                      Divider(
+                      const Divider(
                         color: colorButtonBlue,
                         height: 20,
                       ),
@@ -1150,13 +1153,13 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
     showDialog(
       context: context,
       builder: (popupContext) {
-        Widget content = Text("Are you sure you want to logout?");
+        Widget content = const Text("Are you sure you want to logout?");
         List<Widget> action = [
           TextButton(
             onPressed: () {
               Navigator.pop(popupContext);
             },
-            child: Text(
+            child: const Text(
               'No',
               style: TextStyle(color: colorTextBlack),
             ),
@@ -1176,7 +1179,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                 //     (e) => false);
               });
             },
-            child: Text('Yes', style: TextStyle(color: colorButtonBlue)),
+            child: const Text('Yes', style: TextStyle(color: colorButtonBlue)),
           ),
         ];
 
@@ -1198,12 +1201,9 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
       context: context,
       barrierDismissible: false,
       builder: (dialogContext) {
-        return DialogAddNewItems(
-          onDialogClose: () {
-            // setState(() {
-            //   print("DialogClosed");
-            // });
-          },
+        return DialogMenuItems(
+          onAddDeleteSuccess: () {},
+          type: 'Menu',
         );
       },
     );

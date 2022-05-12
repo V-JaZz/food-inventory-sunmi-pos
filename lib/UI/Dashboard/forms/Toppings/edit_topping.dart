@@ -90,29 +90,29 @@ class _EditToppingsState extends State<EditToppings> {
                   decoration: BoxDecoration(
                     color: colorFieldBG,
                     border: Border.all(color: colorFieldBorder, width: 1),
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
                   ),
                   child: Row(
                     children: [
                       Expanded(
                         child: Container(
                             // color: Colors.red,
-                            padding: EdgeInsets.only(left: 10, right: 10),
+                            padding: const EdgeInsets.only(left: 10, right: 10),
                             // margin: EdgeInsets.all(18),
                             child: TextField(
                               maxLines: 1,
                               controller: _nameController,
                               textAlignVertical: TextAlignVertical.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.normal,
                                   color: colorTextBlack),
                               cursorColor: colorTextBlack,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                   contentPadding: EdgeInsets.all(0),
                                   isDense: true,
                                   hintText: "Enter Topping Name",
-                                  hintStyle: TextStyle(
+                                  hintStyle: const TextStyle(
                                       color: colorTextHint, fontSize: 16),
                                   border: InputBorder.none),
                             )),
@@ -122,31 +122,31 @@ class _EditToppingsState extends State<EditToppings> {
                           height: MediaQuery.of(context).size.height * 0.065,
                           alignment: Alignment.center,
                           // padding: EdgeInsets.all(19),
-                          decoration: BoxDecoration(color: colorGreyDF),
-                          child: Text("€",
-                              style: TextStyle(
+                          decoration: const BoxDecoration(color: colorGreyDF),
+                          child: const Text("€",
+                              style: const TextStyle(
                                 color: Colors.red,
                                 fontWeight: FontWeight.w600,
                               ))),
                       Container(
                           width: MediaQuery.of(context).size.width * 0.15,
-                          padding: EdgeInsets.only(left: 10, right: 10),
+                          padding: const EdgeInsets.only(left: 10, right: 10),
                           child: TextField(
                             maxLines: 1,
                             controller: _priceController,
                             textAlignVertical: TextAlignVertical.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,
                                 color: colorTextBlack),
                             cursorColor: colorTextBlack,
-                            keyboardType: TextInputType.numberWithOptions(
+                            keyboardType: const TextInputType.numberWithOptions(
                                 decimal: true, signed: false),
-                            decoration: InputDecoration(
-                                contentPadding: EdgeInsets.all(0),
+                            decoration: const InputDecoration(
+                                contentPadding: const EdgeInsets.all(0),
                                 isDense: true,
                                 hintText: "0,00",
-                                hintStyle: TextStyle(
+                                hintStyle: const TextStyle(
                                     color: colorTextHint, fontSize: 16),
                                 border: InputBorder.none),
                           )),

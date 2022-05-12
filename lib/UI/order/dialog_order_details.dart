@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers, avoid_print, prefer_adjacent_string_concatenation, prefer_typing_uninitialized_variables
+
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
@@ -79,9 +81,9 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
         sigmaY: 3.0,
       ),
       child: Container(
-        color: Color.fromRGBO(11, 4, 58, 0.7),
+        color: const Color.fromRGBO(11, 4, 58, 0.7),
         child: Dialog(
-            insetPadding: EdgeInsets.all(20.0),
+            insetPadding: const EdgeInsets.all(20.0),
             elevation: 0,
             backgroundColor: Colors.transparent,
             child: Stack(
@@ -90,7 +92,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                 Container(
                   height: MediaQuery.of(context).size.height * 0.46,
                   // width: MediaQuery.of(context).size.width * 0.343,
-                  margin: EdgeInsets.only(top: 10, right: 10),
+                  margin: const EdgeInsets.only(top: 10, right: 10),
                   // padding: EdgeInsets.only(bottom: 10),
                   decoration: BoxDecoration(
                       color: colorTextWhite,
@@ -107,7 +109,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                             children: [
                               Expanded(
                                   child: Container(
-                                padding: EdgeInsets.only(
+                                padding: const EdgeInsets.only(
                                     left: 15, right: 15, top: 15, bottom: 15),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +117,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                     RichText(
                                         text: TextSpan(
                                             text: 'Name: ',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: colorTextBlack,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 10),
@@ -123,17 +125,17 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                           TextSpan(
                                               text:
                                                   "${defaultValue(widget.orderDataModel.userDetails!.firstName, "")} ${defaultValue(widget.orderDataModel.userDetails!.lastName, "")}",
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontWeight: FontWeight.w400,
                                               )),
                                         ])),
-                                    SizedBox(height: 8),
+                                    const SizedBox(height: 8),
                                     widget.orderDataModel.deliveryType ==
                                             'DELIVERY'
                                         ? RichText(
                                             text: TextSpan(
                                                 text: "Address : ",
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: colorTextBlack,
                                                     fontWeight: FontWeight.w500,
                                                     fontSize: 10),
@@ -145,17 +147,17 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                                             .userDetails!
                                                             .address,
                                                         "N/A"),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.w400,
                                                     )),
                                               ]))
-                                        : SizedBox(),
-                                    SizedBox(height: 8),
+                                        : const SizedBox(),
+                                    const SizedBox(height: 8),
                                     RichText(
                                         text: TextSpan(
                                             text: "Contact : ",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: colorTextBlack,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 10),
@@ -165,18 +167,18 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                                   widget.orderDataModel
                                                       .userDetails!.contact,
                                                   "N/A"),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontWeight: FontWeight.w400,
                                               )),
                                         ])),
-                                    SizedBox(height: 8),
+                                    const SizedBox(height: 8),
                                     widget.orderDataModel.orderTime != null
                                         ? widget.orderDataModel.deliveryType ==
                                                 'DELIVERY'
                                             ? RichText(
                                                 text: TextSpan(
                                                     text: "Delivery Time : ",
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         color: colorTextBlack,
                                                         fontWeight:
                                                             FontWeight.w500,
@@ -186,7 +188,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                                         text: widget
                                                             .orderDataModel
                                                             .orderTime!,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.w400,
                                                         )),
@@ -194,7 +196,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                             : RichText(
                                                 text: TextSpan(
                                                     text: "Collection Time : ",
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         color: colorTextBlack,
                                                         fontWeight:
                                                             FontWeight.w500,
@@ -204,12 +206,12 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                                         text: widget
                                                             .orderDataModel
                                                             .orderTime!,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.w400,
                                                         )),
                                                   ]))
-                                        : SizedBox(),
+                                        : const SizedBox(),
                                     // widget.orderDataModel.advanceOrderDate ==
                                     //         null
                                     //     ? RichText(
@@ -236,11 +238,11 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                 width: 1,
                                 height: 100,
                                 decoration:
-                                    BoxDecoration(color: colorDividerGreen),
+                                    const BoxDecoration(color: colorDividerGreen),
                               ),
                               Expanded(
                                   child: Container(
-                                padding: EdgeInsets.only(
+                                padding: const EdgeInsets.only(
                                     left: 15, right: 15, top: 15, bottom: 0),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,7 +250,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                     RichText(
                                         text: TextSpan(
                                             text: "Order Number :- ",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: colorTextBlack,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 10),
@@ -258,15 +260,15 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                                   widget.orderDataModel
                                                       .orderNumber,
                                                   "N/A"),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontWeight: FontWeight.w400,
                                               )),
                                         ])),
-                                    SizedBox(height: 8),
+                                    const SizedBox(height: 8),
                                     RichText(
                                         text: TextSpan(
                                             text: "Order Type ",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: colorTextBlack,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 10),
@@ -278,15 +280,15 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                                   widget.orderDataModel
                                                       .deliveryType!
                                                       .substring(1),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontWeight: FontWeight.w400,
                                               )),
                                         ])),
-                                    SizedBox(height: 8),
+                                    const SizedBox(height: 8),
                                     RichText(
                                         text: TextSpan(
                                             text: "Order Time :- ",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: colorTextBlack,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 10),
@@ -294,11 +296,11 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                           TextSpan(
                                               text: widget.orderDataModel
                                                   .orderDateTime!,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontWeight: FontWeight.w400,
                                               )),
                                         ])),
-                                    SizedBox(height: 8),
+                                    const SizedBox(height: 8),
                                   ],
                                 ),
                               ))
@@ -306,18 +308,18 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                           ),
                           Container(
                             height: 1,
-                            decoration: BoxDecoration(color: colorDividerGreen),
+                            decoration: const BoxDecoration(color: colorDividerGreen),
                           ),
                           widget.orderDataModel.itemDetails == null ||
                                   widget.orderDataModel.itemDetails!.isEmpty
                               ? Container()
                               : ListView.builder(
                                   controller: ScrollController(),
-                                  physics: NeverScrollableScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   itemCount:
                                       widget.orderDataModel.itemDetails!.length,
                                   shrinkWrap: true,
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 15, right: 25, top: 16),
                                   itemBuilder: (context, index) {
                                     ItemDetails itemData = widget
@@ -384,7 +386,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                     }
 
                                     return Container(
-                                      margin: EdgeInsets.only(bottom: 05),
+                                      margin: const EdgeInsets.only(bottom: 05),
                                       child: Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
@@ -429,20 +431,20 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                                                       "N/A")
                                                       : defaultValue(
                                                           itemData.name, "N/A"),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: colorTextBlack,
                                                       fontWeight:
                                                           FontWeight.w500,
                                                       fontSize: 10),
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 3,
                                                 ),
                                                 checkString(itemOptSelection)
                                                     ? Container()
                                                     : Text(
                                                         "$itemOptSelection",
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           color: colorGreen,
                                                           fontWeight:
                                                               FontWeight.w400,
@@ -453,28 +455,28 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                                             '0'
                                                     ? Text(
                                                         "${itemData.variant} (${itemData.variantPrice.toString()})",
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color: Color(
                                                                 0xff51C800),
                                                             fontSize: 14),
                                                       )
-                                                    : SizedBox(),
+                                                    : const SizedBox(),
                                                 itemData.subVariant != null &&
                                                         itemData.subVariantPrice !=
                                                             0
                                                     ? Text(
                                                         "${itemData.subVariant} (${itemData.subVariantPrice.toString()})",
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color:
                                                                 colorTextBlack,
                                                             fontWeight:
                                                                 FontWeight.w500,
                                                             fontSize: 10),
                                                       )
-                                                    : SizedBox(),
+                                                    : const SizedBox(),
                                                 Text(
                                                   itemData.note.toString(),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       color: colorTextBlack,
                                                       fontWeight:
                                                           FontWeight.w500,
@@ -487,7 +489,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                             child: Text(
                                               // "",
                                               "${defaultValue(itemData.quantity.toString(), "1")} X ${getOptionName(itemData.toppings!, itemData) == "" ? getAmountWithCurrency(itemData.price.toString()) : getAmountWithCurrency(getOptionName(itemData.toppings!, itemData).toString())}",
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: colorTextBlack,
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 10),
@@ -500,8 +502,8 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                 ),
                           Container(
                             height: 1,
-                            margin: EdgeInsets.only(left: 20, right: 25),
-                            decoration: BoxDecoration(color: colorBlack),
+                            margin: const EdgeInsets.only(left: 20, right: 25),
+                            decoration: const BoxDecoration(color: colorBlack),
                           ),
                           // Container(
                           //   margin: EdgeInsets.only(
@@ -557,7 +559,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                           // ),
                           widget.orderDataModel.deliveryType == 'DELIVERY'
                               ? Container(
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                       top: 10, left: 20, right: 25),
                                   child: Row(
                                     crossAxisAlignment:
@@ -565,7 +567,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                     children: [
                                       Expanded(
                                           child: Container(
-                                        child: Text(
+                                        child: const Text(
                                           "Delivery Charge",
                                           style: TextStyle(
                                               color: colorGreen,
@@ -580,7 +582,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                                   .orderDataModel.deliveryCharge
                                                   .toString(),
                                               "0")),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: colorGreen,
                                               fontWeight: FontWeight.w500,
                                               fontSize: 10),
@@ -589,16 +591,16 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                     ],
                                   ),
                                 )
-                              : SizedBox(),
+                              : const SizedBox(),
                           Container(
                             margin:
-                                EdgeInsets.only(top: 10, left: 16, right: 25),
+                                const EdgeInsets.only(top: 10, left: 16, right: 25),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Expanded(
                                     child: Container(
-                                  child: Text(
+                                  child: const Text(
                                     "Discount",
                                     style: TextStyle(
                                         color: colorGreen,
@@ -612,7 +614,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                         widget.orderDataModel.discount
                                             .toString(),
                                         "0")),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: colorGreen,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 10),
@@ -623,13 +625,13 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                           ),
                           Container(
                             margin:
-                                EdgeInsets.only(top: 10, left: 16, right: 25),
+                                const EdgeInsets.only(top: 10, left: 16, right: 25),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Expanded(
                                     child: Container(
-                                  child: Text(
+                                  child: const Text(
                                     "Tip",
                                     style: TextStyle(
                                         color: colorGreen,
@@ -640,7 +642,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                 Container(
                                   child: Text(
                                     widget.orderDataModel.tip!,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: colorGreen,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 10),
@@ -656,16 +658,16 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                           //   decoration: BoxDecoration(color: colorBlack),
                           // ),
                           Container(
-                            color: Color(0xffDFDEDE),
-                            padding: EdgeInsets.all(10.0),
+                            color: const Color(0xffDFDEDE),
+                            padding: const EdgeInsets.all(10.0),
                             margin:
-                                EdgeInsets.only(top: 15, left: 15, right: 20),
+                                const EdgeInsets.only(top: 15, left: 15, right: 20),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Expanded(
                                     child: Container(
-                                  child: Text(
+                                  child: const Text(
                                     "Grand Total",
                                     style: TextStyle(
                                         color: colorTextBlack,
@@ -678,7 +680,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                     getAmountWithCurrency(widget
                                         .orderDataModel.totalAmount
                                         .toString()),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: colorTextBlack,
                                         fontWeight: FontWeight.w500,
                                         fontSize: 10),
@@ -687,9 +689,9 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           widget.orderDataModel.orderStatus == STATUS_ACCEPTED
-                              ? Text(
+                              ? const Text(
                                   "Order Accepted",
                                   style: TextStyle(
                                       color: Color(0xff51C800),
@@ -698,7 +700,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                 )
                               : widget.orderDataModel.orderStatus ==
                                       STATUS_ACCEPTED
-                                  ? Text(
+                                  ? const Text(
                                       "Order Declined",
                                       style: TextStyle(
                                           color: Color(0xffFCAE03),
@@ -707,35 +709,35 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                     )
                                   : widget.orderDataModel.orderStatus ==
                                           STATUS_PENDING
-                                      ? SizedBox()
-                                      : SizedBox(),
+                                      ? const SizedBox()
+                                      : const SizedBox(),
                           checkString(widget.orderDataModel.note)
                               ? Container()
                               : Container(
                                   width: MediaQuery.of(context).size.width,
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                       top: 14, left: 20, right: 25),
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 16, top: 13, bottom: 13, right: 16),
                                   decoration:
-                                      BoxDecoration(color: colorBackground),
+                                      const BoxDecoration(color: colorBackground),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Note :-",
                                         style: TextStyle(
                                             color: colorTextBlack,
                                             fontSize: 16),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Text(
                                         defaultValue(
                                             widget.orderDataModel.note, "N/A"),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: colorTextBlack,
                                             fontSize: 14),
                                       ),
@@ -744,7 +746,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                 ),
                           widget.orderDataModel.orderStatus == STATUS_PENDING
                               ? Container(
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                       top: 15, left: 20, right: 25),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -757,7 +759,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                             Stack(
                                               alignment: Alignment.center,
                                               children: [
-                                                Icon(Icons.circle,
+                                                const Icon(Icons.circle,
                                                     size: 50,
                                                     color: Color.fromRGBO(
                                                         234, 234, 234, 1)),
@@ -767,11 +769,11 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                                                 .size
                                                                 .height *
                                                             0.025,
-                                                    color: Color.fromRGBO(
+                                                    color: const Color.fromRGBO(
                                                         81, 200, 0, 1))
                                               ],
                                             ),
-                                            Text(
+                                            const Text(
                                               "Accept",
                                               style: TextStyle(
                                                   color: colorButtonBlue,
@@ -785,7 +787,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                         },
                                         behavior: HitTestBehavior.opaque,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 50,
                                       ),
                                       GestureDetector(
@@ -794,7 +796,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                             Stack(
                                               alignment: Alignment.center,
                                               children: [
-                                                Icon(Icons.circle,
+                                                const Icon(Icons.circle,
                                                     size: 50,
                                                     color: Color.fromRGBO(
                                                         234, 234, 234, 1)),
@@ -804,11 +806,11 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                                                 .size
                                                                 .height *
                                                             0.025,
-                                                    color: Color.fromRGBO(
+                                                    color: const Color.fromRGBO(
                                                         252, 174, 3, 1))
                                               ],
                                             ),
-                                            Text(
+                                            const Text(
                                               "Decline",
                                               style: TextStyle(
                                                   color: colorButtonBlue,
@@ -826,24 +828,24 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                   ),
                                 )
                               : Container(),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           widget.orderDataModel.orderStatus == STATUS_PENDING
-                              ? SizedBox()
+                              ? const SizedBox()
                               :
                               // : Platform.isAndroid
                               // ?
                               GestureDetector(
                                   child: Container(
                                     alignment: Alignment.center,
-                                    margin: EdgeInsets.only(
+                                    margin: const EdgeInsets.only(
                                         left: 10, right: 10, bottom: 05),
                                     padding:
-                                        EdgeInsets.only(top: 10, bottom: 10),
+                                        const EdgeInsets.only(top: 10, bottom: 10),
                                     decoration: BoxDecoration(
-                                      color: Color(0xff0B043A),
+                                      color: const Color(0xff0B043A),
                                       borderRadius: BorderRadius.circular(30.0),
                                     ),
-                                    child: Text(
+                                    child: const Text(
                                       "Print",
                                       style: TextStyle(
                                           color: colorTextWhite,
@@ -959,13 +961,13 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
 
             OrderName = widget.orderDataModel.orderNumber!;
             XmlDocument xmlDocument = XmlDocument([
-              XmlDeclaration(version: '1.0', encoding: 'UTF-8'),
+              const XmlDeclaration(version: '1.0', encoding: 'UTF-8'),
               XmlElement(name: 'order', children: [
                 XmlElement(name: 'ip', children: [XmlText(ip)]),
                 XmlElement(name: 'port', children: [XmlText(port)]),
                 XmlElement(name: 'websiteURL', children: [XmlText(url)]),
                 XmlElement(name: 'restaurant', children: [
-                  XmlElement(name: 'restaurantid'),
+                  const XmlElement(name: 'restaurantid'),
                   XmlElement(name: 'name', children: [
                     XmlText(defaultValue(loginData.restaurantName, ""))
                   ]),
@@ -978,14 +980,14 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                 ]),
                 //Customer
                 XmlElement(name: 'customer', children: [
-                  XmlElement(name: 'newcustomer', children: [XmlText("false")]),
-                  XmlElement(name: 'customerbusinessname'),
+                  const XmlElement(name: 'newcustomer', children: [XmlText("false")]),
+                  const XmlElement(name: 'customerbusinessname'),
                   XmlElement(name: 'customername', children: [
                     XmlText(widget.orderDataModel.userDetails!.firstName! +
                         " " +
                         widget.orderDataModel.userDetails!.lastName!)
                   ]),
-                  XmlElement(name: 'firstname'),
+                  const XmlElement(name: 'firstname'),
                   XmlElement(name: 'lastname', children: [
                     XmlText(widget.orderDataModel.userDetails!.firstName! +
                         " " +
@@ -1020,9 +1022,9 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                 ]),
                 //Addd
                 XmlElement(name: 'paydetails', children: [
-                  XmlElement(name: 'paysexact', children: [XmlText("false")]),
-                  XmlElement(name: 'alternativeamount'),
-                  XmlElement(name: 'customerbusinessname'),
+                  const XmlElement(name: 'paysexact', children: [XmlText("false")]),
+                  const XmlElement(name: 'alternativeamount'),
+                  const XmlElement(name: 'customerbusinessname'),
                   XmlElement(name: 'electronicallypaid', children: [
                     XmlText(widget.orderDataModel.isPaid.toString())
                   ]),

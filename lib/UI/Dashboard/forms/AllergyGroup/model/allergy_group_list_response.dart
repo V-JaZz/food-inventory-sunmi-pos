@@ -9,14 +9,14 @@ class AllergyGroupListResponseModel {
     if (json['data'] != null) {
       data = <AllergyGroupListData>[];
       json['data'].forEach((v) {
-        data!.add(new AllergyGroupListData.fromJson(v));
+        data!.add(AllergyGroupListData.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -48,7 +48,7 @@ class AllergyGroupListData {
     if (json['allergies'] != null) {
       allergies = <AllergyData>[];
       json['allergies'].forEach((v) {
-        allergies!.add(new AllergyData.fromJson(v));
+        allergies!.add(AllergyData.fromJson(v));
       });
     }
     createdOn = json['createdOn'];
@@ -60,16 +60,16 @@ class AllergyGroupListData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.allergies != null) {
-      data['allergies'] = this.allergies!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (allergies != null) {
+      data['allergies'] = allergies!.map((v) => v.toJson()).toList();
     }
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['price'] = this.price;
-    data['toppingIds'] = this.toppingIds;
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['_id'] = sId;
+    data['name'] = name;
+    data['price'] = price;
+    data['toppingIds'] = toppingIds;
     return data;
   }
 }
@@ -100,13 +100,13 @@ class AllergyData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['price'] = this.price;
-    data['__v'] = this.iV;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['_id'] = sId;
+    data['name'] = name;
+    data['price'] = price;
+    data['__v'] = iV;
     return data;
   }
 }

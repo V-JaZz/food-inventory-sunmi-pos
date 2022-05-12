@@ -7,18 +7,19 @@ class LoginModel {
 
   LoginModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    data = json['data'] != null ? new LoginData.fromJson(json['data']) : null;
+    data = json['data'] != null ? LoginData.fromJson(json['data']) : null;
+    // ignore: prefer_if_null_operators
     message = json['message'] == null ? "" : json['message'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    if (this.message != null) {
-      data['message'] = this.message!;
+    if (message != null) {
+      data['message'] = message!;
     }
     return data;
   }
@@ -150,47 +151,47 @@ class LoginData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['isActive'] = this.isActive;
-    data['deviceToken'] = this.deviceToken;
-    data['appVersion'] = this.appVersion;
-    data['deviceType'] = this.deviceType;
-    data['userType'] = this.userType;
-    data['_id'] = this.sId;
-    data['email'] = this.email;
-    data['__v'] = this.iV;
-    data['updatedAt'] = this.updatedAt;
-    data['createdOn'] = this.createdOn;
-    data['isOnline'] = this.isOnline;
-    data['discount'] = this.discount;
-    data['restaurantName'] = this.restaurantName;
-    data['location'] = this.location;
-    data['shortDescription'] = this.shortDescription;
-    data['image'] = this.image;
-    data['phoneNumber'] = this.phoneNumber;
-    data['openTime'] = this.openTime;
-    data['closeTime'] = this.closeTime;
-    data['openDay'] = this.openDay;
-    data['closeDay'] = this.closeDay;
-    data['token'] = this.token;
-    data['wifiPrinterIP'] = this.wifiPrinterIP;
-    data['wifiPrinterPort'] = this.wifiPrinterPort;
-    data['deliveryDiscount'] = this.deliveryDiscount;
-    data['collectionDiscount'] = this.collectionDiscount;
-    data['deliveryTime'] = this.deliveryTime;
-    data['collectionTime'] = this.collectionTime;
-    data['deliveryRadius'] = this.deliveryRadius;
-    data['minimumOrder'] = this.minimumOrder;
-    data['passcode'] = this.passcode;
-    data['restaurantId'] = this.restaurantId;
-    data['vatNumber'] = this.vatNumber;
-    data['restEmail'] = this.restEmail;
-    data['websiteURL'] = this.websiteURL;
-    data['autoAccept'] = this.autoAccept;
-    data['autoPrint'] = this.autoPrint;
-    data['allowOnlineDelivery'] = this.allowOnlineDelivery;
-    data['allowOnlinePickup'] = this.allowOnlinePickup;
-    data['isReservationActive'] = this.isReservationActive;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['isActive'] = isActive;
+    data['deviceToken'] = deviceToken;
+    data['appVersion'] = appVersion;
+    data['deviceType'] = deviceType;
+    data['userType'] = userType;
+    data['_id'] = sId;
+    data['email'] = email;
+    data['__v'] = iV;
+    data['updatedAt'] = updatedAt;
+    data['createdOn'] = createdOn;
+    data['isOnline'] = isOnline;
+    data['discount'] = discount;
+    data['restaurantName'] = restaurantName;
+    data['location'] = location;
+    data['shortDescription'] = shortDescription;
+    data['image'] = image;
+    data['phoneNumber'] = phoneNumber;
+    data['openTime'] = openTime;
+    data['closeTime'] = closeTime;
+    data['openDay'] = openDay;
+    data['closeDay'] = closeDay;
+    data['token'] = token;
+    data['wifiPrinterIP'] = wifiPrinterIP;
+    data['wifiPrinterPort'] = wifiPrinterPort;
+    data['deliveryDiscount'] = deliveryDiscount;
+    data['collectionDiscount'] = collectionDiscount;
+    data['deliveryTime'] = deliveryTime;
+    data['collectionTime'] = collectionTime;
+    data['deliveryRadius'] = deliveryRadius;
+    data['minimumOrder'] = minimumOrder;
+    data['passcode'] = passcode;
+    data['restaurantId'] = restaurantId;
+    data['vatNumber'] = vatNumber;
+    data['restEmail'] = restEmail;
+    data['websiteURL'] = websiteURL;
+    data['autoAccept'] = autoAccept;
+    data['autoPrint'] = autoPrint;
+    data['allowOnlineDelivery'] = allowOnlineDelivery;
+    data['allowOnlinePickup'] = allowOnlinePickup;
+    data['isReservationActive'] = isReservationActive;
     return data;
   }
 }

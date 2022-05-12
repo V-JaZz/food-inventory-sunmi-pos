@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_collection_literals
+
 class MenuItems {
   bool? success;
   List<Data>? data;
@@ -9,14 +11,14 @@ class MenuItems {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -35,16 +37,16 @@ class Data {
     if (json['items'] != null) {
       items = <Items>[];
       json['items'].forEach((v) {
-        items!.add(new Items.fromJson(v));
+        items!.add(Items.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    if (this.items != null) {
-      data['items'] = this.items!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['name'] = name;
+    if (items != null) {
+      data['items'] = items!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -85,13 +87,13 @@ class Items {
     if (json['options'] != null) {
       options = <Options>[];
       json['options'].forEach((v) {
-        options!.add(new Options.fromJson(v));
+        options!.add(Options.fromJson(v));
       });
     }
     if (json['variants'] != null) {
       variants = <Variants>[];
       json['variants'].forEach((v) {
-        variants!.add(new Variants.fromJson(v));
+        variants!.add(Variants.fromJson(v));
       });
     }
     discount = json['discount'];
@@ -99,47 +101,47 @@ class Items {
     excludeDiscount = json['excludeDiscount'];
     name = json['name'];
     category = json['category'] != null
-        ? new Category.fromJson(json['category'])
+        ? Category.fromJson(json['category'])
         : null;
     price = json['price'].toString();
     position = json['position'];
     allergyGroups = json['allergyGroups'] != null
-        ? new AllergyGroups.fromJson(json['allergyGroups'])
+        ? AllergyGroups.fromJson(json['allergyGroups'])
         : null;
     if (json['allergies'] != null) {
       allergies = <Allergies>[];
       json['allergies'].forEach((v) {
-        allergies!.add(new Allergies.fromJson(v));
+        allergies!.add(Allergies.fromJson(v));
       });
     }
     imageName = json['imageName'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    if (this.options != null) {
-      data['options'] = this.options!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['_id'] = sId;
+    if (options != null) {
+      data['options'] = options!.map((v) => v.toJson()).toList();
     }
-    if (this.variants != null) {
-      data['variants'] = this.variants!.map((v) => v.toJson()).toList();
+    if (variants != null) {
+      data['variants'] = variants!.map((v) => v.toJson()).toList();
     }
-    data['discount'] = this.discount;
-    data['description'] = this.description;
-    data['excludeDiscount'] = this.excludeDiscount;
-    data['name'] = this.name;
-    if (this.category != null) {
-      data['category'] = this.category!.toJson();
+    data['discount'] = discount;
+    data['description'] = description;
+    data['excludeDiscount'] = excludeDiscount;
+    data['name'] = name;
+    if (category != null) {
+      data['category'] = category!.toJson();
     }
-    data['price'] = this.price.toString();
-    data['position'] = this.position;
-    if (this.allergyGroups != null) {
-      data['allergyGroups'] = this.allergyGroups!.toJson();
+    data['price'] = price.toString();
+    data['position'] = position;
+    if (allergyGroups != null) {
+      data['allergyGroups'] = allergyGroups!.toJson();
     }
-    if (this.allergies != null) {
-      data['allergies'] = this.allergies!.map((v) => v.toJson()).toList();
+    if (allergies != null) {
+      data['allergies'] = allergies!.map((v) => v.toJson()).toList();
     }
-    data['imageName'] = this.imageName;
+    data['imageName'] = imageName;
     return data;
   }
 }
@@ -183,27 +185,27 @@ class Options {
     if (json['toppings'] != null) {
       toppings = <Toppings>[];
       json['toppings'].forEach((v) {
-        toppings!.add(new Toppings.fromJson(v));
+        toppings!.add(Toppings.fromJson(v));
       });
     }
     toppingGroup = json['toppingGroup'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['minToppings'] = this.minToppings.toString();
-    data['maxToppings'] = this.maxToppings.toString();
-    data['createdOn'] = this.createdOn;
-    data['restaurantId'] = this.restaurantId;
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['price'] = this.price;
-    if (this.toppings != null) {
-      data['toppings'] = this.toppings!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['minToppings'] = minToppings.toString();
+    data['maxToppings'] = maxToppings.toString();
+    data['createdOn'] = createdOn;
+    data['restaurantId'] = restaurantId;
+    data['_id'] = sId;
+    data['name'] = name;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['price'] = price;
+    if (toppings != null) {
+      data['toppings'] = toppings!.map((v) => v.toJson()).toList();
     }
-    data['toppingGroup'] = this.toppingGroup;
+    data['toppingGroup'] = toppingGroup;
     return data;
   }
 }
@@ -243,16 +245,16 @@ class Toppings {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['restaurantId'] = this.restaurantId;
-    data['name'] = this.name;
-    data['price'] = this.price;
-    data['__v'] = this.iV;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['_id'] = sId;
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['restaurantId'] = restaurantId;
+    data['name'] = name;
+    data['price'] = price;
+    data['__v'] = iV;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }
@@ -294,24 +296,24 @@ class Variants {
     if (json['subVariants'] != null) {
       subVariants = <SubVariants>[];
       json['subVariants'].forEach((v) {
-        subVariants!.add(new SubVariants.fromJson(v));
+        subVariants!.add(SubVariants.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['variantGroup'] = this.variantGroup;
-    data['createdOn'] = this.createdOn;
-    data['restaurantId'] = this.restaurantId;
-    data['name'] = this.name;
-    data['__v'] = this.iV;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['price'] = this.price.toString();
-    if (this.subVariants != null) {
-      data['subVariants'] = this.subVariants!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['_id'] = sId;
+    data['variantGroup'] = variantGroup;
+    data['createdOn'] = createdOn;
+    data['restaurantId'] = restaurantId;
+    data['name'] = name;
+    data['__v'] = iV;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['price'] = price.toString();
+    if (subVariants != null) {
+      data['subVariants'] = subVariants!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -355,17 +357,17 @@ class SubVariants {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['variantGroup'] = this.variantGroup;
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['restaurantId'] = this.restaurantId;
-    data['name'] = this.name;
-    data['price'] = this.price;
-    data['__v'] = this.iV;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['_id'] = sId;
+    data['variantGroup'] = variantGroup;
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['restaurantId'] = restaurantId;
+    data['name'] = name;
+    data['price'] = price;
+    data['__v'] = iV;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }
@@ -396,13 +398,13 @@ class Category {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['position'] = this.position;
-    data['description'] = this.description;
-    data['discount'] = this.discount;
-    data['excludeDiscount'] = this.excludeDiscount;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['_id'] = sId;
+    data['name'] = name;
+    data['position'] = position;
+    data['description'] = description;
+    data['discount'] = discount;
+    data['excludeDiscount'] = excludeDiscount;
     return data;
   }
 }
@@ -419,9 +421,9 @@ class AllergyGroups {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['_id'] = sId;
+    data['name'] = name;
     return data;
   }
 }
@@ -461,16 +463,16 @@ class Allergies {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['restaurantId'] = this.restaurantId;
-    data['name'] = this.name;
-    data['description'] = this.description;
-    data['__v'] = this.iV;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['_id'] = sId;
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['restaurantId'] = restaurantId;
+    data['name'] = name;
+    data['description'] = description;
+    data['__v'] = iV;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }

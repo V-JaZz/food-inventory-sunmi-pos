@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -9,7 +11,7 @@ import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
-import 'edit_varient].dart';
+import 'edit_varient.dart';
 
 // ignore: must_be_immutable
 class VarientList extends StatefulWidget {
@@ -84,7 +86,7 @@ class _VarientListState extends State<VarientList> {
       ),
       child: Container(
         alignment: Alignment.topCenter,
-        decoration: new BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
+        decoration: const BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
         child: Dialog(
             insetPadding: EdgeInsets.all(20.0),
             elevation: 0,

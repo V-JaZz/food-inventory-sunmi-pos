@@ -32,8 +32,8 @@ class _OrderHistoryState extends State<OrderHistory> {
           children: [
             Container(
               padding:
-                  EdgeInsets.only(left: 10, right: 40, top: 11, bottom: 11),
-              decoration: BoxDecoration(color: colorTextBlack),
+                  const EdgeInsets.only(left: 10, right: 40, top: 11, bottom: 11),
+              decoration: const BoxDecoration(color: colorTextBlack),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -43,7 +43,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                     child: Row(
                       children: [
                         GestureDetector(
-                          child: Icon(
+                          child: const Icon(
                             Icons.arrow_back,
                             color: Colors.white,
                           ),
@@ -54,14 +54,14 @@ class _OrderHistoryState extends State<OrderHistory> {
                             Navigator.of(context).pop();
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                         Text(
                           selectedDate.isEmpty
                               ? "Today"
                               : getOrderStatusDate(selectedDate),
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: colorTextWhite,
                               fontSize: 18,
                               fontWeight: FontWeight.bold),
@@ -137,7 +137,7 @@ class _OrderHistoryState extends State<OrderHistory> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(15.0),
               child: ListView(
                 shrinkWrap: true,
                 // padding: EdgeInsets.only(left: 38, right: 35, bottom: 29, top: 29),
@@ -146,7 +146,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                       // margin: EdgeInsets.only(top: 29),
                       child: TableCalendar(
                     availableGestures: AvailableGestures.horizontalSwipe,
-                    calendarStyle: CalendarStyle(isTodayHighlighted: false),
+                    calendarStyle: const CalendarStyle(isTodayHighlighted: false),
                     daysOfWeekHeight: 30,
                     rowHeight: 59,
                     calendarBuilders: CalendarBuilders(
@@ -156,16 +156,16 @@ class _OrderHistoryState extends State<OrderHistory> {
                         return Container(
                           height: 100,
                           alignment: Alignment.center,
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             top: 3,
                             bottom: 3,
                           ),
-                          margin: EdgeInsets.only(right: 1, left: 1, bottom: 1),
-                          decoration: BoxDecoration(color: colorButtonBlue),
+                          margin: const EdgeInsets.only(right: 1, left: 1, bottom: 1),
+                          decoration: const BoxDecoration(color: colorButtonBlue),
                           child: Text(
                             text,
                             maxLines: 1,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: colorTextWhite,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16),
@@ -194,14 +194,14 @@ class _OrderHistoryState extends State<OrderHistory> {
                           height: 58,
                           decoration: BoxDecoration(
                             color: selectedDate == getSendableDate(day)
-                                ? Color(0xff51C800)
+                                ? const Color(0xff51C800)
                                 : selectedDate.isEmpty && isToday
                                     ? colorGreen
                                     : colorTextWhite,
                           ),
                           // border:
                           //     Border.all(color: colorDividerGreen, width: 1)),
-                          margin: EdgeInsets.all(1),
+                          margin: const EdgeInsets.all(1),
                           child: Stack(
                             children: [
                               Positioned(
@@ -258,14 +258,14 @@ class _OrderHistoryState extends State<OrderHistory> {
                         final text = DateFormat("d").format(day);
                         return Container(
                           height: 58,
-                          decoration: BoxDecoration(color: colorTextWhite),
-                          margin: EdgeInsets.all(1),
+                          decoration: const BoxDecoration(color: colorTextWhite),
+                          margin: const EdgeInsets.all(1),
                           child: Stack(
                             children: [
                               Positioned(
                                 child: Text(
                                   text,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: colorTextGrey,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500),
@@ -282,13 +282,13 @@ class _OrderHistoryState extends State<OrderHistory> {
                         return Container(
                           height: 58,
                           // decoration: BoxDecoration(color: colorTextWhite),
-                          margin: EdgeInsets.all(1),
+                          margin: const EdgeInsets.all(1),
                           child: Stack(
                             children: [
                               Positioned(
                                 child: Text(
                                   text,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: colorTextGrey,
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500),
@@ -326,7 +326,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                   )),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.22,
-                    margin: EdgeInsets.only(top: 20),
+                    margin: const EdgeInsets.only(top: 20),
                     // padding: EdgeInsets.all(15.0),
                     // decoration: BoxDecoration(
                     //     color: Color(0xffFCAE03),
@@ -343,16 +343,16 @@ class _OrderHistoryState extends State<OrderHistory> {
                         //       fontWeight: FontWeight.bold,
                         //       color: colorTextBlack),
                         // ),
-                        Text(
+                        const Text(
                           "Today's Status",
                           style: TextStyle(
                               color: colorTextBlack,
                               fontSize: 18,
                               fontWeight: FontWeight.w700),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         RichText(
-                            text: TextSpan(
+                            text: const TextSpan(
                                 text: "Accepted Order :- ",
                                 style: TextStyle(
                                     color: colorTextBlack,
@@ -366,9 +366,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700)),
                             ])),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         RichText(
-                            text: TextSpan(
+                            text: const TextSpan(
                                 text: "Declined Order :- ",
                                 style: TextStyle(
                                     color: colorTextBlack,
@@ -382,9 +382,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700)),
                             ])),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         RichText(
-                            text: TextSpan(
+                            text: const TextSpan(
                                 text: "Order Received :- ",
                                 style: TextStyle(
                                     color: colorTextBlack,
@@ -398,9 +398,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700)),
                             ])),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         RichText(
-                            text: TextSpan(
+                            text: const TextSpan(
                                 text: "Cash :- ",
                                 style: TextStyle(
                                     color: colorTextBlack,
@@ -414,9 +414,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700)),
                             ])),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         RichText(
-                            text: TextSpan(
+                            text: const TextSpan(
                                 text: "Online :- ",
                                 style: TextStyle(
                                     color: colorTextBlack,
@@ -430,9 +430,9 @@ class _OrderHistoryState extends State<OrderHistory> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700)),
                             ])),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         RichText(
-                            text: TextSpan(
+                            text: const TextSpan(
                                 text: "Total :- ",
                                 style: TextStyle(
                                     color: colorTextBlack,
@@ -449,7 +449,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Row(
@@ -462,8 +462,8 @@ class _OrderHistoryState extends State<OrderHistory> {
                           decoration: BoxDecoration(
                               color: colorButtonYellow,
                               borderRadius: BorderRadius.circular(30.0)),
-                          padding: EdgeInsets.all(10.0),
-                          child: Text("Full Details",
+                          padding: const EdgeInsets.all(10.0),
+                          child: const Text("Full Details",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: colorTextWhite,

@@ -8,7 +8,7 @@ import 'package:food_inventory/UI/dashboard/forms/Varient/seeAll.dart';
 import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/validation_util.dart';
-import 'edit_varient].dart';
+import 'edit_varient.dart';
 import 'repository/veriant_repository.dart';
 
 // ignore: must_be_immutable
