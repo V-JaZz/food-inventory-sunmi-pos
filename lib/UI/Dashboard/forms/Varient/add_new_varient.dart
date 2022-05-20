@@ -135,13 +135,13 @@ class _AddNewVarientState extends State<AddNewVarient> {
                         color: const Color.fromRGBO(223, 221, 239, 1),
                         borderRadius: BorderRadius.circular(05)),
                     child: Text(
-                      _varientData == null
+                      _varientData.name.isEmpty
                           ? "Select Varient Group"
                           : _varientData.name,
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
-                          color: _varientData == null
+                          color: _varientData.name.isEmpty
                               ? colorTextHint
                               : colorTextBlack),
                     ),
