@@ -1,7 +1,7 @@
+// ignore: file_names
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:food_inventory/UI/dashboard/forms/Allergy/model/allergy_list_response.dart';
 import 'package:food_inventory/UI/dashboard/forms/Toppings/model/toppings_list_response_model.dart';
 import 'package:food_inventory/UI/menu/dialog_delete_type.dart';
 import 'package:food_inventory/UI/menu/dialog_type_list_view.dart';
@@ -14,6 +14,7 @@ import 'edit_topping.dart';
 
 // ignore: must_be_immutable
 class ToppingsList extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   var type;
   VoidCallback onDialogClose;
 
@@ -48,6 +49,7 @@ class _ToppingsListState extends State<ToppingsList> {
           }
         }
       } catch (e) {
+        // ignore: avoid_print
         print(e.toString());
         setState(() {
           isDataLoad = false;
@@ -73,7 +75,7 @@ class _ToppingsListState extends State<ToppingsList> {
       ),
       child: Container(
         alignment: Alignment.topCenter,
-        decoration: new BoxDecoration(color: const Color.fromRGBO(11, 4, 58, 0.7)),
+        decoration: const BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
         child: Dialog(
             insetPadding: const EdgeInsets.all(20.0),
             elevation: 0,
@@ -81,7 +83,7 @@ class _ToppingsListState extends State<ToppingsList> {
             backgroundColor: Colors.transparent,
             child: isDataLoad
                 ? const Center(
-                    child: const CircularProgressIndicator(
+                    child: CircularProgressIndicator(
                       strokeWidth: 5.0,
                       color: colorGreen,
                     ),
@@ -145,7 +147,7 @@ class _ToppingsListState extends State<ToppingsList> {
                                     motion: const ScrollMotion(),
                                     children: [
                                       const Spacer(),
-                                      Container(
+                                      SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.15,
@@ -159,7 +161,7 @@ class _ToppingsListState extends State<ToppingsList> {
                                           // label: 'Delete',
                                         ),
                                       ),
-                                      Container(
+                                      SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.15,

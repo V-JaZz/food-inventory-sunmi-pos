@@ -1,5 +1,6 @@
-// ignore_for_file: unused_import
+// ignore_for_file: unused_import, unnecessary_null_comparison, non_constant_identifier_names
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:food_inventory/UI/dashboard/dialog_menu_data_selection.dart';
 import 'package:food_inventory/UI/dashboard/forms/Allergy/repository/allergy_repository.dart';
@@ -38,10 +39,14 @@ class _AddOptionState extends State<AddOption> {
 
   callAddOptionApi() async {
     if (_toppingGrpData.name == "Default Topping Group") {
-      print("object");
+      if (kDebugMode) {
+        print("object");
+      }
       _optionRepository.addOption(_nameController.text, null, 0.0, 0.0);
     } else {
-      print("false");
+      if (kDebugMode) {
+        print("false");
+      }
       _optionRepository.addOption(
           _nameController.text, _toppingGrpData.id, 0.0, 0.0);
     }

@@ -1,15 +1,13 @@
-import 'dart:io';
+
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_inventory/UI/dashboard/dialog_menu_data_selection.dart';
-import 'package:food_inventory/UI/dashboard/forms/Allergy/repository/allergy_repository.dart';
 import 'package:food_inventory/UI/dashboard/forms/Option/repository/option_repository.dart';
 import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
-import 'package:food_inventory/constant/image.dart';
 import 'package:food_inventory/constant/validation_util.dart';
 
+// ignore: must_be_immutable
 class EditOption extends StatefulWidget {
   VoidCallback onDialogClose;
   String id;

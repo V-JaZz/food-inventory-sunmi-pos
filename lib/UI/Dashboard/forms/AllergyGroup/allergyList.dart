@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, prefer_typing_uninitialized_variables
 
 import 'dart:ui';
 
@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
+// ignore: library_prefixes
 import 'package:food_inventory/constant/switch.dart' as SW;
 
 import '../Allergy/model/allergy_list_response.dart';
@@ -106,14 +107,14 @@ class _AllergyListPageState extends State<AllergyListPage> {
         sigmaY: 3.0,
       ),
       child: Container(
-        decoration: new BoxDecoration(color: const Color.fromRGBO(11, 4, 58, 0.7)),
+        decoration: const BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
         child: Dialog(
             alignment: Alignment.topCenter,
             elevation: 0,
             backgroundColor: Colors.transparent,
             child: isDataLoad
                 ? const Center(
-                    child: const CircularProgressIndicator(
+                    child: CircularProgressIndicator(
                       strokeWidth: 5.0,
                       color: colorGreen,
                     ),
@@ -173,7 +174,7 @@ class _AllergyListPageState extends State<AllergyListPage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Container(
+                                        SizedBox(
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *

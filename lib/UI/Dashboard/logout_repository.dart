@@ -1,6 +1,7 @@
+// ignore_for_file: unused_local_variable, avoid_print
+
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_inventory/UI/Login/login.dart';
 import 'package:food_inventory/model/common_model.dart';
@@ -12,11 +13,12 @@ import '../../main.dart';
 import '../../networking/api_base_helper.dart';
 
 class LogoutRepository {
-  ApiBaseHelper _helper = ApiBaseHelper();
-  BuildContext? _context;
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  final BuildContext? _context;
 
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
+  // ignore: unused_field
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   // late String emailid;
 
   LogoutRepository(this._context);
@@ -38,7 +40,6 @@ class LogoutRepository {
       try {
         final response = await _helper.post(ApiBaseHelper.logout,
             jsonEncode(<String, String>{'email': email}), "");
-        // ignore: avoid_print
         print("posting pramas");
         print(jsonEncode.toString());
         CommonModel model =

@@ -22,7 +22,7 @@ class AllergyGroupsRepository {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
-        var body;
+        String body;
         List<String> toppings = [];
         for (SelectionAllergyListData toppingData in selectionList) {
           if (toppingData.isSelected) {
@@ -66,7 +66,7 @@ class AllergyGroupsRepository {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
-        var body;
+        String body;
         List<String> toppings = [];
         for (SelectionAllergyListData toppingData in selectionList) {
           if (toppingData.isSelected) {

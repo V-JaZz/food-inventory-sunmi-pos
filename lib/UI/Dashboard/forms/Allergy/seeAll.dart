@@ -14,6 +14,7 @@ import 'edit_allergy.dart';
 
 // ignore: must_be_immutable
 class AllergyList extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   var type;
   VoidCallback onDialogClose;
 
@@ -85,7 +86,7 @@ class _AllergyListState extends State<AllergyList> {
       ),
       child: Container(
         alignment: Alignment.topCenter,
-        decoration: new BoxDecoration(color: const Color.fromRGBO(11, 4, 58, 0.7)),
+        decoration: const BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
         child: Dialog(
             insetPadding: const EdgeInsets.all(20.0),
             elevation: 0,
@@ -93,7 +94,7 @@ class _AllergyListState extends State<AllergyList> {
             backgroundColor: Colors.transparent,
             child: isDataLoad
                 ? const Center(
-                    child: const CircularProgressIndicator(
+                    child: CircularProgressIndicator(
                       strokeWidth: 5.0,
                       color: colorGreen,
                     ),
@@ -129,7 +130,7 @@ class _AllergyListState extends State<AllergyList> {
                                 ),
                                 child: const Text(
                                   "My Allergy",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       color: colorTextBlack,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700),
@@ -157,7 +158,7 @@ class _AllergyListState extends State<AllergyList> {
                                     motion: const ScrollMotion(),
                                     children: [
                                       const Spacer(),
-                                      Container(
+                                      SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.15,
@@ -171,7 +172,7 @@ class _AllergyListState extends State<AllergyList> {
                                           // label: 'Delete',
                                         ),
                                       ),
-                                      Container(
+                                      SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.15,

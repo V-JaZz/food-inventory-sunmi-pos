@@ -1,4 +1,4 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe, avoid_print
+// ignore_for_file: import_of_legacy_library_into_null_safe, avoid_print, deprecated_member_use
 
 import 'dart:convert';
 import 'dart:io';
@@ -40,9 +40,12 @@ import 'forms/Varient/add_new_varient.dart';
 import 'forms/VarientGroup/add_varientGroup.dart';
 import 'forms/toppingGroup/add_toppingGroup.dart';
 import 'logout_repository.dart';
+// ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class DashBoard extends StatefulWidget {
+  const DashBoard({Key? key}) : super(key: key);
+
   @override
   _DashBoardState createState() => _DashBoardState();
 }
@@ -110,6 +113,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
     });
   }
 
+  // ignore: prefer_typing_uninitialized_variables
   var notiCount;
   initPreferences() async {
     _prefs = await SharedPreferences.getInstance();
@@ -136,7 +140,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
         });
       }
     });
-    print("raj" + "dfhshdkfjshfhsdjfsjsfdgs");
+    print("raj" "dfhshdkfjshfhsdjfsjsfdgs");
   }
 
   _getDrawerItemWidget(int pos) {
@@ -158,7 +162,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
       case 7:
         return const RestaurantDetails();
       case 8:
-        return Settings();
+        return const Settings();
     }
   }
 
@@ -197,12 +201,10 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
           if (selectedDate.isNotEmpty) {
             params = "date=$selectedDate";
           }
-
           String body = "";
           if (params.isNotEmpty) {
             body = "?$params";
           }
-
           if (!isSocketOrderAdded) {
             final response = await ApiBaseHelper()
                 .getwith(ApiBaseHelper.getOrders + body, token, restaurantId);
@@ -298,6 +300,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
 
+    // ignore: unnecessary_null_comparison
     if (arguments != null && _checkPage != -1) {
       SharedPreferences.getInstance().then((value) {
         List<String> mList =
@@ -331,7 +334,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         drawer: SafeArea(
-          child: Container(
+          child: SizedBox(
             width: MediaQuery.of(context).size.width / 1.4,
             child: BackdropFilter(
               filter: ImageFilter.blur(
@@ -523,40 +526,36 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                       children: [
                         Row(children: [
                           Center(
-                            child: Container(
-                              child: FlatButton(
-                                minWidth: 20,
-                                padding: const EdgeInsets.all(10),
-                                child: SvgPicture.asset(
-                                  icMenuHam,
-                                ),
-                                onPressed: () {
-                                  FocusScope.of(context)
-                                      .requestFocus(FocusNode());
-                                  Scaffold.of(context).openDrawer();
-                                  WidgetsBinding.instance!
-                                      .addPostFrameCallback((_) {
-                                    controller.value = 0;
-                                    controller.animateTo(22,
-                                        duration:
-                                            const Duration(milliseconds: 1500));
-                                  });
-                                },
-                                shape: const CircleBorder(),
+                            child: FlatButton(
+                              minWidth: 20,
+                              padding: const EdgeInsets.all(10),
+                              child: SvgPicture.asset(
+                                icMenuHam,
                               ),
+                              onPressed: () {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                Scaffold.of(context).openDrawer();
+                                WidgetsBinding.instance!
+                                    .addPostFrameCallback((_) {
+                                  controller.value = 0;
+                                  controller.animateTo(22,
+                                      duration:
+                                          const Duration(milliseconds: 1500));
+                                });
+                              },
+                              shape: const CircleBorder(),
                             ),
                           ),
-                          Container(
-                            child: Text(
-                              restaurantName,
-                              maxLines: 1,
-                              overflow: TextOverflow.fade,
-                              softWrap: false,
-                              style: const TextStyle(
-                                  color: colorTextWhite,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15),
-                            ),
+                          Text(
+                            restaurantName,
+                            maxLines: 1,
+                            overflow: TextOverflow.fade,
+                            softWrap: false,
+                            style: const TextStyle(
+                                color: colorTextWhite,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15),
                           )
                         ]),
                         Row(

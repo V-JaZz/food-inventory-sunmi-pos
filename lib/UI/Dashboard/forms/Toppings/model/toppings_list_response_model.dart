@@ -9,13 +9,13 @@ class ToppingsListResponseModel {
     if (json['data'] != null) {
       data = <ToppingsListData>[];
       json['data'].forEach((v) {
-        data!.add(new ToppingsListData.fromJson(v));
+        data!.add(ToppingsListData.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
@@ -49,7 +49,7 @@ class ToppingsListData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['createdOn'] = createdOn;
     data['isDeleted'] = isDeleted;
     data['_id'] = sId;

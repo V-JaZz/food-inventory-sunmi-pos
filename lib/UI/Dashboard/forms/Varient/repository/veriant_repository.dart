@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/constant/validation_util.dart';
@@ -8,9 +9,9 @@ import 'package:food_inventory/model/common_model.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 
 class VariantRepository {
-  ApiBaseHelper _helper = new ApiBaseHelper();
-  late BuildContext _context;
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  late final BuildContext _context;
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
 
   VariantRepository(this._context);
 
@@ -47,7 +48,9 @@ class VariantRepository {
             showMessage(model.message!, _context);
           }
         } catch (e) {
-          print(e.toString());
+          if (kDebugMode) {
+            print(e.toString());
+          }
           Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
           // }
         }
@@ -63,7 +66,6 @@ class VariantRepository {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
-        List<dynamic> dataJson = [];
         Dialogs.showLoadingDialog(_context, _keyLoader); //invoking login
         try {
           final response = await _helper.put(
@@ -90,7 +92,9 @@ class VariantRepository {
             showMessage(model.message!, _context);
           }
         } catch (e) {
-          print(e.toString());
+          if (kDebugMode) {
+            print(e.toString());
+          }
           Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
         }
         // }

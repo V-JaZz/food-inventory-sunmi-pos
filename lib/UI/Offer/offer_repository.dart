@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_final_fields
+
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:food_inventory/UI/Offer/offer_success_model.dart';

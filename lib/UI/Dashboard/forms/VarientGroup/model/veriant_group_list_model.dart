@@ -15,7 +15,7 @@ class VarientGroupListModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
@@ -64,7 +64,7 @@ class VarientGroupList {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (variants != null) {
       data['variants'] = variants!.map((v) => v.toJson()).toList();
     }
@@ -118,7 +118,7 @@ class VariantsGroup {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['variantGroup'] = variantGroup;
     data['createdOn'] = createdOn;
     data['isDeleted'] = isDeleted;

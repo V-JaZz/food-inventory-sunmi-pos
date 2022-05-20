@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_new, unused_local_variable
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -9,8 +11,8 @@ import '../../main.dart';
 import '../../networking/api_base_helper.dart';
 
 class InstanceActionRepository {
-  ApiBaseHelper _helper = ApiBaseHelper();
-  BuildContext? _context;
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  final BuildContext? _context;
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
 
   InstanceActionRepository(this._context);

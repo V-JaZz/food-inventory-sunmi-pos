@@ -1,14 +1,11 @@
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:food_inventory/UI/Dashboard/forms/Toppings/edit_topping.dart';
-import 'package:food_inventory/UI/dashboard/forms/Allergy/model/allergy_list_response.dart';
-import 'package:food_inventory/UI/dashboard/forms/Toppings/model/toppings_list_response_model.dart';
 import 'package:food_inventory/UI/dashboard/forms/toppingGroup/model/topping_group_list_response_model.dart';
 import 'package:food_inventory/UI/dashboard/forms/toppingGroup/toppingsList.dart';
 import 'package:food_inventory/UI/menu/dialog_delete_type.dart';
 import 'package:food_inventory/UI/menu/dialog_type_list_view.dart';
-// import 'package:food_inventory/UI/menu/model/option_list_response_model.dart';
 import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/storage_util.dart';
@@ -16,6 +13,7 @@ import 'package:food_inventory/networking/api_base_helper.dart';
 
 // ignore: must_be_immutable
 class ToppingsListGroup extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   var type;
   VoidCallback onDialogClose;
 
@@ -67,7 +65,9 @@ class _ToppingsListGroupState extends State<ToppingsListGroup> {
           }
         }
       } catch (e) {
-        print(e.toString());
+        if (kDebugMode) {
+          print(e.toString());
+        }
         setState(() {
           isDataLoad = false;
         });
@@ -100,7 +100,7 @@ class _ToppingsListGroupState extends State<ToppingsListGroup> {
             backgroundColor: Colors.transparent,
             child: isDataLoad
                 ? const Center(
-                    child: const CircularProgressIndicator(
+                    child: CircularProgressIndicator(
                       strokeWidth: 5.0,
                       color: colorGreen,
                     ),
@@ -152,7 +152,6 @@ class _ToppingsListGroupState extends State<ToppingsListGroup> {
                             itemCount: dataList.length,
                             shrinkWrap: true,
                             itemBuilder: (listContext, index) {
-                              final item = dataList[index];
 
                               return Container(
                                 key: ValueKey(index),

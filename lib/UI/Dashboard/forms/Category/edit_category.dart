@@ -1,16 +1,17 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_inventory/UI/dashboard/forms/Category/repository/category_repository.dart';
-import 'package:food_inventory/UI/dashboard/forms/Category/seeAll.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/image.dart';
 import 'package:food_inventory/constant/validation_util.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
+// ignore: must_be_immutable
 class EditCategory extends StatefulWidget {
   VoidCallback onDialogClose;
   String id;
@@ -62,7 +63,9 @@ class _EditCategoryState extends State<EditCategory> {
       cropperFile = croppedfile;
       setState(() {});
     } else {
-      print("Image is not cropped.");
+      if (kDebugMode) {
+        print("Image is not cropped.");
+      }
     }
   }
 

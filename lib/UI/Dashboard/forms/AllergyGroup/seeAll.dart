@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:food_inventory/UI/dashboard/forms/AllergyGroup/allergyList.dart';
@@ -13,6 +14,7 @@ import 'model/allergy_group_list_response.dart';
 
 // ignore: must_be_immutable
 class AllergyListGroup extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   var type;
   VoidCallback onDialogClose;
 
@@ -64,7 +66,9 @@ class _AllergyListGroupState extends State<AllergyListGroup> {
           }
         }
       } catch (e) {
-        print(e.toString());
+        if (kDebugMode) {
+          print(e.toString());
+        }
         setState(() {
           isDataLoad = false;
         });
@@ -97,7 +101,7 @@ class _AllergyListGroupState extends State<AllergyListGroup> {
             backgroundColor: Colors.transparent,
             child: isDataLoad
                 ? const Center(
-                    child: const CircularProgressIndicator(
+                    child: CircularProgressIndicator(
                       strokeWidth: 5.0,
                       color: colorGreen,
                     ),
@@ -133,7 +137,7 @@ class _AllergyListGroupState extends State<AllergyListGroup> {
                                 ),
                                 child: const Text(
                                   "My Allergy Group",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       color: colorTextBlack,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700),
@@ -149,6 +153,7 @@ class _AllergyListGroupState extends State<AllergyListGroup> {
                             itemCount: dataList.length,
                             shrinkWrap: true,
                             itemBuilder: (listContext, index) {
+                              // ignore: unused_local_variable
                               final item = dataList[index];
 
                               return Container(

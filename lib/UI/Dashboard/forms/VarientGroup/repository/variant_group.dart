@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import '../varientList.dart';
 
@@ -9,17 +11,17 @@ import 'package:food_inventory/model/common_model.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 
 class VariantGroupsRepository {
-  ApiBaseHelper _helper = new ApiBaseHelper();
-  late BuildContext _context;
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  late final BuildContext _context;
   late VarientListPage widget;
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
   VariantGroupsRepository(this._context, this.widget);
 
   addVariantGroup(String name, List<SelectionVariantListData> selectionList) {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
-        var body;
+        String body;
         List<String> toppings = [];
         for (SelectionVariantListData toppingData in selectionList) {
           if (toppingData.isSelected) {
@@ -64,7 +66,7 @@ class VariantGroupsRepository {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
-        var body;
+        String body;
         List<String> toppings = [];
         for (SelectionVariantListData toppingData in selectionList) {
           if (toppingData.isSelected) {

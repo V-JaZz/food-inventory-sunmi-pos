@@ -1,10 +1,9 @@
-// ignore_for_file: unused_import
+
 
 import 'package:flutter/material.dart';
 import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/validation_util.dart';
-import '../Allergy/repository/allergy_repository.dart';
 import 'allergyList.dart';
 import 'seeAll.dart';
 
@@ -19,13 +18,11 @@ class AddAllergyGroups extends StatefulWidget {
 }
 
 class _AddAllergyGroupsState extends State<AddAllergyGroups> {
-  late AllergyRepository _allergyRepository;
   late TextEditingController _nameController;
 
   @override
   void initState() {
     super.initState();
-    _allergyRepository = AllergyRepository(context);
     _nameController = TextEditingController();
   }
 
@@ -95,10 +92,10 @@ class _AddAllergyGroupsState extends State<AddAllergyGroups> {
                           color: colorTextBlack),
                       cursorColor: colorTextBlack,
                       decoration: const InputDecoration(
-                          contentPadding: const EdgeInsets.all(0),
+                          contentPadding: EdgeInsets.all(0),
                           isDense: true,
                           hintText: "Enter New Allergy Group Name",
-                          hintStyle: const TextStyle(
+                          hintStyle: TextStyle(
                               color: colorTextHint,
                               fontSize: 15,
                               fontWeight: FontWeight.w400),
@@ -191,7 +188,7 @@ class _AddAllergyGroupsState extends State<AddAllergyGroups> {
           name: name,
           id: '',
           type: "Add",
-          ids: [],
+          ids: const [],
         );
       },
     );

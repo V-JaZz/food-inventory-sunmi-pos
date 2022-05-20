@@ -21,13 +21,11 @@ class AddVarientGroups extends StatefulWidget {
 }
 
 class _AddVarientGroupsState extends State<AddVarientGroups> {
-  late VariantRepository _varientRepository;
   late TextEditingController _nameController;
 
   @override
   void initState() {
     super.initState();
-    _varientRepository = VariantRepository(context);
     _nameController = TextEditingController();
   }
 
@@ -97,7 +95,7 @@ class _AddVarientGroupsState extends State<AddVarientGroups> {
                           color: colorTextBlack),
                       cursorColor: colorTextBlack,
                       decoration: const InputDecoration(
-                          contentPadding: const EdgeInsets.all(0),
+                          contentPadding: EdgeInsets.all(0),
                           isDense: true,
                           hintText: "Enter New Allergy Group Name",
                           hintStyle: TextStyle(
@@ -193,7 +191,7 @@ class _AddVarientGroupsState extends State<AddVarientGroups> {
           name: name,
           id: '',
           type: "Add",
-          ids: [],
+          ids: const [],
         );
       },
     );

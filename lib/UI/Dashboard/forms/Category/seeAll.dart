@@ -1,4 +1,6 @@
+// ignore: file_names
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:food_inventory/UI/menu/dialog_delete_type.dart';
@@ -12,6 +14,7 @@ import 'model/category_list_response_model.dart';
 
 // ignore: must_be_immutable
 class ListAllPage extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   var type;
   VoidCallback onDialogClose;
 
@@ -76,7 +79,9 @@ class _ListAllPageState extends State<ListAllPage> {
           }
         }
       } catch (e) {
-        print(e.toString());
+        if (kDebugMode) {
+          print(e.toString());
+        }
         setState(() {
           isDataLoad = false;
         });
@@ -101,7 +106,7 @@ class _ListAllPageState extends State<ListAllPage> {
       ),
       child: Container(
         alignment: Alignment.topCenter,
-        decoration: new BoxDecoration(color: const Color.fromRGBO(11, 4, 58, 0.7)),
+        decoration: const BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
         child: Dialog(
             insetPadding: const EdgeInsets.all(20.0),
             elevation: 0,
@@ -109,7 +114,7 @@ class _ListAllPageState extends State<ListAllPage> {
             backgroundColor: Colors.transparent,
             child: isDataLoad
                 ? const Center(
-                    child: const CircularProgressIndicator(
+                    child: CircularProgressIndicator(
                       strokeWidth: 5.0,
                       color: colorGreen,
                     ),
@@ -145,7 +150,7 @@ class _ListAllPageState extends State<ListAllPage> {
                                 ),
                                 child: const Text(
                                   "My Category",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       color: colorTextBlack,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700),
@@ -173,7 +178,7 @@ class _ListAllPageState extends State<ListAllPage> {
                                     motion: const ScrollMotion(),
                                     children: [
                                       const Spacer(),
-                                      Container(
+                                      SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.15,
@@ -187,7 +192,7 @@ class _ListAllPageState extends State<ListAllPage> {
                                           // label: 'Delete',
                                         ),
                                       ),
-                                      Container(
+                                      SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.15,

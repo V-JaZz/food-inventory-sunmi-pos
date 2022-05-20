@@ -91,7 +91,7 @@ class _InstantActionState extends State<InstantAction> {
               boxShadow: [
                 const BoxShadow(
                   color: Colors.grey,
-                  offset: const Offset(1.0, 1.0), //(x,y)
+                  offset: Offset(1.0, 1.0), //(x,y)
                   blurRadius: 1.0,
                 ),
               ]),

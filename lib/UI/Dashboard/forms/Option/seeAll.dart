@@ -14,6 +14,7 @@ import 'edit_option.dart';
 
 // ignore: must_be_immutable
 class OptionList extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   var type;
   VoidCallback onDialogClose;
 

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_new
+
 import 'package:flutter/material.dart';
 import 'package:food_inventory/UI/menu/dialog_type_list_view.dart';
 import 'package:food_inventory/UI/menu/repository/delete_data_repository.dart';

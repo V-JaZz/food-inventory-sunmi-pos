@@ -14,11 +14,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../main.dart';
 
 class LoginRepository {
-  ApiBaseHelper _helper = ApiBaseHelper();
-  BuildContext? _context;
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  final BuildContext? _context;
 
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   late String restaurantid;
   late String emailid;
 

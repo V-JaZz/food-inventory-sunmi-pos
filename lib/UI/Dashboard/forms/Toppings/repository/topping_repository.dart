@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/constant/validation_util.dart';
@@ -8,9 +9,9 @@ import 'package:food_inventory/model/common_model.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 
 class ToppingsRepository {
-  ApiBaseHelper _helper = ApiBaseHelper();
-  late BuildContext _context;
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  late final BuildContext _context;
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
 
   ToppingsRepository(this._context);
 
@@ -46,7 +47,9 @@ class ToppingsRepository {
             showMessage(model.message!, _context);
           }
         } catch (e) {
-          print(e.toString());
+          if (kDebugMode) {
+            print(e.toString());
+          }
           Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
         }
       }
@@ -84,7 +87,9 @@ class ToppingsRepository {
               showMessage(model.message!, _context);
             }
           } catch (e) {
-            print(e.toString());
+            if (kDebugMode) {
+              print(e.toString());
+            }
             Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
           }
         }

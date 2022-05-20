@@ -1,6 +1,9 @@
+// ignore_for_file: unused_shown_name
+
 import 'dart:convert';
 import 'dart:io' show Directory, File, Platform, Process;
 import 'dart:ffi' as ffi;
+import 'package:flutter/foundation.dart';
 import 'package:food_inventory/UI/order/dialog_order_details.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/constant/validation_util.dart';
@@ -20,11 +23,11 @@ final PlayWorld playSound =
     dylib.lookup<ffi.NativeFunction<PlaySoundFunc>>('stop').asFunction();
 
 class OrderManageRepository {
-  ApiBaseHelper _helper = new ApiBaseHelper();
+  ApiBaseHelper _helper = ApiBaseHelper();
   late BuildContext context;
   late OrderDetailsDialog widget;
 
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
 
   OrderManageRepository(this.context, this.widget);
 
@@ -56,7 +59,9 @@ class OrderManageRepository {
             showMessage(model.message!, context);
           }
         } catch (e) {
-          print(e.toString());
+          if (kDebugMode) {
+            print(e.toString());
+          }
           Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
         }
       });

@@ -15,7 +15,7 @@ class AllergyGroupListResponseModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
@@ -60,7 +60,7 @@ class AllergyGroupListData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (allergies != null) {
       data['allergies'] = allergies!.map((v) => v.toJson()).toList();
     }
@@ -100,7 +100,7 @@ class AllergyData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['createdOn'] = createdOn;
     data['isDeleted'] = isDeleted;
     data['_id'] = sId;

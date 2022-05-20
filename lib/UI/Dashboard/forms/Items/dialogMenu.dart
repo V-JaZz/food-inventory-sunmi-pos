@@ -10,13 +10,13 @@ import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/image.dart';
 import 'package:food_inventory/constant/validation_util.dart';
-import 'package:image_cropper/image_cropper.dart';
 
 import 'menu_item_repository.dart';
 import 'model/menu_items.dart';
 
 // ignore: must_be_immutable
 class DialogMenuItems extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   var isEdit;
   Items? editItem;
   String type;
@@ -212,16 +212,16 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: new BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
+      decoration: const BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
       child: Dialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          insetPadding: EdgeInsets.all(15.0),
+          insetPadding: const EdgeInsets.all(15.0),
           elevation: 0,
           // backgroundColor: Colors.transparent,
           child: Container(
             height: MediaQuery.of(context).size.height * 0.785,
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             decoration: BoxDecoration(
                 color: colorTextWhite, borderRadius: BorderRadius.circular(13)),
             child: ListView(
@@ -232,7 +232,7 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                   children: [
                     Text(
                       widget.isEdit ? "Edit Item" : "Add New Item",
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: colorTextBlack,
                           fontWeight: FontWeight.w700,
                           fontSize: 18),
@@ -310,8 +310,8 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                       )
                                     : GestureDetector(
                                         child: Row(
-                                          children: [
-                                            const Text(
+                                          children: const [
+                                            Text(
                                               "Add image",
                                               style: TextStyle(
                                                   color: colorTextBlack,
@@ -319,10 +319,10 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                                   fontSize: 18),
                                               textAlign: TextAlign.center,
                                             ),
-                                            const SizedBox(
+                                            SizedBox(
                                               width: 5.0,
                                             ),
-                                            const Icon(
+                                            Icon(
                                               Icons.add_circle,
                                               color: colorYellow,
                                             )
@@ -357,8 +357,8 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                   )
                                 : GestureDetector(
                                     child: Row(
-                                      children: [
-                                        const Text(
+                                      children: const [
+                                        Text(
                                           "Add image",
                                           style: TextStyle(
                                               color: colorTextBlack,
@@ -366,10 +366,10 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                               fontSize: 18),
                                           textAlign: TextAlign.center,
                                         ),
-                                        const SizedBox(
+                                        SizedBox(
                                           width: 5.0,
                                         ),
-                                        const Icon(
+                                        Icon(
                                           Icons.add_circle,
                                           color: colorYellow,
                                         )
@@ -393,7 +393,7 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                         // padding: EdgeInsets.all(15.0),
                         padding: const EdgeInsets.only(left: 05, right: 05),
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(223, 221, 239, 1),
+                            color: const Color.fromRGBO(223, 221, 239, 1),
                             borderRadius: BorderRadius.circular(05)),
                         child: DropdownButton<String>(
                             isExpanded: true,
@@ -434,9 +434,9 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                         height: 25,
                       ),
                       Container(
-                        padding: EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(223, 221, 239, 1),
+                            color: const Color.fromRGBO(223, 221, 239, 1),
                             borderRadius: BorderRadius.circular(05)),
                         child: TextField(
                           maxLines: 1,
@@ -469,12 +469,12 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(223, 221, 239, 1),
+                            color: const Color.fromRGBO(223, 221, 239, 1),
                             borderRadius: BorderRadius.circular(05)),
                         child: GestureDetector(
-                          child: Container(
+                          child: SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
                               _categoryData.name.isEmpty
@@ -504,20 +504,22 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(223, 221, 239, 1),
+                            color: const Color.fromRGBO(223, 221, 239, 1),
                             borderRadius: BorderRadius.circular(05)),
                         child: GestureDetector(
-                          child: Container(
+                          child: SizedBox(
                             width: MediaQuery.of(context).size.width,
                             child: Text(
+                              // ignore: unnecessary_null_comparison
                               _allergyGroupData == null
                                   ? "Select Allergy Group"
                                   : _allergyGroupData.name,
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.normal,
+                                  // ignore: unnecessary_null_comparison
                                   color: _allergyGroupData == null
                                       ? colorTextHint
                                       : colorTextBlack),
@@ -540,9 +542,9 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(223, 221, 239, 1),
+                            color: const Color.fromRGBO(223, 221, 239, 1),
                             borderRadius: BorderRadius.circular(05)),
                         child: TextField(
                           maxLines: 1,
@@ -573,9 +575,9 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(223, 221, 239, 1),
+                            color: const Color.fromRGBO(223, 221, 239, 1),
                             borderRadius: BorderRadius.circular(05)),
                         child: TextField(
                           maxLines: 1,
@@ -614,11 +616,11 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                         itemBuilder: (listContext, index) {
                           return Container(
                             height: MediaQuery.of(context).size.width * 0.14,
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                               left: 15.0,
                             ),
                             decoration: BoxDecoration(
-                                color: Color.fromRGBO(223, 221, 239, 1),
+                                color: const Color.fromRGBO(223, 221, 239, 1),
                                 borderRadius: BorderRadius.circular(05)),
                             child: Row(
                               children: [
@@ -658,8 +660,8 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                 Container(
                                     alignment: Alignment.center,
                                     width: 60,
-                                    padding: EdgeInsets.only(left: 10),
-                                    color: Color.fromRGBO(213, 210, 234, 1),
+                                    padding: const EdgeInsets.only(left: 10),
+                                    color: const Color.fromRGBO(213, 210, 234, 1),
                                     height: MediaQuery.of(context).size.width *
                                         0.14,
                                     child: TextField(
@@ -668,7 +670,7 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                           variantData[index].priceController,
                                       textAlignVertical:
                                           TextAlignVertical.center,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: colorBlack,
                                           fontSize: 15,
                                           fontWeight: FontWeight.w400),
@@ -686,8 +688,8 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                     )),
                                 Container(
                                   alignment: Alignment.center,
-                                  padding: EdgeInsets.all(15),
-                                  decoration: BoxDecoration(
+                                  padding: const EdgeInsets.all(15),
+                                  decoration: const BoxDecoration(
                                     color: colorButtonYellow,
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(05),
@@ -743,11 +745,11 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                         itemBuilder: (listContext, index) {
                           return Container(
                             height: MediaQuery.of(context).size.width * 0.14,
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                               left: 15.0,
                             ),
                             decoration: BoxDecoration(
-                                color: Color.fromRGBO(223, 221, 239, 1),
+                                color: const Color.fromRGBO(223, 221, 239, 1),
                                 borderRadius: BorderRadius.circular(05)),
                             child: Row(
                               children: [
@@ -755,7 +757,7 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                   child: Container(
                                     // padding: const EdgeInsets.all(22),
                                     child: GestureDetector(
-                                      child: Container(
+                                      child: SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width,
                                         child: Text(
@@ -784,8 +786,8 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                 Container(
                                     alignment: Alignment.center,
                                     width: 60,
-                                    padding: EdgeInsets.only(left: 10),
-                                    color: Color.fromRGBO(213, 210, 234, 1),
+                                    padding: const EdgeInsets.only(left: 10),
+                                    color: const Color.fromRGBO(213, 210, 234, 1),
                                     height: MediaQuery.of(context).size.width *
                                         0.14,
                                     child: TextField(
@@ -812,8 +814,8 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                     )),
                                 Container(
                                     alignment: Alignment.center,
-                                    padding: EdgeInsets.all(15),
-                                    decoration: BoxDecoration(
+                                    padding: const EdgeInsets.all(15),
+                                    decoration: const BoxDecoration(
                                       color: colorButtonYellow,
                                       borderRadius: BorderRadius.only(
                                           topRight: Radius.circular(05),
@@ -855,15 +857,15 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 10),
+                  margin: const EdgeInsets.only(top: 10),
                   child: Row(
                     children: [
                       Expanded(
                         child: GestureDetector(
                           child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 14),
+                            padding: const EdgeInsets.symmetric(vertical: 14),
                             alignment: Alignment.center,
-                            margin: EdgeInsets.only(left: 30, right: 10),
+                            margin: const EdgeInsets.only(left: 30, right: 10),
                             decoration: BoxDecoration(
                                 color: colorButtonYellow,
                                 borderRadius: BorderRadius.circular(30)),
@@ -971,44 +973,6 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
     );
   }
 
-  Future<void> _optionsDialogBox() {
-    return showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (BuildContext _context) {
-          return AlertDialog(
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  GestureDetector(
-                    child: Text(
-                      'Take a picture',
-                      style: TextStyle(color: colorTextBlack, fontSize: 22),
-                    ),
-                    onTap: () {
-                      setState(() async {
-                        Navigator.pop(_context);
-                      });
-                    },
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                  ),
-                  GestureDetector(
-                    child: Text(
-                      'Select from gallery',
-                      style: TextStyle(color: colorTextBlack, fontSize: 22),
-                    ),
-                    onTap: () {
-                      _pickerFile();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
 
   void _pickerFile() async {
     // FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -1021,33 +985,4 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
     // });
   }
 
-  Future<void> _cropImage(path) async {
-    print(path);
-    ImageCropper imageCropper = ImageCropper();
-    File? croppedfile = await imageCropper.cropImage(
-        sourcePath: path,
-        aspectRatioPresets: [
-          CropAspectRatioPreset.square,
-          CropAspectRatioPreset.ratio3x2,
-          CropAspectRatioPreset.original,
-          CropAspectRatioPreset.ratio4x3,
-          CropAspectRatioPreset.ratio16x9
-        ],
-        androidUiSettings: const AndroidUiSettings(
-            toolbarTitle: '',
-            toolbarColor: colorButtonYellow,
-            toolbarWidgetColor: colorButtonBlue,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false),
-        iosUiSettings: const IOSUiSettings(
-          minimumAspectRatio: 1.0,
-        ));
-
-    if (croppedfile != null) {
-      cropperFile = croppedfile;
-      setState(() {});
-    } else {
-      print("Image is not cropped.");
-    }
-  }
 }

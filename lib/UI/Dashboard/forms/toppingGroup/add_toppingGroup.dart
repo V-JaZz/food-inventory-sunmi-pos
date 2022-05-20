@@ -22,13 +22,11 @@ class AddToppingGroups extends StatefulWidget {
 }
 
 class _AddToppingGroupsState extends State<AddToppingGroups> {
-  late ToppingsRepository _toppingRepository;
   late TextEditingController _nameController;
 
   @override
   void initState() {
     super.initState();
-    _toppingRepository = ToppingsRepository(context);
     _nameController = TextEditingController();
   }
 
@@ -194,7 +192,7 @@ class _AddToppingGroupsState extends State<AddToppingGroups> {
           name: name,
           id: '',
           type: "Add",
-          ids: [],
+          ids: const [],
         );
       },
     );

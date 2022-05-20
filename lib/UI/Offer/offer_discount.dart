@@ -1,9 +1,6 @@
-// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_const, avoid_print
 
 import 'dart:convert';
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_inventory/UI/Offer/exclude_page.dart';

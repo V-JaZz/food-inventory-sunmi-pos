@@ -679,30 +679,6 @@ class ApiBaseHelper {
     return response;
   }
 
-  dynamic _returnResponse(http.Response response) {
-    print(response.statusCode.toString());
-    print(response.body.toString());
-    var responseJson = json.decode(response.body.toString());
-    switch (response.statusCode) {
-      case 101:
-      case 200:
-      case 404:
-        // var responseJson = json.decode(response.body.toString());
-        return responseJson;
-      case 400:
-        return responseJson;
-        throw BadRequestException(response.body.toString());
-      case 401:
-      case 403:
-        return responseJson;
-        throw UnauthorisedException(response.body.toString());
-      case 500:
-      default:
-        return responseJson;
-        throw FetchDataException(
-            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
-    }
-  }
 
   dynamic returnResponse(BuildContext context, http.Response response) {
     print(response.statusCode.toString());

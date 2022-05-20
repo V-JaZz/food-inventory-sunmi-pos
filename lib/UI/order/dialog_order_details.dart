@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, avoid_print, prefer_adjacent_string_concatenation, prefer_typing_uninitialized_variables
+// ignore_for_file: avoid_unnecessary_containers, avoid_print, prefer_adjacent_string_concatenation, prefer_typing_uninitialized_variables, unrelated_type_equality_checks, prefer_if_null_operators
 
 import 'dart:convert';
 import 'dart:io';
@@ -6,8 +6,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_inventory/UI/order/Repository/order_manage_repository.dart';
 import 'package:food_inventory/constant/app_util.dart';

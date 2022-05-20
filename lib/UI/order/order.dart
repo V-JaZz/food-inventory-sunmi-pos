@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_local_variable, unnecessary_string_interpolations, prefer_typing_uninitialized_variables
 
 import 'dart:convert';
 import 'dart:ui';
@@ -96,7 +96,7 @@ class _OrderState extends State<Order> {
     });
   }
 
-  ApiBaseHelper _helper = new ApiBaseHelper();
+  final ApiBaseHelper _helper = ApiBaseHelper();
 
   changeOrderStatus(String status, orderId) {
     print("Change Order Status");
@@ -325,7 +325,7 @@ class _OrderState extends State<Order> {
         color: colorBackgroundyellow,
         child: isDataLoad
             ? const Center(
-                child: const CircularProgressIndicator(
+                child: CircularProgressIndicator(
                   strokeWidth: 5.0,
                   color: colorGreen,
                 ),
@@ -370,7 +370,7 @@ class _OrderState extends State<Order> {
                                     children: <TextSpan>[
                                       TextSpan(
                                           text: truncateString(
-                                              "${orderObj.orderNumber!.trimRight()}",
+                                              orderObj.orderNumber!.trimRight(),
                                               16),
                                           style: const TextStyle(
                                             fontWeight: FontWeight.w400,
@@ -421,7 +421,7 @@ class _OrderState extends State<Order> {
                                         children: <TextSpan>[
                                           TextSpan(
                                               text:
-                                                  "${orderObj.deliveryDatetime ?? ""}",
+                                                  orderObj.deliveryDatetime ?? "",
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.w600,
                                               )),

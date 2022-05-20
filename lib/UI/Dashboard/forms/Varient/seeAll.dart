@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:food_inventory/UI/dashboard/forms/Allergy/model/allergy_list_response.dart';
 import 'package:food_inventory/UI/dashboard/forms/Varient/model/veriant_list.dart';
 import 'package:food_inventory/UI/menu/dialog_delete_type.dart';
 import 'package:food_inventory/UI/menu/dialog_type_list_view.dart';
@@ -15,6 +15,7 @@ import 'edit_varient.dart';
 
 // ignore: must_be_immutable
 class VarientList extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   var type;
   VoidCallback onDialogClose;
 
@@ -61,7 +62,9 @@ class _VarientListState extends State<VarientList> {
           }
         }
       } catch (e) {
-        print(e.toString());
+        if (kDebugMode) {
+          print(e.toString());
+        }
         setState(() {
           isDataLoad = false;
         });
@@ -158,7 +161,7 @@ class _VarientListState extends State<VarientList> {
                                     motion: const ScrollMotion(),
                                     children: [
                                       Spacer(),
-                                      Container(
+                                      SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.15,
@@ -172,7 +175,7 @@ class _VarientListState extends State<VarientList> {
                                           // label: 'Delete',
                                         ),
                                       ),
-                                      Container(
+                                      SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.15,

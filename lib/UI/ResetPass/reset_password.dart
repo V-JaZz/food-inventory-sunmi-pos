@@ -216,7 +216,6 @@ class _ResetPasswordState extends State<ResetPassword> {
                     ),
                   ),
                   onTap: () {
-                    //TODO : Login
                   },
                   behavior: HitTestBehavior.opaque,
                 ),

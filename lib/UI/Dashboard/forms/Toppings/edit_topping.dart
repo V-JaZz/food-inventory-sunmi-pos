@@ -1,14 +1,9 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:food_inventory/UI/dashboard/forms/Allergy/repository/allergy_repository.dart';
-import 'package:food_inventory/UI/dashboard/forms/Option/repository/option_repository.dart';
 import 'package:food_inventory/UI/dashboard/forms/Toppings/repository/topping_repository.dart';
 import 'package:food_inventory/constant/colors.dart';
-import 'package:food_inventory/constant/image.dart';
-import 'package:food_inventory/constant/validation_util.dart';
 
+// ignore: must_be_immutable
 class EditToppings extends StatefulWidget {
   VoidCallback onDialogClose;
   String id;
@@ -112,7 +107,7 @@ class _EditToppingsState extends State<EditToppings> {
                                   contentPadding: EdgeInsets.all(0),
                                   isDense: true,
                                   hintText: "Enter Topping Name",
-                                  hintStyle: const TextStyle(
+                                  hintStyle: TextStyle(
                                       color: colorTextHint, fontSize: 16),
                                   border: InputBorder.none),
                             )),
@@ -124,7 +119,7 @@ class _EditToppingsState extends State<EditToppings> {
                           // padding: EdgeInsets.all(19),
                           decoration: const BoxDecoration(color: colorGreyDF),
                           child: const Text("€",
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.red,
                                 fontWeight: FontWeight.w600,
                               ))),
@@ -143,10 +138,10 @@ class _EditToppingsState extends State<EditToppings> {
                             keyboardType: const TextInputType.numberWithOptions(
                                 decimal: true, signed: false),
                             decoration: const InputDecoration(
-                                contentPadding: const EdgeInsets.all(0),
+                                contentPadding: EdgeInsets.all(0),
                                 isDense: true,
                                 hintText: "0,00",
-                                hintStyle: const TextStyle(
+                                hintStyle: TextStyle(
                                     color: colorTextHint, fontSize: 16),
                                 border: InputBorder.none),
                           )),

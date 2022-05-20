@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, avoid_print
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -105,7 +107,7 @@ class _VarientListPageState extends State<VarientListPage> {
         sigmaY: 3.0,
       ),
       child: Container(
-        decoration: new BoxDecoration(color: const Color.fromRGBO(11, 4, 58, 0.7)),
+        decoration: const BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
         child: Dialog(
             alignment: Alignment.topCenter,
             elevation: 0,
@@ -132,8 +134,8 @@ class _VarientListPageState extends State<VarientListPage> {
                           height: 45,
                           decoration: const BoxDecoration(
                               // color: colorGreen,
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: const Radius.circular(14),
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(14),
                                   topRight: Radius.circular(14))),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -230,7 +232,7 @@ class _VarientListPageState extends State<VarientListPage> {
                                             BorderRadius.circular(30)),
                                     child: const Text(
                                       "Save",
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           color: colorTextWhite,
                                           fontWeight: FontWeight.w700,
                                           fontSize: 12),

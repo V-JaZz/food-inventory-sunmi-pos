@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_inventory/UI/Dashboard/forms/AllergyGroup/model/allergy_group_list_response.dart';
 import 'package:food_inventory/UI/dashboard/forms/Category/model/category_list_response_model.dart';
@@ -17,6 +16,7 @@ import 'package:food_inventory/networking/api_base_helper.dart';
 
 typedef SelectDataFunc = void Function(SelectionMenuDataList);
 
+// ignore: must_be_immutable
 class DialogMenuDataSelection extends StatefulWidget {
   late String type;
   SelectionMenuDataList? selectedData;
@@ -25,11 +25,11 @@ class DialogMenuDataSelection extends StatefulWidget {
   late int variantListSize;
 
   DialogMenuDataSelection(
-      {required this.type,
+      {Key? key, required this.type,
       this.selectedData,
       required this.onSelectData,
       required this.optionListSize,
-      required this.variantListSize});
+      required this.variantListSize}) : super(key: key);
 
   @override
   _DialogMenuDataSelectionState createState() =>
@@ -42,7 +42,6 @@ class _DialogMenuDataSelectionState extends State<DialogMenuDataSelection> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     dataList = [];
     if (widget.type == TYPE_CATEGORY) {

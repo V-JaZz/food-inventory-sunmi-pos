@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 import 'package:food_inventory/constant/app_util.dart';
@@ -10,9 +11,9 @@ import 'package:food_inventory/model/login_model.dart';
 import '../../main.dart';
 
 class RestaurantDetailsRepository {
-  ApiBaseHelper _helper = ApiBaseHelper();
+  final ApiBaseHelper _helper = ApiBaseHelper();
   late BuildContext context;
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
 
   RestaurantDetailsRepository(this.context);
 
@@ -64,7 +65,9 @@ class RestaurantDetailsRepository {
               showMessage(model.message!, context);
             }
           } catch (e) {
-            print(e.toString());
+            if (kDebugMode) {
+              print(e.toString());
+            }
             Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
           }
         }
@@ -126,7 +129,9 @@ class RestaurantDetailsRepository {
               showMessage(model.message!, context);
             }
           } catch (e) {
-            print(e.toString());
+            if (kDebugMode) {
+              print(e.toString());
+            }
             Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
           }
         }
@@ -135,18 +140,9 @@ class RestaurantDetailsRepository {
   }
 
   updateRestaurantImageType(File imageFile, String type) async {
-    String fileName = File(imageFile.path).path.split("/").last;
-    String fileType = File(imageFile.path).path.split(".").last;
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((value) async {
       Dialogs.showLoadingDialog(context, _keyLoader);
       try {
-        final response = await _helper.putMultiPart(
-            ApiBaseHelper.addRestaurantImage,
-            File(imageFile.path),
-            fileName,
-            fileType,
-            type,
-            value);
         Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
       } catch (e) {
         Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();

@@ -223,6 +223,7 @@ class _AddToppingsState extends State<AddToppings> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   void ToppingsListData(String type) {
     showDialog(
       context: context,

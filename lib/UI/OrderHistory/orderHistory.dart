@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
@@ -39,36 +41,34 @@ class _OrderHistoryState extends State<OrderHistory> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                      child: Container(
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          child: const Icon(
-                            Icons.arrow_back,
-                            color: Colors.white,
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            child: const Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selectedDate = "";
+                              });
+                              Navigator.of(context).pop();
+                            },
                           ),
-                          onTap: () {
-                            setState(() {
-                              selectedDate = "";
-                            });
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Text(
-                          selectedDate.isEmpty
-                              ? "Today"
-                              : getOrderStatusDate(selectedDate),
-                          style: const TextStyle(
-                              color: colorTextWhite,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  )),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            selectedDate.isEmpty
+                                ? "Today"
+                                : getOrderStatusDate(selectedDate),
+                            style: const TextStyle(
+                                color: colorTextWhite,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      )),
                   // GestureDetector(
                   //   child: Row(
                   //     children: [
@@ -142,164 +142,160 @@ class _OrderHistoryState extends State<OrderHistory> {
                 shrinkWrap: true,
                 // padding: EdgeInsets.only(left: 38, right: 35, bottom: 29, top: 29),
                 children: [
-                  Container(
-                      // margin: EdgeInsets.only(top: 29),
-                      child: TableCalendar(
+                  TableCalendar(
                     availableGestures: AvailableGestures.horizontalSwipe,
                     calendarStyle: const CalendarStyle(isTodayHighlighted: false),
                     daysOfWeekHeight: 30,
                     rowHeight: 59,
                     calendarBuilders: CalendarBuilders(
-                      dowBuilder: (context, day) {
-                        final text = DateFormat.E().format(day);
-                        //TODO : Set Day TOP UI
-                        return Container(
-                          height: 100,
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.only(
-                            top: 3,
-                            bottom: 3,
+                  dowBuilder: (context, day) {
+                    final text = DateFormat.E().format(day);
+                    return Container(
+                      height: 100,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.only(
+                        top: 3,
+                        bottom: 3,
+                      ),
+                      margin: const EdgeInsets.only(right: 1, left: 1, bottom: 1),
+                      decoration: const BoxDecoration(color: colorButtonBlue),
+                      child: Text(
+                        text,
+                        maxLines: 1,
+                        style: const TextStyle(
+                            color: colorTextWhite,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16),
+                      ),
+                    );
+                  },
+                  defaultBuilder: (context, day, focusedDay) {
+                    
+                    final text = DateFormat("d").format(day);
+                    String totalAmountOnDay = "";
+                    // if (_historyList.isNotEmpty) {
+                    //   for (OrderHistoryData history in _historyList) {
+                    //     if (history.sId == stCheckDay) {
+                    //       totalAmountOnDay =
+                    //           defaultValue(history.totalOrderAmount, "");
+                    //     }
+                    //   }
+                    // }
+                    var now = DateTime.now();
+                    var isToday = false;
+                    if (getSendableDate(day) == getSendableDate(now)) {
+                      isToday = true;
+                    }
+                    return Container(
+                      height: 58,
+                      decoration: BoxDecoration(
+                        color: selectedDate == getSendableDate(day)
+                            ? const Color(0xff51C800)
+                            : selectedDate.isEmpty && isToday
+                                ? colorGreen
+                                : colorTextWhite,
+                      ),
+                      // border:
+                      //     Border.all(color: colorDividerGreen, width: 1)),
+                      margin: const EdgeInsets.all(1),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            child: Text(
+                              text,
+                              style: TextStyle(
+                                  color:
+                                      selectedDate == getSendableDate(day)
+                                          ? colorTextWhite
+                                          : selectedDate.isEmpty && isToday
+                                              ? colorTextWhite
+                                              : colorTextBlack,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            bottom: 40,
+                            left: 10,
                           ),
-                          margin: const EdgeInsets.only(right: 1, left: 1, bottom: 1),
-                          decoration: const BoxDecoration(color: colorButtonBlue),
-                          child: Text(
-                            text,
-                            maxLines: 1,
-                            style: const TextStyle(
-                                color: colorTextWhite,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16),
-                          ),
-                        );
-                      },
-                      defaultBuilder: (context, day, focusedDay) {
-                        //TODO : Dates of Month UI
-                        final text = DateFormat("d").format(day);
-                        String totalAmountOnDay = "";
-                        final stCheckDay = DateFormat("yyyy-MM-dd").format(day);
-                        // if (_historyList.isNotEmpty) {
-                        //   for (OrderHistoryData history in _historyList) {
-                        //     if (history.sId == stCheckDay) {
-                        //       totalAmountOnDay =
-                        //           defaultValue(history.totalOrderAmount, "");
-                        //     }
-                        //   }
-                        // }
-                        var now = new DateTime.now();
-                        var isToday = false;
-                        if (getSendableDate(day) == getSendableDate(now)) {
-                          isToday = true;
-                        }
-                        return Container(
-                          height: 58,
-                          decoration: BoxDecoration(
-                            color: selectedDate == getSendableDate(day)
-                                ? const Color(0xff51C800)
-                                : selectedDate.isEmpty && isToday
-                                    ? colorGreen
-                                    : colorTextWhite,
-                          ),
-                          // border:
-                          //     Border.all(color: colorDividerGreen, width: 1)),
-                          margin: const EdgeInsets.all(1),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                child: Text(
-                                  text,
+                          Positioned(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SvgPicture.asset(
+                                  icHistoryCal,
+                                  height: 9,
+                                  width: 9,
+                                ),
+                                const SizedBox(
+                                  width: 3,
+                                ),
+                                Text(
+                                  getAmountWithCurrency(totalAmountOnDay),
                                   style: TextStyle(
-                                      color:
-                                          selectedDate == getSendableDate(day)
+                                      color: selectedDate ==
+                                              getSendableDate(day)
+                                          ? colorTextWhite
+                                          : selectedDate.isEmpty && isToday
                                               ? colorTextWhite
-                                              : selectedDate.isEmpty && isToday
-                                                  ? colorTextWhite
-                                                  : colorTextBlack,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500),
+                                              : colorButtonYellow,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w600),
                                 ),
-                                bottom: 40,
-                                left: 10,
-                              ),
-                              Positioned(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SvgPicture.asset(
-                                      icHistoryCal,
-                                      height: 9,
-                                      width: 9,
-                                    ),
-                                    const SizedBox(
-                                      width: 3,
-                                    ),
-                                    Text(
-                                      getAmountWithCurrency(totalAmountOnDay),
-                                      style: TextStyle(
-                                          color: selectedDate ==
-                                                  getSendableDate(day)
-                                              ? colorTextWhite
-                                              : selectedDate.isEmpty && isToday
-                                                  ? colorTextWhite
-                                                  : colorButtonYellow,
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
-                                ),
-                                top: 25,
-                                right: 08,
-                              )
-                            ],
+                              ],
+                            ),
+                            top: 25,
+                            right: 08,
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                  outsideBuilder: (context, day, focusedDay) {
+                    final text = DateFormat("d").format(day);
+                    return Container(
+                      height: 58,
+                      decoration: const BoxDecoration(color: colorTextWhite),
+                      margin: const EdgeInsets.all(1),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            child: Text(
+                              text,
+                              style: const TextStyle(
+                                  color: colorTextGrey,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            bottom: 40,
+                            left: 10,
                           ),
-                        );
-                      },
-                      outsideBuilder: (context, day, focusedDay) {
-                        final text = DateFormat("d").format(day);
-                        return Container(
-                          height: 58,
-                          decoration: const BoxDecoration(color: colorTextWhite),
-                          margin: const EdgeInsets.all(1),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                child: Text(
-                                  text,
-                                  style: const TextStyle(
-                                      color: colorTextGrey,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                bottom: 40,
-                                left: 10,
-                              ),
-                            ],
+                        ],
+                      ),
+                    );
+                  },
+                  disabledBuilder: (context, day, focusedDay) {
+                    final text = DateFormat("d").format(day);
+                    return Container(
+                      height: 58,
+                      // decoration: BoxDecoration(color: colorTextWhite),
+                      margin: const EdgeInsets.all(1),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            child: Text(
+                              text,
+                              style: const TextStyle(
+                                  color: colorTextGrey,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            bottom: 40,
+                            left: 10,
                           ),
-                        );
-                      },
-                      disabledBuilder: (context, day, focusedDay) {
-                        final text = DateFormat("d").format(day);
-                        return Container(
-                          height: 58,
-                          // decoration: BoxDecoration(color: colorTextWhite),
-                          margin: const EdgeInsets.all(1),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                child: Text(
-                                  text,
-                                  style: const TextStyle(
-                                      color: colorTextGrey,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                bottom: 40,
-                                left: 10,
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+                        ],
+                      ),
+                    );
+                  },
                     ),
                     headerVisible: false,
                     firstDay: DateTime.utc(2010, 10, 16),
@@ -307,23 +303,23 @@ class _OrderHistoryState extends State<OrderHistory> {
                     focusedDay: _focusedDay,
                     dayHitTestBehavior: HitTestBehavior.opaque,
                     onDaySelected: (selectedDay, focusedDay) {
-                      setState(() {
-                        _focusedDay = focusedDay;
-                        // isToday = true;
-                        // isHistory = false;
-                        showReport = true;
-                        var now = new DateTime.now();
-                        // if (selectedDay.difference(now).inDays == 0) {
-                        if (getSendableDate(selectedDay) ==
-                            getSendableDate(now)) {
-                          selectedDate = "";
-                        } else {
-                          selectedDate = getSendableDate(selectedDay);
-                        }
-                      });
-                      // getOrderList(true);
+                  setState(() {
+                    _focusedDay = focusedDay;
+                    // isToday = true;
+                    // isHistory = false;
+                    showReport = true;
+                    var now = DateTime.now();
+                    // if (selectedDay.difference(now).inDays == 0) {
+                    if (getSendableDate(selectedDay) ==
+                        getSendableDate(now)) {
+                      selectedDate = "";
+                    } else {
+                      selectedDate = getSendableDate(selectedDay);
+                    }
+                  });
+                  // getOrderList(true);
                     },
-                  )),
+                  ),
                   Container(
                     width: MediaQuery.of(context).size.width * 0.22,
                     margin: const EdgeInsets.only(top: 20),

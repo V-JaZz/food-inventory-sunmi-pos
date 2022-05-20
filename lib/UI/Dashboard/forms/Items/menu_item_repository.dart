@@ -1,6 +1,9 @@
+// ignore_for_file: prefer_null_aware_operators, unnecessary_null_comparison
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:food_inventory/UI/dashboard/dialog_menu_data_selection.dart';
 import 'package:food_inventory/UI/dashboard/forms/Items/dialogAddNewItem.dart';
 import 'package:food_inventory/constant/storage_util.dart';
@@ -12,9 +15,9 @@ import 'package:food_inventory/networking/api_base_helper.dart';
 import 'dialogMenu.dart';
 
 class MenuItemRepository {
-  ApiBaseHelper _helper = new ApiBaseHelper();
-  late BuildContext _context;
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  late final BuildContext _context;
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
   late DialogMenuItems widget;
 
 /*  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -58,7 +61,6 @@ class MenuItemRepository {
         //   }
         // }
         // if (isValidOption) {
-        //TODO : Call Api
         var optionJsonList = [];
         var veriantJsonList = [];
         var optionJson = "";
@@ -67,7 +69,9 @@ class MenuItemRepository {
         for (SelectOptionData data in _optionDataList!) {
           if (data.selectData!.id.isEmpty) {
             price = data.priceController.text.toString().trim();
-            print("With image" + price);
+            if (kDebugMode) {
+              print("With image" + price);
+            }
           } else {
             // optionJsonList.add({
             //   'toppingGroup': data.selectData!.selectedToppingId,
@@ -170,7 +174,9 @@ class MenuItemRepository {
             showMessage(model.message!, _context);
           }
         } catch (e) {
-          print(e.toString());
+          if (kDebugMode) {
+            print(e.toString());
+          }
           Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
         }
         // }
@@ -210,7 +216,6 @@ class MenuItemRepository {
         //   }
         // }
         // if (isValidOption) {
-        //TODO : Call Api
         var optionJsonList = [];
         var veriantJsonList = [];
         var optionJson = "";
@@ -219,6 +224,7 @@ class MenuItemRepository {
         for (SelectOptionData data in _optionDataList!) {
           if (data.selectData!.id.isEmpty) {
             price = data.priceController.text.toString().trim();
+            // ignore: avoid_print
             print("Without image" + price);
           } else {
             optionJson = jsonEncode({
@@ -297,6 +303,7 @@ class MenuItemRepository {
             showMessage(model.message!, _context);
           }
         } catch (e) {
+          // ignore: avoid_print
           print(e.toString());
           Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
         }
@@ -318,6 +325,7 @@ class MenuItemRepository {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
+        // ignore: avoid_print
         print("Menu TYpe:" + menuType);
         if (itemName.text.toString().trim().isEmpty) {
           showMessage("Enter Item Name", _context);
@@ -339,7 +347,6 @@ class MenuItemRepository {
           //   }
           // }
           // if (isValidOption) {
-          //TODO : Call Api
           var optionJsonList = [];
           var veriantJsonList = [];
           var optionJson = "";
@@ -421,6 +428,7 @@ class MenuItemRepository {
               showMessage(model.message!, _context);
             }
           } catch (e) {
+            // ignore: avoid_print
             print(e.toString());
             Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
           }
@@ -466,7 +474,6 @@ class MenuItemRepository {
           //   }
           // }
           // if (isValidOption) {
-          //TODO : Call Api
           var optionJsonList = [];
           var veriantJsonList = [];
           var optionJson = "";
@@ -551,7 +558,9 @@ class MenuItemRepository {
               showMessage(model.message!, _context);
             }
           } catch (e) {
-            print(e.toString());
+            if (kDebugMode) {
+              print(e.toString());
+            }
             Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
           }
         }
