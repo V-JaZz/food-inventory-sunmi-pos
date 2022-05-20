@@ -34,7 +34,6 @@ import 'forms/Allergy/add_new_allergy.dart';
 import 'forms/AllergyGroup/add_allergyGroup.dart';
 import 'forms/Category/add_new_category.dart';
 import 'forms/Items/dialogMenu.dart';
-import 'forms/Items/dialogAddNewItem.dart';
 import 'forms/Option/add_option.dart';
 import 'forms/Toppings/add_topping.dart';
 import 'forms/Varient/add_new_varient.dart';
@@ -52,45 +51,12 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
   int _selectedDrawerIndex = 0, _checkPage = 0;
   // final List<int> _backstack = [0];
   List<int> mOriginaListMain = [0];
-  String _lastSelected = 'TAB: 0';
-
-  void _selectedTab(int index) {
-    setState(() {
-      _lastSelected = 'TAB: $index';
-    });
-  }
-
-  void _selectedFab(int index) {
-    setState(() {
-      _lastSelected = 'FAB: $index';
-    });
-  }
 
   late GifController controller;
 
   late Widget avatarWidget;
 
   late SharedPreferences _prefs;
-  var _items = [
-    restaurantName,
-    restaurantName,
-    restaurantName,
-    restaurantName,
-    restaurantName,
-    restaurantName,
-    restaurantName,
-    restaurantName,
-    restaurantName,
-  ];
-  String id = '',
-      userName = '',
-      mobileNo = '',
-      profileImage = '',
-      firstName = '',
-      lastName = '';
-
-  late TextEditingController _newItemDashController;
-  late TextEditingController _addDesDashController;
   late LogoutRepository _logoutRepository;
   var logoutEmail = "";
   IO.Socket socket =
@@ -109,8 +75,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
     // clearImageCache();
     getLoginData();
     initPreferences();
-    _newItemDashController = TextEditingController();
-    _addDesDashController = TextEditingController();
+
     _logoutRepository = LogoutRepository(context);
 
     avatarWidget = Container();
@@ -203,23 +168,16 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
     } else {
       avatarWidget = avatar();
     }
-
     List<String> mList =
         (_prefs.getStringList(Constants.backPages) ?? <String>[]);
-
     mOriginaListMain = mList.map((i) => int.parse(i)).toList();
-
     if (!mOriginaListMain.contains(index)) {
       mOriginaListMain.add(index);
-
       List<String> stringsList =
           mOriginaListMain.map((i) => i.toString()).toList();
-
       _prefs.setStringList(Constants.backPages, stringsList);
     }
-
     setState(() => _selectedDrawerIndex = index);
-
     Navigator.of(context).pop(); // close the drawer
   }
 
@@ -1202,7 +1160,11 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
       barrierDismissible: false,
       builder: (dialogContext) {
         return DialogMenuItems(
-          onAddDeleteSuccess: () {},
+          onAddDeleteSuccess: () {
+            setState(() {
+              _selectedDrawerIndex = 3;
+            });
+          },
           type: 'Menu',
           isEdit: false,
         );

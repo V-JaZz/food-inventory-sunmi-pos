@@ -3,18 +3,19 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:food_inventory/UI/dashboard/dialog_menu_data_selection.dart';
 import 'package:food_inventory/UI/dashboard/forms/Items/dialogAddNewItem.dart';
-import 'package:food_inventory/UI/dashboard/forms/Items/dialogMenu.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/constant/validation_util.dart';
 import 'package:food_inventory/main.dart';
 import 'package:food_inventory/model/common_model.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 
+import 'dialogMenu.dart';
+
 class MenuItemRepository {
   ApiBaseHelper _helper = new ApiBaseHelper();
   late BuildContext _context;
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-  late Function widgett;
+  late DialogMenuItems widget;
 
 /*  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final SharedPreferences prefs = await _prefs;
@@ -22,7 +23,7 @@ class MenuItemRepository {
   restaurantId=(prefs.getString('restaurant')?? 0.0) as String?;
   print("restaurantIddev");
   print(restaurantId);*/
-  MenuItemRepository(this._context, this.widgett);
+  MenuItemRepository(this._context, this.widget);
 
   addMenuItem(
       TextEditingController itemName,
@@ -136,7 +137,7 @@ class MenuItemRepository {
         //       _allergyGroupData == null ? null : _allergyGroupData.id,
         // });
         var alergy = _allergyGroupData == null ? null : _allergyGroupData.id;
-      
+
         Dialogs.showLoadingDialog(_context, _keyLoader); //invoking login
         try {
           // final response =
@@ -164,7 +165,7 @@ class MenuItemRepository {
           Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
           if (model.success!) {
             Navigator.pop(_context);
-            widgett();
+            widget.onAddDeleteSuccess();
           } else {
             showMessage(model.message!, _context);
           }
@@ -291,7 +292,7 @@ class MenuItemRepository {
           Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
           if (model.success!) {
             Navigator.pop(_context);
-            widgett();
+            widget.onAddDeleteSuccess();
           } else {
             showMessage(model.message!, _context);
           }
@@ -415,7 +416,7 @@ class MenuItemRepository {
             Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
             if (model.success!) {
               Navigator.pop(_context);
-              widgett();
+              widget.onAddDeleteSuccess();
             } else {
               showMessage(model.message!, _context);
             }
@@ -545,7 +546,7 @@ class MenuItemRepository {
             Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
             if (model.success!) {
               Navigator.pop(_context);
-              widgett();
+              widget.onAddDeleteSuccess();
             } else {
               showMessage(model.message!, _context);
             }

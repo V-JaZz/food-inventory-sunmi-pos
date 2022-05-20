@@ -6,13 +6,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:food_inventory/UI/dashboard/dialog_menu_data_selection.dart';
 import 'package:food_inventory/UI/dashboard/forms/Items/dialogAddNewItem.dart';
 // import 'package:food_inventory/UI/dashboard/forms/Items/model/menu_items.dart';
-import 'package:food_inventory/UI/dashboard/forms/Items/repository/menu_item_repository.dart';
 import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/image.dart';
 import 'package:food_inventory/constant/validation_util.dart';
 import 'package:image_cropper/image_cropper.dart';
 
+import 'menu_item_repository.dart';
 import 'model/menu_items.dart';
 
 // ignore: must_be_immutable
@@ -58,6 +58,7 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
   @override
   void initState() {
     super.initState();
+    _itemRepository = MenuItemRepository(context, widget);
     optionData = [];
     variantData = [];
     selectedValue =
@@ -158,7 +159,6 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
       _categoryData =
           SelectionMenuDataList("", "", "", 0.0, 0.0, '', "", false);
     }
-    _itemRepository = MenuItemRepository(context, widget.onAddDeleteSuccess);
   }
 
   callAddItemApi() async {
