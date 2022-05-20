@@ -22,7 +22,7 @@ class AddOption extends StatefulWidget {
 }
 
 class _AddOptionState extends State<AddOption> {
-  SelectionMenuDataList? _toppingGrpData;
+  late SelectionMenuDataList _toppingGrpData;
 
   late OptionRepository _optionRepository;
   late TextEditingController _nameController;
@@ -32,16 +32,18 @@ class _AddOptionState extends State<AddOption> {
     super.initState();
     _optionRepository = OptionRepository(context);
     _nameController = TextEditingController();
+    _toppingGrpData = SelectionMenuDataList(
+        "", "Default Topping Group", "", 0.0, 0.0, "", "", false);
   }
 
   callAddOptionApi() async {
-    if (_toppingGrpData!.name == "Default Topping Group") {
+    if (_toppingGrpData.name == "Default Topping Group") {
       print("object");
       _optionRepository.addOption(_nameController.text, null, 0.0, 0.0);
     } else {
       print("false");
       _optionRepository.addOption(
-          _nameController.text, _toppingGrpData!.id, 0.0, 0.0);
+          _nameController.text, _toppingGrpData.id, 0.0, 0.0);
     }
   }
 
@@ -135,7 +137,7 @@ class _AddOptionState extends State<AddOption> {
                     child: Text(
                       _toppingGrpData == null
                           ? "Select Topping Group"
-                          : _toppingGrpData!.name,
+                          : _toppingGrpData.name,
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
@@ -168,15 +170,6 @@ class _AddOptionState extends State<AddOption> {
                             ),
                           ),
                           onTap: () {
-                            // if (_nameController.text.isEmpty) {
-                            //   showMessage("Enter Allergy Name", context);
-                            // } else if (_descriptionController.text.isEmpty) {
-                            //   showMessage("Enter Discription Name", context);
-                            // } else if (_discountController.text.isEmpty) {
-                            //   showMessage("Enter Discount Name", context);
-                            // } else {
-                            //   callAddOptionApi();
-                            // }
                             callAddOptionApi();
                           },
                         ),

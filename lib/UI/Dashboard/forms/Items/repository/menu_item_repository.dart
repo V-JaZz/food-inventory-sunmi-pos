@@ -2,34 +2,35 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:food_inventory/UI/dashboard/dialog_menu_data_selection.dart';
+import 'package:food_inventory/UI/dashboard/forms/Items/dialogAddNewItem.dart';
+import 'package:food_inventory/UI/dashboard/forms/Items/dialogMenu.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/constant/validation_util.dart';
 import 'package:food_inventory/main.dart';
 import 'package:food_inventory/model/common_model.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
-import '../dialogMenu.dart';
 
 class MenuItemRepository {
   ApiBaseHelper _helper = new ApiBaseHelper();
   late BuildContext _context;
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
-  late DialogMenuItems widget;
-  
+  late Function widgett;
+
 /*  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final SharedPreferences prefs = await _prefs;
   String? restaurantId;
   restaurantId=(prefs.getString('restaurant')?? 0.0) as String?;
   print("restaurantIddev");
   print(restaurantId);*/
-  MenuItemRepository(this._context, this.widget);
+  MenuItemRepository(this._context, this.widgett);
 
   addMenuItem(
       TextEditingController itemName,
       TextEditingController descriptionName,
       TextEditingController discount,
       SelectionMenuDataList? _categoryData,
-      List _variantDataList,
-      List _optionDataList,
+      List<SelectVariantData>? _variantDataList,
+      List<SelectOptionData>? _optionDataList,
       SelectionMenuDataList? _allergyGroupData,
       File imageFile,
       String menuType) {
@@ -62,7 +63,7 @@ class MenuItemRepository {
         var optionJson = "";
         var variantJson = "";
         String price = "";
-        for (SelectOptionData data in _optionDataList) {
+        for (SelectOptionData data in _optionDataList!) {
           if (data.selectData!.id.isEmpty) {
             price = data.priceController.text.toString().trim();
             print("With image" + price);
@@ -94,7 +95,7 @@ class MenuItemRepository {
             optionJsonList.add(optionJson);
           }
         }
-        for (SelectVariantData data in _variantDataList) {
+        for (SelectVariantData data in _variantDataList!) {
           if (data.selectData!.id.isEmpty) {
             // price = data.priceController.text.toString().trim();
           } else {
@@ -135,6 +136,7 @@ class MenuItemRepository {
         //       _allergyGroupData == null ? null : _allergyGroupData.id,
         // });
         var alergy = _allergyGroupData == null ? null : _allergyGroupData.id;
+      
         Dialogs.showLoadingDialog(_context, _keyLoader); //invoking login
         try {
           // final response =
@@ -155,12 +157,14 @@ class MenuItemRepository {
               alergy,
               token,
               menuType);
+
           CommonModel model =
               CommonModel.fromJson(_helper.returnResponse(_context, response));
+
           Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
           if (model.success!) {
             Navigator.pop(_context);
-            widget.onAddDeleteSuccess();
+            widgett();
           } else {
             showMessage(model.message!, _context);
           }
@@ -178,8 +182,8 @@ class MenuItemRepository {
       TextEditingController descriptionName,
       TextEditingController discount,
       SelectionMenuDataList? _categoryData,
-      List _variantDataList,
-      List _optionDataList,
+      List<SelectVariantData>? _variantDataList,
+      List<SelectOptionData>? _optionDataList,
       SelectionMenuDataList? _allergyGroupData,
       String menuType) {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
@@ -211,7 +215,7 @@ class MenuItemRepository {
         var optionJson = "";
         var variantJson = "";
         String price = "";
-        for (SelectOptionData data in _optionDataList) {
+        for (SelectOptionData data in _optionDataList!) {
           if (data.selectData!.id.isEmpty) {
             price = data.priceController.text.toString().trim();
             print("Without image" + price);
@@ -232,7 +236,7 @@ class MenuItemRepository {
             optionJsonList.add(optionJson);
           }
         }
-        for (SelectVariantData data in _variantDataList) {
+        for (SelectVariantData data in _variantDataList!) {
           if (data.selectData!.id.isEmpty) {
             // price = data.priceController.text.toString().trim();
           } else {
@@ -287,7 +291,7 @@ class MenuItemRepository {
           Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
           if (model.success!) {
             Navigator.pop(_context);
-            widget.onAddDeleteSuccess();
+            widgett();
           } else {
             showMessage(model.message!, _context);
           }
@@ -305,8 +309,8 @@ class MenuItemRepository {
       TextEditingController itemName,
       TextEditingController descriptionName,
       SelectionMenuDataList? _categoryData,
-      List _variantDataList,
-      List _optionDataList,
+      List<SelectVariantData>? _variantDataList,
+      List<SelectOptionData>? _optionDataList,
       SelectionMenuDataList? _allergyGroupData,
       TextEditingController discount,
       String menuType) {
@@ -340,7 +344,7 @@ class MenuItemRepository {
           var optionJson = "";
           var variantJson = "";
           String price = "";
-          for (SelectOptionData data in _optionDataList) {
+          for (SelectOptionData data in _optionDataList!) {
             if (data.selectData!.id.isEmpty) {
               price = data.priceController.text.toString().trim();
             } else {
@@ -360,7 +364,7 @@ class MenuItemRepository {
               optionJsonList.add(optionJson);
             }
           }
-          for (SelectVariantData data in _variantDataList) {
+          for (SelectVariantData data in _variantDataList!) {
             if (data.selectData!.id.isEmpty) {
               // price = data.priceController.text.toString().trim();
             } else {
@@ -411,7 +415,7 @@ class MenuItemRepository {
             Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
             if (model.success!) {
               Navigator.pop(_context);
-              widget.onAddDeleteSuccess();
+              widgett();
             } else {
               showMessage(model.message!, _context);
             }
@@ -430,8 +434,8 @@ class MenuItemRepository {
       TextEditingController itemName,
       TextEditingController descriptionName,
       SelectionMenuDataList? _categoryData,
-      List _variantDataList,
-      List _optionDataList,
+      List<SelectVariantData>? _variantDataList,
+      List<SelectOptionData>? _optionDataList,
       SelectionMenuDataList? _allergyGroupData,
       TextEditingController discount,
       File imageFile,
@@ -467,7 +471,7 @@ class MenuItemRepository {
           var optionJson = "";
           var variantJson = "";
           String price = "";
-          for (SelectOptionData data in _optionDataList) {
+          for (SelectOptionData data in _optionDataList!) {
             if (data.selectData!.id.isEmpty) {
               price = data.priceController.text.toString().trim();
             } else {
@@ -487,7 +491,7 @@ class MenuItemRepository {
               optionJsonList.add(optionJson);
             }
           }
-          for (SelectVariantData data in _variantDataList) {
+          for (SelectVariantData data in _variantDataList!) {
             if (data.selectData!.id.isEmpty) {
               // price = data.priceController.text.toString().trim();
             } else {
@@ -541,7 +545,7 @@ class MenuItemRepository {
             Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
             if (model.success!) {
               Navigator.pop(_context);
-              widget.onAddDeleteSuccess();
+              widgett();
             } else {
               showMessage(model.message!, _context);
             }

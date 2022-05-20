@@ -1204,6 +1204,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
         return DialogMenuItems(
           onAddDeleteSuccess: () {},
           type: 'Menu',
+          isEdit: false,
         );
       },
     );

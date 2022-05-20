@@ -23,7 +23,7 @@ class AddNewVarient extends StatefulWidget {
 
 class _AddNewVarientState extends State<AddNewVarient> {
   late VariantRepository _varientRepository;
-  SelectionMenuDataList? _VarientData;
+  late SelectionMenuDataList _varientData;
 
   late TextEditingController _nameController;
 
@@ -32,13 +32,15 @@ class _AddNewVarientState extends State<AddNewVarient> {
     super.initState();
     _varientRepository = VariantRepository(context);
     _nameController = TextEditingController();
+    _varientData = SelectionMenuDataList(
+        "", "Default Veriant Group", "", 0.0, 0.0, "", "", false);
   }
 
   callAddAllergyApi() async {
-    if (_VarientData!.name == 'Default Veriant Group') {
+    if (_varientData.name == 'Default Veriant Group') {
       _varientRepository.addVarient(_nameController.text, null);
     } else {
-      _varientRepository.addVarient(_nameController.text, _VarientData!.id);
+      _varientRepository.addVarient(_nameController.text, _varientData.id);
     }
     // imageupload(selectedBanner!);
   }
@@ -125,7 +127,7 @@ class _AddNewVarientState extends State<AddNewVarient> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    selectTypeData(TYPE_VARIANT_GROUP, -1, _VarientData);
+                    selectTypeData(TYPE_VARIANT_GROUP, -1, _varientData);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(15.0),
@@ -133,13 +135,13 @@ class _AddNewVarientState extends State<AddNewVarient> {
                         color: const Color.fromRGBO(223, 221, 239, 1),
                         borderRadius: BorderRadius.circular(05)),
                     child: Text(
-                      _VarientData == null
+                      _varientData == null
                           ? "Select Varient Group"
-                          : _VarientData!.name,
+                          : _varientData.name,
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
-                          color: _VarientData == null
+                          color: _varientData == null
                               ? colorTextHint
                               : colorTextBlack),
                     ),
@@ -235,7 +237,7 @@ class _AddNewVarientState extends State<AddNewVarient> {
           selectedData: selectedData,
           onSelectData: (SelectionMenuDataList dataModel) {
             setState(() {
-              _VarientData = dataModel;
+              _varientData = dataModel;
             });
           },
           optionListSize: 10,

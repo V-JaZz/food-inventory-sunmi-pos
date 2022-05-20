@@ -53,19 +53,19 @@ class Data {
 }
 
 class Items {
-    String? sId;
-    List<Options>? options;
-    List<Variants>? variants;
-    int? discount;
-    String? description;
-    bool? excludeDiscount;
-    String? name;
-    Category? category;
-    String? price;
-    int? position;
-    AllergyGroups? allergyGroups;
-    List<Allergies>? allergies;
-    String? imageName;
+  String? sId;
+  List<Options>? options;
+  List<Variants>? variants;
+  int? discount;
+  String? description;
+  bool? excludeDiscount;
+  String? name;
+  Category? category;
+  String? price;
+  int? position;
+  AllergyGroups? allergyGroups;
+  List<Allergies>? allergies;
+  String? imageName;
 
   Items(
       {this.sId,
@@ -100,9 +100,8 @@ class Items {
     description = json['description'];
     excludeDiscount = json['excludeDiscount'];
     name = json['name'];
-    category = json['category'] != null
-        ? Category.fromJson(json['category'])
-        : null;
+    category =
+        json['category'] != null ? Category.fromJson(json['category']) : null;
     price = json['price'].toString();
     position = json['position'];
     allergyGroups = json['allergyGroups'] != null
@@ -157,7 +156,7 @@ class Options {
   String? updatedAt;
   String? price;
   List<Toppings>? toppings;
-  Null? toppingGroup;
+  String? toppingGroup;
 
   Options(
       {this.minToppings,

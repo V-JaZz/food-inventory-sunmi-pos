@@ -2,16 +2,18 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_inventory/UI/dashboard/dialog_menu_data_selection.dart';
-import 'package:food_inventory/UI/dashboard/forms/Items/model/menu_items.dart';
+import 'package:food_inventory/UI/dashboard/forms/Items/dialogAddNewItem.dart';
+// import 'package:food_inventory/UI/dashboard/forms/Items/model/menu_items.dart';
 import 'package:food_inventory/UI/dashboard/forms/Items/repository/menu_item_repository.dart';
 import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/image.dart';
 import 'package:food_inventory/constant/validation_util.dart';
 import 'package:image_cropper/image_cropper.dart';
+
+import 'model/menu_items.dart';
 
 // ignore: must_be_immutable
 class DialogMenuItems extends StatefulWidget {
@@ -21,10 +23,12 @@ class DialogMenuItems extends StatefulWidget {
   VoidCallback onAddDeleteSuccess;
 
   DialogMenuItems(
-      {this.isEdit,
+      {Key? key,
+      this.isEdit,
       this.editItem,
       required this.type,
-      required this.onAddDeleteSuccess});
+      required this.onAddDeleteSuccess})
+      : super(key: key);
 
   @override
   _DialogMenuItemsState createState() => _DialogMenuItemsState();
@@ -37,7 +41,7 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
   List<SelectOptionData> optionData = [];
   List<SelectVariantData> variantData = [];
   bool isOpen = true, isClose = false;
-  SelectionMenuDataList? _categoryData, _allergyGroupData;
+  late SelectionMenuDataList _categoryData, _allergyGroupData;
   late TextEditingController _itemNameController;
   late TextEditingController _descriptionController;
   late TextEditingController _discountController;
@@ -63,20 +67,28 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
       clearImageCache(widget.editItem!.sId!);
       if (widget.editItem!.options!.isEmpty) {
         isShowAddMoreOption = true;
-        optionData.add(SelectOptionData(
-            SelectionMenuDataList(
-                "",
-                "Default Option",
-                defaultValue(widget.editItem!.price, "0.0"),
-                0.0,
-                0.0,
-                "",
-                "",
-                false),
-            TextEditingController(
-                text: defaultValue(widget.editItem!.price, "0.0"))));
+        print("OPTIONIS WORKING NIT");
+        for (int i = 0; widget.editItem!.options!.length > i; i++) {
+          print("JSJSJJSJ" + widget.editItem!.options![i].price.toString());
+          print("OPTIONIS WORKING NIT");
+
+          optionData.add(SelectOptionData(
+              SelectionMenuDataList(
+                  "",
+                  "Default Option",
+                  defaultValue(widget.editItem!.options![i].price, "0.0"),
+                  0.0,
+                  0.0,
+                  "",
+                  "",
+                  false),
+              TextEditingController(
+                  text: defaultValue(
+                      widget.editItem!.options![i].price, "0.0"))));
+        }
       } else {
         for (Options data in widget.editItem!.options!) {
+          print("OPTIONIS WORKING");
           optionData.add(SelectOptionData(
               SelectionMenuDataList(
                   data.sId!, data.name!, data.price!, 0.0, 0.0, "", "", true),
@@ -85,7 +97,10 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
       }
       if (widget.editItem!.variants!.isEmpty) {
         isShowAddMore = true;
-        for (int i = 0; widget.editItem!.variants!.length < i; i++) {
+        print("VARIANTY WORKING NIT");
+
+        for (int i = 0; widget.editItem!.variants!.length > i; i++) {
+          print("JSJSJJSJ" + widget.editItem!.variants![i].price.toString());
           variantData.add(SelectVariantData(
               SelectionMenuDataList(
                   "",
@@ -101,6 +116,8 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                       widget.editItem!.variants![i].price, "0.0"))));
         }
       } else {
+        print("VARIANTY WORKING");
+
         for (Variants data in widget.editItem!.variants!) {
           variantData.add(SelectVariantData(
               SelectionMenuDataList(data.sId!, data.name!, data.price!, 0.0,
@@ -136,8 +153,12 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
       _discountController = TextEditingController();
       _itemNameController = TextEditingController();
       _descriptionController = TextEditingController();
+      _allergyGroupData = SelectionMenuDataList(
+          "", "Default Allergy Group", "", 0.0, 0.0, '', "", false);
+      _categoryData =
+          SelectionMenuDataList("", "", "", 0.0, 0.0, '', "", false);
     }
-    _itemRepository = MenuItemRepository(context, widget);
+    _itemRepository = MenuItemRepository(context, widget.onAddDeleteSuccess);
   }
 
   callAddItemApi() async {
@@ -190,29 +211,32 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        child: Container(
-          width: 560,
-          margin: EdgeInsets.only(top: 20.sp, right: 20),
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
-          decoration: BoxDecoration(
-              color: colorTextWhite, borderRadius: BorderRadius.circular(13)),
-          child: ListView(
-            shrinkWrap: true,
-            children: [
-              Container(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+    return Container(
+      decoration: new BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
+      child: Dialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          insetPadding: EdgeInsets.all(15.0),
+          elevation: 0,
+          // backgroundColor: Colors.transparent,
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.785,
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            decoration: BoxDecoration(
+                color: colorTextWhite, borderRadius: BorderRadius.circular(13)),
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       widget.isEdit ? "Edit Item" : "Add New Item",
-                      style: const TextStyle(
+                      style: TextStyle(
                           color: colorTextBlack,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18),
+                      textAlign: TextAlign.center,
                     ),
                     widget.isEdit
                         ? widget.editItem!.imageName!.isNotEmpty &&
@@ -225,8 +249,10 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(33.0),
                                     ),
-                                    height: 60,
-                                    width: 60,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.05,
+                                    width: MediaQuery.of(context).size.width *
+                                        0.20,
                                     child: CachedNetworkImage(
                                       imageUrl: getImageCatURL(
                                           "item", widget.editItem!.sId!),
@@ -247,8 +273,12 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                       errorWidget: (context, url, error) =>
                                           SvgPicture.asset(
                                         placeHolder,
-                                        width: 60,
-                                        height: 60,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.05,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.20,
                                       ),
                                     )),
                               )
@@ -259,8 +289,14 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                           _pickerFile();
                                         },
                                         child: Container(
-                                          height: 60,
-                                          width: 60,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.05,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.20,
                                           decoration: BoxDecoration(
                                             shape: BoxShape.rectangle,
                                             borderRadius:
@@ -278,9 +314,10 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                             const Text(
                                               "Add image",
                                               style: TextStyle(
-                                                  color: colorBlack,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold),
+                                                  color: colorTextBlack,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 18),
+                                              textAlign: TextAlign.center,
                                             ),
                                             const SizedBox(
                                               width: 5.0,
@@ -303,8 +340,11 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                       _pickerFile();
                                     },
                                     child: Container(
-                                      height: 60,
-                                      width: 60,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.05,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.20,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.rectangle,
                                         borderRadius: const BorderRadius.all(
@@ -321,9 +361,10 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                         const Text(
                                           "Add image",
                                           style: TextStyle(
-                                              color: colorBlack,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
+                                              color: colorTextBlack,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 18),
+                                          textAlign: TextAlign.center,
                                         ),
                                         const SizedBox(
                                           width: 5.0,
@@ -341,570 +382,540 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                           ),
                   ],
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Select Menu Type",
-                      style: TextStyle(color: colorTextBlack, fontSize: 16),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(08),
-                      margin: const EdgeInsets.only(top: 3),
-                      decoration: BoxDecoration(
-                        color: colorFieldBG,
-                        border: Border.all(color: colorFieldBorder, width: 1),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5)),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        // padding: EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.only(left: 05, right: 05),
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(223, 221, 239, 1),
+                            borderRadius: BorderRadius.circular(05)),
+                        child: DropdownButton<String>(
+                            isExpanded: true,
+                            underline: const SizedBox(),
+                            dropdownColor: Colors.white,
+                            iconEnabledColor: Colors.black,
+                            value: selectedValue,
+                            items: dropDownOption.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: colorTextBlack,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            onTap: () {
+                              FocusScope.of(context).unfocus();
+                            },
+                            onChanged: (value) {
+                              setState(() {
+                                selectedValue = value!;
+                                if (value == "Online Order Menu") {
+                                  selectedType = "online";
+                                } else if (value == "Table Order Menu") {
+                                  selectedType = "table";
+                                } else {
+                                  print("DATA FALSE: NULL");
+                                }
+                                print("Selected Type: " + selectedType);
+                              });
+                            }),
                       ),
-                      child: DropdownButton<String>(
-                          isExpanded: true,
-                          underline: const SizedBox(),
-                          dropdownColor: Colors.white,
-                          iconEnabledColor: Colors.black,
-                          value: selectedValue,
-                          items: dropDownOption.map((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: const TextStyle(
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(223, 221, 239, 1),
+                            borderRadius: BorderRadius.circular(05)),
+                        child: TextField(
+                          maxLines: 1,
+                          controller: _itemNameController,
+                          textAlignVertical: TextAlignVertical.center,
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: colorTextBlack),
+                          cursorColor: colorTextBlack,
+                          decoration: const InputDecoration(
+                              contentPadding: EdgeInsets.all(0),
+                              isDense: true,
+                              hintText: "Enter Item Name",
+                              hintStyle: TextStyle(
+                                  color: colorTextHint,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400),
+                              border: InputBorder.none),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(223, 221, 239, 1),
+                            borderRadius: BorderRadius.circular(05)),
+                        child: GestureDetector(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Text(
+                              _categoryData.name.isEmpty
+                                  ? "Select Category"
+                                  : _categoryData.name,
+                              style: TextStyle(
                                   fontSize: 16,
-                                  color: colorTextBlack,
-                                ),
-                              ),
-                            );
-                          }).toList(),
+                                  fontWeight: FontWeight.normal,
+                                  color: _categoryData.name.isEmpty
+                                      ? colorTextHint
+                                      : colorTextBlack),
+                            ),
+                          ),
                           onTap: () {
-                            FocusScope.of(context).unfocus();
+                            selectTypeData(TYPE_CATEGORY, -1, _categoryData);
                           },
-                          onChanged: (value) {
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(223, 221, 239, 1),
+                            borderRadius: BorderRadius.circular(05)),
+                        child: GestureDetector(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            child: Text(
+                              _allergyGroupData == null
+                                  ? "Select Allergy Group"
+                                  : _allergyGroupData.name,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.normal,
+                                  color: _allergyGroupData == null
+                                      ? colorTextHint
+                                      : colorTextBlack),
+                            ),
+                          ),
+                          onTap: () {
+                            selectTypeData(
+                                TYPE_ALLERGY_GROUP, -1, _allergyGroupData);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(223, 221, 239, 1),
+                            borderRadius: BorderRadius.circular(05)),
+                        child: TextField(
+                          maxLines: 1,
+                          controller: _descriptionController,
+                          textAlignVertical: TextAlignVertical.center,
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: colorTextBlack),
+                          cursorColor: colorTextBlack,
+                          decoration: const InputDecoration(
+                              contentPadding: EdgeInsets.all(0),
+                              isDense: true,
+                              hintText: "Description",
+                              hintStyle:
+                                  TextStyle(color: colorTextHint, fontSize: 16),
+                              border: InputBorder.none),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(15.0),
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(223, 221, 239, 1),
+                            borderRadius: BorderRadius.circular(05)),
+                        child: TextField(
+                          maxLines: 1,
+                          controller: _discountController,
+                          textAlignVertical: TextAlignVertical.center,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true, signed: false),
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: colorTextBlack),
+                          cursorColor: colorTextBlack,
+                          decoration: const InputDecoration(
+                              contentPadding: EdgeInsets.all(0),
+                              isDense: true,
+                              hintText: "Add Discount",
+                              hintStyle:
+                                  TextStyle(color: colorTextHint, fontSize: 16),
+                              border: InputBorder.none),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: variantData.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (listContext, index) {
+                          return Container(
+                            height: MediaQuery.of(context).size.width * 0.14,
+                            padding: EdgeInsets.only(
+                              left: 15.0,
+                            ),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(223, 221, 239, 1),
+                                borderRadius: BorderRadius.circular(05)),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    // padding: const EdgeInsets.all(22),
+                                    child: GestureDetector(
+                                      child: Container(
+                                        // width:
+                                        //     MediaQuery.of(context).size.width,
+                                        child: Text(
+                                          variantData[index]
+                                                  .selectData!
+                                                  .name
+                                                  .isEmpty
+                                              ? "Select Variant"
+                                              : variantData[index]
+                                                  .selectData!
+                                                  .name,
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                              color: variantData[index]
+                                                          .selectData ==
+                                                      null
+                                                  ? colorTextHint
+                                                  : colorTextBlack),
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        selectTypeData(TYPE_VERIANT, index,
+                                            variantData[index].selectData);
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                    alignment: Alignment.center,
+                                    width: 60,
+                                    padding: EdgeInsets.only(left: 10),
+                                    color: Color.fromRGBO(213, 210, 234, 1),
+                                    height: MediaQuery.of(context).size.width *
+                                        0.14,
+                                    child: TextField(
+                                      maxLines: 1,
+                                      controller:
+                                          variantData[index].priceController,
+                                      textAlignVertical:
+                                          TextAlignVertical.center,
+                                      style: TextStyle(
+                                          color: colorBlack,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400),
+                                      cursorColor: colorTextBlack,
+                                      keyboardType:
+                                          const TextInputType.numberWithOptions(
+                                              decimal: true, signed: false),
+                                      decoration: const InputDecoration(
+                                          contentPadding: EdgeInsets.all(0),
+                                          isDense: true,
+                                          hintText: "0,00",
+                                          hintStyle: TextStyle(
+                                              color: colorBlack, fontSize: 16),
+                                          border: InputBorder.none),
+                                    )),
+                                Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.all(15),
+                                  decoration: BoxDecoration(
+                                    color: colorButtonYellow,
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(05),
+                                        bottomRight: Radius.circular(05)),
+                                  ),
+                                  child: SvgPicture.asset(
+                                    icCurrency,
+                                    color: Colors.white,
+                                    width: 20,
+                                    height: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                      isShowAddMore
+                          ? GestureDetector(
+                              child: Container(
+                                margin: const EdgeInsets.only(top: 3),
+                                child: const Text(
+                                  "+Add another variant",
+                                  style: TextStyle(
+                                      color: colorYellow,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  variantData.add(SelectVariantData(
+                                      null, TextEditingController()));
+                                });
+                              },
+                              behavior: HitTestBehavior.opaque,
+                            )
+                          : Container(),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: optionData.length,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (listContext, index) {
+                          return Container(
+                            height: MediaQuery.of(context).size.width * 0.14,
+                            padding: EdgeInsets.only(
+                              left: 15.0,
+                            ),
+                            decoration: BoxDecoration(
+                                color: Color.fromRGBO(223, 221, 239, 1),
+                                borderRadius: BorderRadius.circular(05)),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    // padding: const EdgeInsets.all(22),
+                                    child: GestureDetector(
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        child: Text(
+                                          optionData[index].selectData == null
+                                              ? "Select Option"
+                                              : optionData[index]
+                                                  .selectData!
+                                                  .name,
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.normal,
+                                              color: optionData[index]
+                                                          .selectData ==
+                                                      null
+                                                  ? colorTextHint
+                                                  : colorTextBlack),
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        selectTypeData(TYPE_OPTION, index,
+                                            optionData[index].selectData);
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                    alignment: Alignment.center,
+                                    width: 60,
+                                    padding: EdgeInsets.only(left: 10),
+                                    color: Color.fromRGBO(213, 210, 234, 1),
+                                    height: MediaQuery.of(context).size.width *
+                                        0.14,
+                                    child: TextField(
+                                      maxLines: 1,
+                                      controller:
+                                          optionData[index].priceController,
+                                      textAlignVertical:
+                                          TextAlignVertical.center,
+                                      style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal,
+                                          color: colorTextBlack),
+                                      cursorColor: colorTextBlack,
+                                      keyboardType:
+                                          const TextInputType.numberWithOptions(
+                                              decimal: true, signed: false),
+                                      decoration: const InputDecoration(
+                                          contentPadding: EdgeInsets.all(0),
+                                          isDense: true,
+                                          hintText: "0,00",
+                                          hintStyle: TextStyle(
+                                              color: colorBlack, fontSize: 16),
+                                          border: InputBorder.none),
+                                    )),
+                                Container(
+                                    alignment: Alignment.center,
+                                    padding: EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                      color: colorButtonYellow,
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(05),
+                                          bottomRight: Radius.circular(05)),
+                                    ),
+                                    child: SvgPicture.asset(
+                                      icCurrency,
+                                      color: Colors.white,
+                                      width: 20,
+                                      height: 20,
+                                    )),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                      isShowAddMoreOption
+                          ? GestureDetector(
+                              child: Container(
+                                margin: const EdgeInsets.only(top: 3),
+                                child: const Text(
+                                  "+Add another option",
+                                  style: TextStyle(
+                                      color: colorYellow,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  optionData.add(SelectOptionData(
+                                      null, TextEditingController()));
+                                });
+                              },
+                              behavior: HitTestBehavior.opaque,
+                            )
+                          : Container(),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 10),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: GestureDetector(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 14),
+                            alignment: Alignment.center,
+                            margin: EdgeInsets.only(left: 30, right: 10),
+                            decoration: BoxDecoration(
+                                color: colorButtonYellow,
+                                borderRadius: BorderRadius.circular(30)),
+                            child: Text(
+                              widget.isEdit ? "Update" : "Add",
+                              style: const TextStyle(
+                                  color: colorTextWhite,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 12),
+                            ),
+                          ),
+                          onTap: () {
+                            if (widget.isEdit) {
+                              callEditItemApi();
+                            } else {
+                              callAddItemApi();
+                            }
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        child: GestureDetector(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            alignment: Alignment.center,
+                            margin: const EdgeInsets.only(left: 8, right: 30),
+                            decoration: BoxDecoration(
+                                color: colorGrey,
+                                borderRadius: BorderRadius.circular(30)),
+                            child: const Text(
+                              "Cancel",
+                              style: TextStyle(
+                                  color: colorTextWhite,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 12),
+                            ),
+                          ),
+                          onTap: () {
                             setState(() {
-                              selectedValue = value!;
-                              if (value == "Online Order Menu") {
-                                selectedType = "online";
-                              } else if (value == "Table Order Menu") {
-                                selectedType = "table";
-                              } else {
-                                print("DATA FALSE: NULL");
-                              }
-                              print("Selected Type: " + selectedType);
+                              Navigator.of(context).pop(context);
                             });
-                          }),
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Text(
-                      widget.isEdit ? "Enter Item" : "Enter New Item",
-                      style:
-                          const TextStyle(color: colorTextBlack, fontSize: 16),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(18),
-                      margin: const EdgeInsets.only(top: 3),
-                      decoration: BoxDecoration(
-                        color: colorFieldBG,
-                        border: Border.all(color: colorFieldBorder, width: 1),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: TextField(
-                        maxLines: 1,
-                        controller: _itemNameController,
-                        textAlignVertical: TextAlignVertical.center,
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color: colorTextBlack),
-                        cursorColor: colorTextBlack,
-                        decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.all(0),
-                            isDense: true,
-                            hintText: "Enter Item Name",
-                            hintStyle:
-                                TextStyle(color: colorTextHint, fontSize: 16),
-                            border: InputBorder.none),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Select Category",
-                      style: TextStyle(color: colorTextBlack, fontSize: 16),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(18),
-                      margin: const EdgeInsets.only(top: 3),
-                      decoration: BoxDecoration(
-                        color: colorFieldBG,
-                        border: Border.all(color: colorFieldBorder, width: 1),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: GestureDetector(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: Text(
-                            _categoryData == null
-                                ? "Select Category"
-                                : _categoryData!.name,
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.normal,
-                                color: _categoryData == null
-                                    ? colorTextHint
-                                    : colorTextBlack),
-                          ),
+                          },
+                          behavior: HitTestBehavior.opaque,
                         ),
-                        onTap: () {
-                          selectTypeData(TYPE_CATEGORY, -1, _categoryData);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Select Allergy Group",
-                      style: TextStyle(color: colorTextBlack, fontSize: 16),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(18),
-                      margin: const EdgeInsets.only(top: 3),
-                      decoration: BoxDecoration(
-                        color: colorFieldBG,
-                        border: Border.all(color: colorFieldBorder, width: 1),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: GestureDetector(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          child: Text(
-                            _allergyGroupData == null
-                                ? "Select Allergy Group"
-                                : _allergyGroupData!.name,
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.normal,
-                                color: _allergyGroupData == null
-                                    ? colorTextHint
-                                    : colorTextBlack),
-                          ),
-                        ),
-                        onTap: () {
-                          selectTypeData(
-                              TYPE_ALLERGY_GROUP, -1, _allergyGroupData);
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Add Description",
-                      style: TextStyle(color: colorTextBlack, fontSize: 16),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(18),
-                      margin: const EdgeInsets.only(top: 3),
-                      decoration: BoxDecoration(
-                        color: colorFieldBG,
-                        border: Border.all(color: colorFieldBorder, width: 1),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: TextField(
-                        maxLines: 1,
-                        controller: _descriptionController,
-                        textAlignVertical: TextAlignVertical.center,
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color: colorTextBlack),
-                        cursorColor: colorTextBlack,
-                        decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.all(0),
-                            isDense: true,
-                            hintText: "Description",
-                            hintStyle:
-                                TextStyle(color: colorTextHint, fontSize: 16),
-                            border: InputBorder.none),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Add Discount",
-                      style: TextStyle(color: colorTextBlack, fontSize: 16),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(18),
-                      margin: const EdgeInsets.only(top: 3),
-                      decoration: BoxDecoration(
-                        color: colorFieldBG,
-                        border: Border.all(color: colorFieldBorder, width: 1),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: TextField(
-                        maxLines: 1,
-                        controller: _discountController,
-                        textAlignVertical: TextAlignVertical.center,
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.normal,
-                            color: colorTextBlack),
-                        cursorColor: colorTextBlack,
-                        decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.all(0),
-                            isDense: true,
-                            hintText: "Add Discount",
-                            hintStyle:
-                                TextStyle(color: colorTextHint, fontSize: 16),
-                            border: InputBorder.none),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Select Variant",
-                      style: TextStyle(color: colorTextBlack, fontSize: 16),
-                    ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: variantData.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (listContext, index) {
-                        return Container(
-                          margin: EdgeInsets.only(top: 3.sp, bottom: 5.sp),
-                          decoration: BoxDecoration(
-                            border:
-                                Border.all(color: colorFieldBorder, width: 1),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(5)),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  padding: const EdgeInsets.all(22),
-                                  child: GestureDetector(
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Text(
-                                        variantData[index].selectData == null
-                                            ? "Select Variant"
-                                            : variantData[index]
-                                                .selectData!
-                                                .name,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.normal,
-                                            color:
-                                                variantData[index].selectData ==
-                                                        null
-                                                    ? colorTextHint
-                                                    : colorTextBlack),
-                                      ),
-                                    ),
-                                    onTap: () {
-                                      selectTypeData(TYPE_VERIANT, index,
-                                          variantData[index].selectData);
-                                    },
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                  width: 0.07,
-                                  padding: const EdgeInsets.all(0.037),
-                                  color: colorFieldBG,
-                                  child: TextField(
-                                    maxLines: 1,
-                                    controller:
-                                        variantData[index].priceController,
-                                    textAlignVertical: TextAlignVertical.center,
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.normal,
-                                        color: colorTextBlack),
-                                    cursorColor: colorTextBlack,
-                                    keyboardType:
-                                        const TextInputType.numberWithOptions(
-                                            decimal: true, signed: false),
-                                    decoration: const InputDecoration(
-                                        contentPadding: EdgeInsets.all(0),
-                                        isDense: true,
-                                        hintText: "0,00",
-                                        hintStyle: TextStyle(
-                                            color: colorBlack, fontSize: 16),
-                                        border: InputBorder.none),
-                                  )),
-                              Container(
-                                  width: 70,
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.all(25),
-                                  decoration:
-                                      const BoxDecoration(color: colorYellow),
-                                  child: const Text("€",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                      ))),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                    isShowAddMore
-                        ? GestureDetector(
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 3),
-                              child: const Text(
-                                "+Add another variant",
-                                style: TextStyle(
-                                    color: colorYellow,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            onTap: () {
-                              setState(() {
-                                variantData.add(SelectVariantData(
-                                    null, TextEditingController()));
-                              });
-                            },
-                            behavior: HitTestBehavior.opaque,
-                          )
-                        : Container(),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Select Option",
-                      style: TextStyle(color: colorTextBlack, fontSize: 16),
-                    ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: optionData.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (listContext, index) {
-                        return Container(
-                          margin: const EdgeInsets.only(top: 3, bottom: 5),
-                          decoration: BoxDecoration(
-                            border:
-                                Border.all(color: colorFieldBorder, width: 1),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(5)),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  padding: const EdgeInsets.all(22),
-                                  child: GestureDetector(
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      child: Text(
-                                        optionData[index].selectData == null
-                                            ? "Select Option"
-                                            : optionData[index]
-                                                .selectData!
-                                                .name,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.normal,
-                                            color:
-                                                optionData[index].selectData ==
-                                                        null
-                                                    ? colorTextHint
-                                                    : colorTextBlack),
-                                      ),
-                                    ),
-                                    onTap: () {
-                                      selectTypeData(TYPE_OPTION, index,
-                                          optionData[index].selectData);
-                                    },
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                  width: 0.07,
-                                  padding: const EdgeInsets.all(0.037),
-                                  color: colorFieldBG,
-                                  child: TextField(
-                                    maxLines: 1,
-                                    controller:
-                                        optionData[index].priceController,
-                                    textAlignVertical: TextAlignVertical.center,
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.normal,
-                                        color: colorTextBlack),
-                                    cursorColor: colorTextBlack,
-                                    keyboardType:
-                                        const TextInputType.numberWithOptions(
-                                            decimal: true, signed: false),
-                                    decoration: const InputDecoration(
-                                        contentPadding: EdgeInsets.all(0),
-                                        isDense: true,
-                                        hintText: "0,00",
-                                        hintStyle: TextStyle(
-                                            color: colorBlack, fontSize: 16),
-                                        border: InputBorder.none),
-                                  )),
-                              Container(
-                                  width: 70,
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.all(25),
-                                  decoration:
-                                      const BoxDecoration(color: colorYellow),
-                                  child: const Text("€",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                      ))),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                    isShowAddMoreOption
-                        ? GestureDetector(
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 3),
-                              child: const Text(
-                                "+Add another option",
-                                style: TextStyle(
-                                    color: colorYellow,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            onTap: () {
-                              setState(() {
-                                optionData.add(SelectOptionData(
-                                    null, TextEditingController()));
-                              });
-                            },
-                            behavior: HitTestBehavior.opaque,
-                          )
-                        : Container(),
-                  ],
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 25),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: GestureDetector(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.only(right: 8),
-                          decoration: BoxDecoration(
-                              color: colorYellow,
-                              borderRadius: BorderRadius.circular(30)),
-                          child: Text(
-                            widget.isEdit ? "Update" : "Add",
-                            style: const TextStyle(
-                                color: colorTextWhite,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18),
-                          ),
-                        ),
-                        onTap: () {
-                          if (widget.isEdit) {
-                            callEditItemApi();
-                          } else {
-                            callAddItemApi();
-                          }
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.only(left: 8),
-                          decoration: BoxDecoration(
-                              color: colorGrey,
-                              borderRadius: BorderRadius.circular(30)),
-                          child: const Text(
-                            "Cancel",
-                            style: TextStyle(
-                                color: colorTextWhite,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18),
-                          ),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            Navigator.of(context).pop(context);
-                          });
-                        },
-                        behavior: HitTestBehavior.opaque,
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        ));
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )),
+    );
   }
 
   // void dialogDeleteType(TypeListDataModel model) {
@@ -972,7 +983,7 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                   GestureDetector(
                     child: Text(
                       'Take a picture',
-                      style: TextStyle(color: colorTextBlack, fontSize: 22.sp),
+                      style: TextStyle(color: colorTextBlack, fontSize: 22),
                     ),
                     onTap: () {
                       setState(() async {
@@ -986,7 +997,7 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                   GestureDetector(
                     child: Text(
                       'Select from gallery',
-                      style: TextStyle(color: colorTextBlack, fontSize: 22.sp),
+                      style: TextStyle(color: colorTextBlack, fontSize: 22),
                     ),
                     onTap: () {
                       _pickerFile();
@@ -1039,16 +1050,4 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
       print("Image is not cropped.");
     }
   }
-}
-
-class SelectOptionData {
-  SelectionMenuDataList? selectData;
-  late TextEditingController priceController;
-  SelectOptionData(this.selectData, this.priceController);
-}
-
-class SelectVariantData {
-  SelectionMenuDataList? selectData;
-  late TextEditingController priceController;
-  SelectVariantData(this.selectData, this.priceController);
 }

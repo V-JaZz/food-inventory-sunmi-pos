@@ -404,8 +404,9 @@ class ApiBaseHelper {
     print('Api PUT, url $url');
     print('Api PUT, FilePath ${pickedImage}');
     print('Api PUT, Token $token');
-    print('Api PUT, ImageType}' + variants.toString());
-
+    print('Api PUT,' + variants.toString());
+    print("Api VARI: " + variants.toString());
+    print("API OPT: " + options.toString());
     var respStr;
     try {
       var request = http.MultipartRequest("POST", Uri.parse(baseURL + url));
@@ -452,6 +453,8 @@ class ApiBaseHelper {
     print('Api PUT, Token $token');
     print('Api PUT, ImageType $name');
     print('Api PUT, varient $price');
+    print("Api VARI: " + variants.toString());
+    print("API OPT: " + options.toString());
 
     var respStr;
     try {
@@ -497,6 +500,7 @@ class ApiBaseHelper {
     print('Api PUT, FilePath ${pickedImage}');
     print('Api PUT, Token $token');
     print('Api PUT, ImageType $name');
+
     var respStr;
     try {
       var request = http.MultipartRequest("PUT", Uri.parse(baseURL + url));

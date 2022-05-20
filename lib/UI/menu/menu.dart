@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_inventory/UI/dashboard/forms/Items/dialogMenu.dart';
 import 'package:food_inventory/UI/dashboard/forms/Items/model/menu_items.dart';
 import 'package:food_inventory/UI/menu/dialog_delete_type.dart';
 import 'package:food_inventory/UI/menu/dialog_type_list_view.dart';
@@ -179,7 +180,8 @@ class _MenuState extends State<Menu> {
                                   ),
                                   Flexible(
                                     child: Container(
-                                      padding: const EdgeInsets.only(bottom: 03.5),
+                                      padding:
+                                          const EdgeInsets.only(bottom: 03.5),
                                       height: 55,
                                       child: TextField(
                                         onChanged: (value) => setState(() {
@@ -300,8 +302,8 @@ class _MenuState extends State<Menu> {
                               ),
                             ),
                       Container(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 13),
                         alignment: Alignment.center,
                         child: const Text(
                           "Price",
@@ -391,17 +393,19 @@ class _MenuState extends State<Menu> {
                                               icon: Icons.delete,
                                             ),
                                           ),
-                                          Container(
+                                          SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
                                                 0.15,
                                             child: SlidableAction(
-                                              onPressed: doNothing,
-                                              backgroundColor: colorTextBlack,
-                                              foregroundColor: colorTextWhite,
-                                              icon: Icons.edit,
-                                            ),
+                                                backgroundColor: colorTextBlack,
+                                                foregroundColor: colorTextWhite,
+                                                icon: Icons.edit,
+                                                onPressed: (context) {
+                                                  editMenuItem(
+                                                      data[index].items![i]);
+                                                }),
                                           ),
                                         ],
                                       ),
@@ -409,10 +413,10 @@ class _MenuState extends State<Menu> {
                                       child: Table(
                                           key: ValueKey(
                                               data[index].items![i].name),
-                                          columnWidths: {
-                                            0: const FlexColumnWidth(7.1),
-                                            1: const FlexColumnWidth(5.0),
-                                            2: const FlexColumnWidth(5.0),
+                                          columnWidths: const {
+                                            0: FlexColumnWidth(7.1),
+                                            1: FlexColumnWidth(5.0),
+                                            2: FlexColumnWidth(5.0),
                                           },
                                           defaultVerticalAlignment:
                                               TableCellVerticalAlignment.middle,
@@ -423,9 +427,10 @@ class _MenuState extends State<Menu> {
                                                     ? const Color.fromRGBO(
                                                         228, 225, 246, 1)
                                                     : colorTextWhite,
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: 10,
-                                                    vertical: 15),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 15),
                                                 child: Text(
                                                     data[index].items![i].name!,
                                                     maxLines: 1,
@@ -440,9 +445,10 @@ class _MenuState extends State<Menu> {
                                                     ? const Color.fromRGBO(
                                                         228, 225, 246, 1)
                                                     : colorTextWhite,
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: 10,
-                                                    vertical: 15),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 15),
                                                 child: Text(
                                                     data[index]
                                                         .items![i]
@@ -460,9 +466,10 @@ class _MenuState extends State<Menu> {
                                                     ? const Color.fromRGBO(
                                                         228, 225, 246, 1)
                                                     : colorTextWhite,
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: 10,
-                                                    vertical: 15),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 15),
                                                 alignment: Alignment.center,
                                                 child: Text(
                                                     getOptionPrice(
@@ -617,6 +624,28 @@ class _MenuState extends State<Menu> {
       }
     }
     return optionPrice;
+  }
+
+  void editMenuItem(Items itemData) {
+    // for (Items items in itemData)
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (menuDialogContext) {
+        return DialogMenuItems(
+          isEdit: true,
+          editItem: itemData,
+          onAddDeleteSuccess: () {
+            setState(() {
+              itemList = [];
+            });
+            getMenuItems();
+          },
+          type: 'Menu',
+          // isShowTable: widget.isShowTable,
+        );
+      },
+    );
   }
 
   void doNothing(BuildContext context) {}
