@@ -1,8 +1,6 @@
 // ignore_for_file: avoid_print, unused_local_variable, unnecessary_string_interpolations, prefer_typing_uninitialized_variables
 
 import 'dart:convert';
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_inventory/UI/order/dialog_order_details.dart';

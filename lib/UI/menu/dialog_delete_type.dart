@@ -6,12 +6,13 @@ import 'package:food_inventory/UI/menu/repository/delete_data_repository.dart';
 import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
 
+// ignore: must_be_immutable
 class DialogDeleteType extends StatefulWidget {
   // var type, name;
   TypeListDataModel model;
   VoidCallback onDialogClose;
 
-  DialogDeleteType({required this.model, required this.onDialogClose});
+  DialogDeleteType({Key? key, required this.model, required this.onDialogClose}) : super(key: key);
 
   @override
   _DialogDeleteTypeState createState() => _DialogDeleteTypeState();
@@ -22,7 +23,6 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _deleteDataRepository =
         new DeleteDataRepository(context, widget, widget.model);
@@ -103,7 +103,7 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
                               borderRadius: BorderRadius.circular(30)),
                           child: const Text(
                             "Delete",
-                            style: const TextStyle(
+                            style: TextStyle(
                                 color: colorTextWhite,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 18),

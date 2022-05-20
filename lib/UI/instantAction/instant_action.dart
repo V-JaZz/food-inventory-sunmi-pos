@@ -21,11 +21,10 @@ class _InstantActionState extends State<InstantAction> {
 
   bool isOpen = true, isClose = false;
 
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _repository = InstanceActionRepository(context);
     getProfileData();
@@ -56,7 +55,7 @@ class _InstantActionState extends State<InstantAction> {
             });
           }
         } catch (e) {
-          print(e.toString());
+         
           Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
         }
       });
@@ -88,8 +87,8 @@ class _InstantActionState extends State<InstantAction> {
           decoration: BoxDecoration(
               color: colorTextWhite,
               borderRadius: BorderRadius.circular(46),
-              boxShadow: [
-                const BoxShadow(
+              boxShadow: const [
+                BoxShadow(
                   color: Colors.grey,
                   offset: Offset(1.0, 1.0), //(x,y)
                   blurRadius: 1.0,

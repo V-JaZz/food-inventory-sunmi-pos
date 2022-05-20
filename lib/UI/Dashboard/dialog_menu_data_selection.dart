@@ -25,11 +25,13 @@ class DialogMenuDataSelection extends StatefulWidget {
   late int variantListSize;
 
   DialogMenuDataSelection(
-      {Key? key, required this.type,
+      {Key? key,
+      required this.type,
       this.selectedData,
       required this.onSelectData,
       required this.optionListSize,
-      required this.variantListSize}) : super(key: key);
+      required this.variantListSize})
+      : super(key: key);
 
   @override
   _DialogMenuDataSelectionState createState() =>
@@ -314,152 +316,149 @@ class _DialogMenuDataSelectionState extends State<DialogMenuDataSelection> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Dialog(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          child: Container(
-            // width: Media,
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+    return Dialog(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        child: Container(
+          // width: Media,
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
 
-            decoration: BoxDecoration(
-                color: colorTextWhite, borderRadius: BorderRadius.circular(13)),
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Select ${widget.type}",
-                      style: const TextStyle(
-                          color: colorTextBlack,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18),
-                    ),
-                    widget.type == TYPE_CATEGORY
-                        ? Container()
-                        : widget.type == TYPE_GROUP_TOPPINGS
-                            ? getDefaultButton()
-                            : widget.type == TYPE_OPTION &&
-                                    widget.optionListSize > 1
-                                ? Container()
-                                : widget.type == TYPE_VERIANT &&
-                                        widget.variantListSize > 1
-                                    ? Container()
-                                    : getDefaultButton()
-                  ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                isDataLoad
-                    ? const Center(
-                        child: CircularProgressIndicator(
-                          strokeWidth: 5.0,
-                          color: colorGreen,
-                        ),
-                      )
-                    : ListView.builder(
-                        itemCount: dataList.length,
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemBuilder: (listContext, index) {
-                          return Column(
-                            children: [
-                              GestureDetector(
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 15),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      widget.type == TYPE_TOPPINGS
-                                          ? Expanded(
-                                              child: RichText(
-                                                  text: TextSpan(
-                                                      text:
-                                                          dataList[index].name,
-                                                      style: const TextStyle(
-                                                          color: colorTextBlack,
-                                                          fontSize: 16),
-                                                      children: [
-                                                  TextSpan(
-                                                      text:
-                                                          " (€${dataList[index].price})",
-                                                      style: const TextStyle(
-                                                          color: colorLightRed,
-                                                          fontSize: 16)),
-                                                ])))
-                                          : Expanded(
-                                              child: Text(
-                                              dataList[index].name,
-                                              style: const TextStyle(
-                                                  color: colorTextBlack,
-                                                  fontSize: 16),
-                                            )),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      SvgPicture.asset(
-                                        dataList[index].isSelected
-                                            ? icRadioCheck
-                                            : icRadioUncheck,
-                                        width: 18,
-                                        height: 18,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                onTap: () {
-                                  widget.onSelectData(dataList[index]);
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              Container(
-                                height: 1,
-                                decoration:
-                                    const BoxDecoration(color: colorDividerGreen),
-                              )
-                            ],
-                          );
-                        },
-                      ),
-                GestureDetector(
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 20),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SvgPicture.asset(
-                          icBackArrow,
-                          width: 40,
-                          height: 40,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        const Text(
-                          "Back",
-                          style: TextStyle(
-                              color: colorTextBlack,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
+          decoration: BoxDecoration(
+              color: colorTextWhite, borderRadius: BorderRadius.circular(13)),
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Select ${widget.type}",
+                    style: const TextStyle(
+                        color: colorTextBlack,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18),
                   ),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                )
-              ],
-            ),
-          )),
-    );
+                  widget.type == TYPE_CATEGORY
+                      ? Container()
+                      : widget.type == TYPE_GROUP_TOPPINGS
+                          ? getDefaultButton()
+                          : widget.type == TYPE_OPTION &&
+                                  widget.optionListSize > 1
+                              ? Container()
+                              : widget.type == TYPE_VERIANT &&
+                                      widget.variantListSize > 1
+                                  ? Container()
+                                  : getDefaultButton()
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              isDataLoad
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        strokeWidth: 5.0,
+                        color: colorGreen,
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: dataList.length,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (listContext, index) {
+                        return Column(
+                          children: [
+                            GestureDetector(
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 15),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    widget.type == TYPE_TOPPINGS
+                                        ? Expanded(
+                                            child: RichText(
+                                                text: TextSpan(
+                                                    text: dataList[index].name,
+                                                    style: const TextStyle(
+                                                        color: colorTextBlack,
+                                                        fontSize: 16),
+                                                    children: [
+                                                TextSpan(
+                                                    text:
+                                                        " (€${dataList[index].price})",
+                                                    style: const TextStyle(
+                                                        color: colorLightRed,
+                                                        fontSize: 16)),
+                                              ])))
+                                        : Expanded(
+                                            child: Text(
+                                            dataList[index].name,
+                                            style: const TextStyle(
+                                                color: colorTextBlack,
+                                                fontSize: 16),
+                                          )),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    SvgPicture.asset(
+                                      dataList[index].isSelected
+                                          ? icRadioCheck
+                                          : icRadioUncheck,
+                                      width: 18,
+                                      height: 18,
+                                    )
+                                  ],
+                                ),
+                              ),
+                              onTap: () {
+                                widget.onSelectData(dataList[index]);
+                                Navigator.pop(context);
+                              },
+                            ),
+                            Container(
+                              height: 1,
+                              decoration:
+                                  const BoxDecoration(color: colorDividerGreen),
+                            )
+                          ],
+                        );
+                      },
+                    ),
+              GestureDetector(
+                child: Container(
+                  margin: const EdgeInsets.only(top: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SvgPicture.asset(
+                        icBackArrow,
+                        width: 40,
+                        height: 40,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      const Text(
+                        "Back",
+                        style: TextStyle(
+                            color: colorTextBlack,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500),
+                      )
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          ),
+        ));
   }
 
   Widget getDefaultButton() {
@@ -476,7 +475,6 @@ class _DialogMenuDataSelectionState extends State<DialogMenuDataSelection> {
                 fontSize: 13)),
       ),
       onTap: () {
-        //TODO:  Delete Item
         widget.onSelectData(SelectionMenuDataList(
             "", "Default ${widget.type}", "", 0.0, 0.0, "", "", false));
         Navigator.pop(context);

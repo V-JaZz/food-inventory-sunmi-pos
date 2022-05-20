@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, avoid_print, prefer_adjacent_string_concatenation, prefer_typing_uninitialized_variables, unrelated_type_equality_checks, prefer_if_null_operators
+// ignore_for_file: avoid_unnecessary_containers, avoid_print, prefer_adjacent_string_concatenation, prefer_typing_uninitialized_variables, unrelated_type_equality_checks, prefer_if_null_operators, unused_field
 
 import 'dart:convert';
 import 'dart:io';
@@ -22,15 +22,16 @@ import '../../constant/image.dart';
 import 'model/order_list_response_model.dart';
 // import 'package:just_audio/just_audio.dart';
 
+// ignore: must_be_immutable
 class OrderDetailsDialog extends StatefulWidget {
   OrderDataModel orderDataModel;
   VoidCallback onOrderUpdate;
   String name;
 
   OrderDetailsDialog(
-      {required this.orderDataModel,
+      {Key? key, required this.orderDataModel,
       required this.onOrderUpdate,
-      required this.name});
+      required this.name}) : super(key: key);
 
   @override
   _OrderDetailsDialogState createState() => _OrderDetailsDialogState();
@@ -43,7 +44,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
       MethodChannel('com.suresh.foodinventory/orderprint');
   var itemDiscount;
   var catDiscount;
-  var OrderName;
+  var _orderName;
   late SharedPreferences prefs;
 
   @override
@@ -441,7 +442,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
                                                 checkString(itemOptSelection)
                                                     ? Container()
                                                     : Text(
-                                                        "$itemOptSelection",
+                                                        itemOptSelection,
                                                         style: const TextStyle(
                                                           color: colorGreen,
                                                           fontWeight:
@@ -957,7 +958,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
             print("$port" + "IPPPPPPPPPPPPPPPPPPPPPPPPP");
             print("$url" + "IPPPPPPPPPPPPPPPPPPPPPPPPP");
 
-            OrderName = widget.orderDataModel.orderNumber!;
+            _orderName = widget.orderDataModel.orderNumber!;
             XmlDocument xmlDocument = XmlDocument([
               const XmlDeclaration(version: '1.0', encoding: 'UTF-8'),
               XmlElement(name: 'order', children: [
@@ -1094,7 +1095,7 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
               ]),
             ]);
             writeCounter(xmlDocument);
-            Process.run('start', ["flutter_pos_driver", "$OrderName", "online"],
+            Process.run('start', ["flutter_pos_driver", "$_orderName", "online"],
                 runInShell: true);
           });
           // try {
@@ -1130,23 +1131,11 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
     });
   }
 
-  // _createFolder() async {
-  //   final folderName = "orderData";
-  //   final path = Directory("$folderName");
-  //   if ((await path.exists())) {
-  //     // TODO:
-  //     print("exist");
-  //   } else {
-  //     // TODO:
-  //     print("not exist");
-  //     path.create();
-  //   }
-  // }
   runCommand() async {
-    final directory = await getApplicationDocumentsDirectory();
 
-    final path = Directory("$OrderName");
+    final path = Directory("$_orderName");
     if ((await path.exists())) {
+      // ignore: non_constant_identifier_names
       Process.run('dir', [], runInShell: true).then((ProcessResultrs) {});
       print("exist");
       print(path);
@@ -1165,8 +1154,8 @@ class _OrderDetailsDialogState extends State<OrderDetailsDialog> {
   Future<File> get _localFile async {
     final path = await _localPath;
     // final folderName = "orderData";
-    print('$path/$OrderName.xml');
-    return File('$path/$OrderName.xml');
+    print('$path/$_orderName.xml');
+    return File('$path/$_orderName.xml');
   }
 
   Future<File> writeCounter(Object counter) async {

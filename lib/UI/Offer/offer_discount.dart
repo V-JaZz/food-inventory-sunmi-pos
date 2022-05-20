@@ -30,7 +30,6 @@ class _OfferDiscountState extends State<OfferDiscount> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _offerRepository = OfferRepository(context);
     getProfileData();
@@ -257,7 +256,7 @@ class _OfferDiscountState extends State<OfferDiscount> {
               ),
             ],
           ),
-          Container(
+          SizedBox(
             width: 480,
             child: Row(
               children: [

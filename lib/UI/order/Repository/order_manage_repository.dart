@@ -23,7 +23,7 @@ final PlayWorld playSound =
     dylib.lookup<ffi.NativeFunction<PlaySoundFunc>>('stop').asFunction();
 
 class OrderManageRepository {
-  ApiBaseHelper _helper = ApiBaseHelper();
+  final ApiBaseHelper _helper = ApiBaseHelper();
   late BuildContext context;
   late OrderDetailsDialog widget;
 

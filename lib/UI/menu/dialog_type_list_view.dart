@@ -22,11 +22,13 @@ import 'package:food_inventory/model/common_model.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 
 
+// ignore: must_be_immutable
 class DialogTypeListView extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   var type;
   VoidCallback onDialogClose;
 
-  DialogTypeListView({this.type, required this.onDialogClose});
+  DialogTypeListView({Key? key, this.type, required this.onDialogClose}) : super(key: key);
 
   @override
   _DialogTypeListViewState createState() => _DialogTypeListViewState();
@@ -40,7 +42,6 @@ class _DialogTypeListViewState extends State<DialogTypeListView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     dataList = [];
     if (widget.type == TYPE_CATEGORY) {
@@ -405,10 +406,10 @@ class _DialogTypeListViewState extends State<DialogTypeListView> {
     });
   }
 
-  ApiBaseHelper _helper = ApiBaseHelper();
+  final ApiBaseHelper _helper = ApiBaseHelper();
 
 //   // late BuildContext _context;
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
 
   updateCategoryPosition(
       currentPosition, targetPosition, currentCategory, targetCategory) async {
@@ -489,7 +490,7 @@ class _DialogTypeListViewState extends State<DialogTypeListView> {
                         color: colorYellow,
                       ),
                     )
-                  : Container(
+                  : SizedBox(
                       height: 190,
                       child: ReorderableListView.builder(
                           itemCount: dataList.length,
@@ -541,7 +542,7 @@ class _DialogTypeListViewState extends State<DialogTypeListView> {
                                         ),
                                         GestureDetector(
                                           child: const Text("Edit",
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                   color: colorYellow,
                                                   fontSize: 16)),
                                           onTap: () {

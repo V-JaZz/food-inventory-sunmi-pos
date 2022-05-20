@@ -30,7 +30,6 @@ class InstanceActionRepository {
             CommonModel.fromJson(_helper.returnResponse(_context!, response));
         Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
       } catch (e) {
-        print(e.toString());
         Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
       }
     });

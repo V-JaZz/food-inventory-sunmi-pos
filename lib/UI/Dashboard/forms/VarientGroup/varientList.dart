@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
+// ignore: library_prefixes
 import 'package:food_inventory/constant/switch.dart' as SW;
 
 import '../Varient/model/veriant_list.dart';
 import 'repository/variant_group.dart';
-
 
 // ignore: must_be_immutable
 class VarientListPage extends StatefulWidget {
@@ -168,13 +168,14 @@ class _VarientListPageState extends State<VarientListPage> {
                                     padding: const EdgeInsets.only(left: 15),
                                     decoration: BoxDecoration(
                                         color: index % 2 == 0
-                                            ? const Color.fromRGBO(228, 225, 246, 1)
+                                            ? const Color.fromRGBO(
+                                                228, 225, 246, 1)
                                             : colorTextWhite),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Container(
+                                        SizedBox(
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
@@ -223,7 +224,8 @@ class _VarientListPageState extends State<VarientListPage> {
                               Expanded(
                                 child: GestureDetector(
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(vertical: 14),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 14),
                                     alignment: Alignment.center,
                                     margin: const EdgeInsets.only(right: 8),
                                     decoration: BoxDecoration(
@@ -250,7 +252,8 @@ class _VarientListPageState extends State<VarientListPage> {
                               Expanded(
                                 child: GestureDetector(
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(vertical: 14),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 14),
                                     alignment: Alignment.center,
                                     margin: const EdgeInsets.only(left: 8),
                                     decoration: BoxDecoration(

@@ -79,8 +79,8 @@ class _MenuState extends State<Menu> {
     });
   }
 
-  ApiBaseHelper _helper = ApiBaseHelper();
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
   updatePosition(currentPosition, targetPosition, currentItem, targetItem,
       oldIndex, newIndex, items) async {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
@@ -115,12 +115,6 @@ class _MenuState extends State<Menu> {
     });
   }
 
-  Widget _singleToDoWidget(String title, int index) {
-    return Text(
-      title,
-      key: ValueKey(title),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,10 +125,10 @@ class _MenuState extends State<Menu> {
       child: Column(
         children: [
           Table(
-              columnWidths: {
-                0: const FlexColumnWidth(7.1),
-                1: const FlexColumnWidth(5.0),
-                2: const FlexColumnWidth(5.0),
+              columnWidths: const {
+                0: FlexColumnWidth(7.1),
+                1: FlexColumnWidth(5.0),
+                2: FlexColumnWidth(5.0),
               },
               border: TableBorder.all(
                   color: colorYellow,
@@ -356,7 +350,7 @@ class _MenuState extends State<Menu> {
                                         motion: const ScrollMotion(),
                                         children: [
                                           const Spacer(),
-                                          Container(
+                                          SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *

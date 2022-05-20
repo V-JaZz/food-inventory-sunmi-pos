@@ -1,11 +1,8 @@
-// ignore_for_file: avoid_print, prefer_typing_uninitialized_variables, use_key_in_widget_constructors
+// ignore_for_file: avoid_print, prefer_typing_uninitialized_variables, use_key_in_widget_constructors, library_prefixes
 
 import 'dart:convert';
 import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:food_inventory/UI/dashboard/forms/Items/model/menu_items.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/storage_util.dart';
@@ -61,7 +58,7 @@ class _ExcluedPageState extends State<ExcluedPage> {
         sigmaY: 3.0,
       ),
       child: Container(
-        decoration: new BoxDecoration(color: const Color.fromRGBO(11, 4, 58, 0.7)),
+        decoration: const BoxDecoration(color: Color.fromRGBO(11, 4, 58, 0.7)),
         child: Dialog(
             alignment: Alignment.topCenter,
             elevation: 0,
@@ -205,7 +202,7 @@ class _ExcluedPageState extends State<ExcluedPage> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Container(
+                                          SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .width *
@@ -366,7 +363,7 @@ class _ExcluedPageState extends State<ExcluedPage> {
     });
   }
 
-  var _itemsData = [];
+  final _itemsData = [];
   // late BuildContext context;
   final ApiBaseHelper _helper = ApiBaseHelper();
   final GlobalKey<State> _keyLoader = GlobalKey<State>();

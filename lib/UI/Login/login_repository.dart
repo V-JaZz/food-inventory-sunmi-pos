@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_inventory/UI/Dashboard/dashboard.dart';
 import 'package:food_inventory/constant/storage_util.dart';
@@ -17,7 +16,7 @@ class LoginRepository {
   final ApiBaseHelper _helper = ApiBaseHelper();
   final BuildContext? _context;
 
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader =  GlobalKey<State>();
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   late String restaurantid;
   late String emailid;

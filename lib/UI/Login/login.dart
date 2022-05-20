@@ -3,7 +3,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:food_inventory/UI/Dashboard/dashboard.dart';
 import 'package:food_inventory/UI/ResetPass/reset_password.dart';
 import '../../constant/colors.dart';
 import '../../constant/image.dart';
@@ -20,7 +19,6 @@ class _LoginPageState extends State<LoginPage> {
   late TextEditingController _emailController;
   late String devicetoken;
   late LoginRepository _loginRepository;
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   late TextEditingController _passController;
   @override
   void initState() {
@@ -223,7 +221,7 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       devicetoken = devicetoken;
     });
-    print("raj" + "dfhshdkfjshfhsdjfsjsfdgs");
+    print("raj" "dfhshdkfjshfhsdjfsjsfdgs");
     print("dev" + devicetoken);
   }
 }

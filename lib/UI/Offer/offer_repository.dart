@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:food_inventory/UI/Offer/offer_success_model.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/constant/validation_util.dart';
@@ -12,7 +13,7 @@ import '../../main.dart';
 class OfferRepository {
   ApiBaseHelper _helper = ApiBaseHelper();
   late BuildContext context;
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
 
   OfferRepository(this.context);
 
@@ -34,7 +35,9 @@ class OfferRepository {
         showMessage(model.data!, context);
 
       } catch (e) {
-        print(e.toString());
+        if (kDebugMode) {
+          print(e.toString());
+        }
         Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
       }
     });
