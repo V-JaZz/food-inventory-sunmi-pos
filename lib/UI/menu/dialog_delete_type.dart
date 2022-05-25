@@ -12,7 +12,8 @@ class DialogDeleteType extends StatefulWidget {
   TypeListDataModel model;
   VoidCallback onDialogClose;
 
-  DialogDeleteType({Key? key, required this.model, required this.onDialogClose}) : super(key: key);
+  DialogDeleteType({Key? key, required this.model, required this.onDialogClose})
+      : super(key: key);
 
   @override
   _DialogDeleteTypeState createState() => _DialogDeleteTypeState();
@@ -105,8 +106,8 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
                             "Delete",
                             style: TextStyle(
                                 color: colorTextWhite,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12),
                           ),
                         ),
                         onTap: () {
@@ -127,8 +128,8 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
                             "Cancel",
                             style: TextStyle(
                                 color: colorTextWhite,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12),
                           ),
                         ),
                         onTap: () {

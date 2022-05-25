@@ -145,7 +145,7 @@ class _MainPageState extends State<MainPage> {
       if (mounted) {
         setState(() {
           Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => DashBoard()));
+              MaterialPageRoute(builder: (context) => const DashBoard()));
         });
       }
       print('Message clicked!');
@@ -188,7 +188,7 @@ class _MainPageState extends State<MainPage> {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                tokent.isEmpty ? const LoginPage() : DashBoard()));
+                tokent.isEmpty ? const LoginPage() : const DashBoard()));
   }
 
   @override

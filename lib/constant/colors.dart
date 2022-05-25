@@ -16,7 +16,8 @@ const Color colorDividerGreen = Color(0xFFBDE99E);
 const Color colorGreen = Color.fromRGBO(81, 200, 0, 1);
 const Color colorGreen1 = Color.fromRGBO(81, 200, 0, 1);
 const Color colorGreen2 = Color.fromRGBO(51, 122, 3, 1);
-
+const Color coloryello = Color.fromRGBO(252, 174, 3, 1);
+const Color coloryello2 = Color.fromRGBO(198, 144, 26, 1);
 const Color colorOrange = Color(0xFFFCAE03);
 const Color colorRedTrans = Color(0x52FF6D6F);
 const Color colorLightGrey = Color(0xFFE4E6E8);

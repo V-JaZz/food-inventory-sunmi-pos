@@ -1,6 +1,7 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe, avoid_print, deprecated_member_use
 
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -83,7 +84,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
 
     avatarWidget = Container();
     controller = GifController(vsync: this);
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.value = 0;
       controller.animateTo(22, duration: const Duration(milliseconds: 1500));
     });
@@ -195,7 +196,6 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
           resId = restaurantId;
           clearImageCache(restaurantId);
         });
-
         try {
           String params = "";
           if (selectedDate.isNotEmpty) {
@@ -518,8 +518,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
             child: Column(
               children: [
                 Container(
-                  padding:
-                      const EdgeInsets.only(top: 05, bottom: 05, right: 10),
+                  padding: const EdgeInsets.only(top: 05, bottom: 0, right: 10),
                   color: colorButtonBlue,
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -536,7 +535,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                                 FocusScope.of(context)
                                     .requestFocus(FocusNode());
                                 Scaffold.of(context).openDrawer();
-                                WidgetsBinding.instance!
+                                WidgetsBinding.instance
                                     .addPostFrameCallback((_) {
                                   controller.value = 0;
                                   controller.animateTo(22,
@@ -605,7 +604,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                 Expanded(
                     child: Container(
                         padding: const EdgeInsets.only(
-                            left: 10, top: 10, right: 15, bottom: 10),
+                            left: 10, top: 10, right: 15, bottom: 0),
                         color: colorBackgroundyellow,
                         child: _getDrawerItemWidget(_selectedDrawerIndex))),
               ],
@@ -613,7 +612,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          // disabledElevation: 0,
+          disabledElevation: 0,
           // foregroun ? dColor : colorTextBlack,
           onPressed: () {
             addMoreDialog();
@@ -621,7 +620,11 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
           child: Container(
             width: 60,
             height: 60,
-            child: const Icon(Icons.add),
+            child: const Icon(
+              Icons.add,
+              color: colorTextWhite,
+              size: 32,
+            ),
             decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: LinearGradient(colors: [colorGreen2, colorGreen1])),
@@ -629,7 +632,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
-          // color: colorTextWhite,
+          color: colorTextWhite,
           elevation: 10,
           shape: const CircularNotchedRectangle(),
           notchMargin: 05,
@@ -1124,16 +1127,8 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
           TextButton(
             onPressed: () {
               Navigator.pop(popupContext);
-              // FlutterRingtonePlayer.stop();
               StorageUtil.clearData().then((value) {
                 callLogout();
-                // logoutDialog();
-                // Navigator.pushAndRemoveUntil(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) => LoginPage(),
-                //     ),
-                //     (e) => false);
               });
             },
             child: const Text('Yes', style: TextStyle(color: colorButtonBlue)),

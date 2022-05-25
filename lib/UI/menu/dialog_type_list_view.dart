@@ -21,14 +21,14 @@ import 'package:food_inventory/main.dart';
 import 'package:food_inventory/model/common_model.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 
-
 // ignore: must_be_immutable
 class DialogTypeListView extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
   var type;
   VoidCallback onDialogClose;
 
-  DialogTypeListView({Key? key, this.type, required this.onDialogClose}) : super(key: key);
+  DialogTypeListView({Key? key, this.type, required this.onDialogClose})
+      : super(key: key);
 
   @override
   _DialogTypeListViewState createState() => _DialogTypeListViewState();
@@ -504,7 +504,8 @@ class _DialogTypeListViewState extends State<DialogTypeListView> {
                                 key: ValueKey(dataList[index].id),
                                 children: [
                                   Container(
-                                    padding: const EdgeInsets.symmetric(vertical: 15),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
