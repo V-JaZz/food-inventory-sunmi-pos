@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:food_inventory/UI/restaurentTimeSet/dialog_add_time_zone.dart';
+import 'package:food_inventory/UI/restaurentTimeSet/dialog_delete_time.dart';
+import 'package:food_inventory/UI/restaurentTimeSet/dialog_edit_time_zone.dart';
+import 'package:food_inventory/UI/restaurentTimeSet/dialog_update_status.dart';
 import 'package:food_inventory/constant/colors.dart';
 // ignore: library_prefixes
 import 'package:food_inventory/constant/switch.dart' as SW;
@@ -196,27 +200,11 @@ class _RestaurantTimeSetState extends State<RestaurantTimeSet> {
                                                     0.15,
                                                 child: SlidableAction(
                                                   onPressed: (context) {
-                                                    // dialogDeleteType(
-                                                    //     TypeListDataModel(
-                                                    //         TYPE_MENU_ITEM,
-                                                    //         data[index]
-                                                    //             .items![i]
-                                                    //             .sId!,
-                                                    //         0,
-                                                    //         data[index]
-                                                    //             .items![i]
-                                                    //             .name!,
-                                                    //         data[index]
-                                                    //             .items![i]
-                                                    //             .description!,
-                                                    //         "",
-                                                    //         "",
-                                                    //         [],
-                                                    //         "",
-                                                    //         "",
-                                                    //         "",
-                                                    //         "",
-                                                    //         0));
+                                                    dialogDeleteTime(
+                                                        itemList[i]
+                                                            .sId
+                                                            .toString(),
+                                                        itemList[i]);
                                                   },
                                                   backgroundColor:
                                                       colorButtonYellow,
@@ -241,8 +229,8 @@ class _RestaurantTimeSetState extends State<RestaurantTimeSet> {
                                                         colorTextWhite,
                                                     icon: Icons.edit,
                                                     onPressed: (context) {
-                                                      // editMenuItem(
-                                                      //     data[index].items![i]);
+                                                      dialogEditTime(
+                                                          itemList[i]);
                                                     }),
                                               ),
                                             ],
@@ -253,6 +241,10 @@ class _RestaurantTimeSetState extends State<RestaurantTimeSet> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.46,
                                                 padding:
                                                     const EdgeInsets.symmetric(
                                                   horizontal: 10,
@@ -264,29 +256,39 @@ class _RestaurantTimeSetState extends State<RestaurantTimeSet> {
                                                         fontWeight:
                                                             FontWeight.w500)),
                                               ),
-                                              SizedBox(
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.12,
+                                                child: Text(
+                                                    itemList[i].startTime!,
+                                                    style: const TextStyle(
+                                                        color: colorTextBlack,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500)),
+                                              ),
+                                              Container(
+                                                alignment: Alignment.center,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.12,
+                                                child: Text(
+                                                    itemList[i]
+                                                        .endTime! /* getOptionName(itemList[i].options!)*/,
+                                                    style: const TextStyle(
+                                                        color: colorTextBlack,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500)),
+                                              ),
+                                              Container(
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *
-                                                      0.27),
-                                              Text(itemList[i].startTime!,
-                                                  style: const TextStyle(
-                                                      color: colorTextBlack,
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500)),
-                                              Text(
-                                                  itemList[i]
-                                                      .endTime! /* getOptionName(itemList[i].options!)*/,
-                                                  style: const TextStyle(
-                                                      color: colorTextBlack,
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500)),
-                                              Container(
-                                                  // padding: const EdgeInsets
-                                                  //         .symmetric(
-                                                  //     horizontal: 10),
+                                                      0.2,
                                                   alignment: Alignment.center,
                                                   child: SW.Switch(
                                                       value:
@@ -295,6 +297,37 @@ class _RestaurantTimeSetState extends State<RestaurantTimeSet> {
                                                         setState(() {
                                                           itemList[i].isActive =
                                                               value;
+                                                          if (itemList[i]
+                                                                  .isActive ==
+                                                              value) {
+                                                            print("DATA FIRST" +
+                                                                itemList[i]
+                                                                    .isActive
+                                                                    .toString());
+                                                            if (itemList[i]
+                                                                    .isActive ==
+                                                                false) {
+                                                              print(
+                                                                  "DATA FALSE");
+                                                              dialogEditStatus(
+                                                                  "Deactivate",
+                                                                  itemList[i]);
+                                                            } else if (itemList[
+                                                                        i]
+                                                                    .isActive ==
+                                                                true) {
+                                                              print(
+                                                                  "DATA TRUE");
+                                                              dialogEditStatus(
+                                                                  "Active",
+                                                                  itemList[i]);
+                                                            }
+                                                          } else {
+                                                            print(
+                                                                "NOT MATCHED");
+                                                          }
+
+                                                          print(value);
                                                         });
                                                       },
                                                       // activeColor: colorGreen,
@@ -313,20 +346,26 @@ class _RestaurantTimeSetState extends State<RestaurantTimeSet> {
                                     ])
                                 ],
                               ),
-                              Container(
-                                margin: const EdgeInsets.all(15.0),
-                                width: MediaQuery.of(context).size.width * 0.15,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.07,
-                                child: const Icon(
-                                  Icons.add,
-                                  color: colorTextWhite,
-                                  size: 32,
+                              GestureDetector(
+                                onTap: () {
+                                  dialogAddNewTime();
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.all(15.0),
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.15,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.07,
+                                  child: const Icon(
+                                    Icons.add,
+                                    color: colorTextWhite,
+                                    size: 32,
+                                  ),
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      gradient: LinearGradient(
+                                          colors: [coloryello2, coloryello])),
                                 ),
-                                decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    gradient: LinearGradient(
-                                        colors: [coloryello2, coloryello])),
                               ),
                             ],
                           ),
@@ -335,6 +374,78 @@ class _RestaurantTimeSetState extends State<RestaurantTimeSet> {
                     ))
         ],
       ),
+    );
+  }
+
+  void dialogAddNewTime() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (
+        dialogListContext,
+      ) {
+        return DialogAddtimeSlot(
+          onDialogClose: () {
+            setState(() {
+              getTimeZone();
+            });
+          },
+        );
+      },
+    );
+  }
+
+  void dialogEditTime(TimeSlotItemData itemList) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return DialogEditTimeSlot(
+          itemList: itemList,
+          data: [],
+          onDialogClose: () {
+            setState(() {
+              getTimeZone();
+            });
+          },
+        );
+      },
+    );
+  }
+
+  void dialogEditStatus(String type, TimeSlotItemData itemList) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return DialogEditTimeZoneStatus(
+          type: type,
+          itemList: itemList,
+          onDialogClose: () {
+            setState(() {
+              getTimeZone();
+            });
+          },
+        );
+      },
+    );
+  }
+
+  void dialogDeleteTime(String id, TimeSlotItemData itemList) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) {
+        return DialogDeleteTimeZone(
+          onDialogClose: () {
+            setState(() {
+              getTimeZone();
+            });
+          },
+          id: id,
+          itemList: itemList,
+        );
+      },
     );
   }
 }

@@ -1,32 +1,38 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:food_inventory/UI/itemsTimeSet/repository/delete_data_repository.dart';
+import 'package:food_inventory/UI/restaurentTimeSet/repository/updateStatusRepository.dart';
 import 'package:food_inventory/constant/colors.dart';
-import 'package:food_inventory/UI/menu/dialog_type_list_view.dart';
+import 'model/restaurantTimeSlotResponseModel.dart';
 
-class DialogDeleteType extends StatefulWidget {
-  TypeListDataModel model;
+class DialogEditTimeZoneStatus extends StatefulWidget {
+  // var type,name;
   VoidCallback onDialogClose;
-  late String delId;
+  TimeSlotItemData itemList;
+  var type;
 
-  DialogDeleteType({required this.model, required this.onDialogClose});
+  DialogEditTimeZoneStatus(
+      {this.type, required this.onDialogClose, required this.itemList});
 
   @override
   _DialogDeleteTypeState createState() => _DialogDeleteTypeState();
 }
 
-class _DialogDeleteTypeState extends State<DialogDeleteType> {
-  late DeleteDataRepository _deleteDataRepository;
+class _DialogDeleteTypeState extends State<DialogEditTimeZoneStatus> {
+  late UpdateStatusTimeZoneRepository _statusRepository;
 
   @override
   void initState() {
     super.initState();
-    _deleteDataRepository = new DeleteDataRepository(context, widget);
+    _statusRepository = new UpdateStatusTimeZoneRepository(context, widget);
   }
 
-  callDeleteType() async {
-    _deleteDataRepository.deleteMenuItemData(widget.model.id);
+  callStatusType() async {
+    if (widget.itemList.isActive!) {
+      _statusRepository.updateStatusTimeZone(false, widget.itemList);
+    } else {
+      _statusRepository.updateStatusTimeZone(true, widget.itemList);
+    }
   }
 
   @override
@@ -38,14 +44,14 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           insetPadding: const EdgeInsets.all(15.0),
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 15),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             decoration: BoxDecoration(
                 color: colorTextWhite, borderRadius: BorderRadius.circular(13)),
             child: ListView(
               shrinkWrap: true,
               children: [
                 Text(
-                  widget.model.name,
+                  widget.itemList.name.toString(),
                   style: TextStyle(
                       color: colorButtonYellow,
                       fontWeight: FontWeight.w700,
@@ -56,7 +62,7 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
                   height: 15,
                 ),
                 Text(
-                  "Are you sure Delete this ${widget.model.type}?",
+                  "Are you sure to update the status ?",
                   style: TextStyle(
                       color: colorTextBlack,
                       fontWeight: FontWeight.w700,
@@ -77,7 +83,7 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
                                 color: colorLightRed,
                                 borderRadius: BorderRadius.circular(30)),
                             child: Text(
-                              "Delete",
+                              "Update",
                               style: TextStyle(
                                   color: colorTextWhite,
                                   fontWeight: FontWeight.w700,
@@ -85,7 +91,7 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
                             ),
                           ),
                           onTap: () {
-                            callDeleteType();
+                            callStatusType();
                           },
                         ),
                       ),

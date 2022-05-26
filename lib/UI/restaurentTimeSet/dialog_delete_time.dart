@@ -1,32 +1,38 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:food_inventory/UI/itemsTimeSet/repository/delete_data_repository.dart';
+import 'package:food_inventory/UI/restaurentTimeSet/repository/delete_time_repository.dart';
 import 'package:food_inventory/constant/colors.dart';
-import 'package:food_inventory/UI/menu/dialog_type_list_view.dart';
+import 'model/restaurantTimeSlotResponseModel.dart';
 
-class DialogDeleteType extends StatefulWidget {
-  TypeListDataModel model;
+class DialogDeleteTimeZone extends StatefulWidget {
+  // var type, name;
   VoidCallback onDialogClose;
-  late String delId;
+  late String id;
+  TimeSlotItemData itemList;
 
-  DialogDeleteType({required this.model, required this.onDialogClose});
+  DialogDeleteTimeZone(
+      {required this.id, required this.onDialogClose, required this.itemList});
 
   @override
   _DialogDeleteTypeState createState() => _DialogDeleteTypeState();
 }
 
-class _DialogDeleteTypeState extends State<DialogDeleteType> {
-  late DeleteDataRepository _deleteDataRepository;
+class _DialogDeleteTypeState extends State<DialogDeleteTimeZone> {
+  /*late DeleteDataRepository _deleteDataRepository;*/
+  late DeleteTimeZoneRepository _deleteDataRepository;
 
   @override
   void initState() {
     super.initState();
-    _deleteDataRepository = new DeleteDataRepository(context, widget);
+    _deleteDataRepository = new DeleteTimeZoneRepository(context, widget);
+
+    /* _deleteDataRepository =
+        new DeleteDataRepository(context,delId);*/
   }
 
   callDeleteType() async {
-    _deleteDataRepository.deleteMenuItemData(widget.model.id);
+    _deleteDataRepository.deleteMenuItemData(widget.id);
   }
 
   @override
@@ -45,7 +51,7 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
               shrinkWrap: true,
               children: [
                 Text(
-                  widget.model.name,
+                  widget.itemList.name!,
                   style: TextStyle(
                       color: colorButtonYellow,
                       fontWeight: FontWeight.w700,
@@ -56,7 +62,7 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
                   height: 15,
                 ),
                 Text(
-                  "Are you sure Delete this ${widget.model.type}?",
+                  "Are you sure to Delete ${widget.itemList.name!}?",
                   style: TextStyle(
                       color: colorTextBlack,
                       fontWeight: FontWeight.w700,
