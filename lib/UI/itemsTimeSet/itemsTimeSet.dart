@@ -293,7 +293,7 @@ class _ItemsTimeSetState extends State<ItemsTimeSet> {
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *
-                                                      0.2,
+                                                      0.23,
                                                   alignment: Alignment.center,
                                                   child: SW.Switch(
                                                       value:

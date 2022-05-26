@@ -159,7 +159,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
       case 5:
         return const RestaurantTimeSet();
       case 6:
-        return const DeliverySetting();
+        return DeliverySetting();
       case 7:
         return const RestaurantDetails();
       case 8:
