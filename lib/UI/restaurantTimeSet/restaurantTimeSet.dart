@@ -69,6 +69,7 @@ class _RestaurantTimeSetState extends State<RestaurantTimeSet> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.only(left: 12, right: 12),
       decoration: const BoxDecoration(color: colorBackground),
       child: Column(
         children: [

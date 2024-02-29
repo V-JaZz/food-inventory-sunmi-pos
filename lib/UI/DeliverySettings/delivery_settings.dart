@@ -1,10 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:food_inventory/UI/DeliverySettings/dailog_delivery_setting.dart';
+import 'package:food_inventory/UI/DeliverySettings/repository/delivery_repository.dart';
 import 'package:food_inventory/UI/DeliverySettings/repository/models/delivery_data_model.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/storage_util.dart';
+import 'package:food_inventory/constant/validation_util.dart';
+import 'package:food_inventory/main.dart';
+import 'package:food_inventory/model/common_model.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 
 import 'dialog_create_delivery.dart';
@@ -19,6 +25,7 @@ class DeliverySetting extends StatefulWidget {
 class _DeliverySettingState extends State<DeliverySetting> {
   bool isDataLoad = false;
   List<DistanceDetail> itemList = [];
+
   String resId = '';
   @override
   void initState() {
@@ -69,7 +76,8 @@ class _DeliverySettingState extends State<DeliverySetting> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: colorBackground),
+      padding: const EdgeInsets.only(left: 12, right: 12),
+      decoration: const BoxDecoration(color: colorBackground),
       child: Column(
         children: [
           const Text(
@@ -81,13 +89,17 @@ class _DeliverySettingState extends State<DeliverySetting> {
           ),
           const SizedBox(height: 20),
           Table(
-            columnWidths: {
+            columnWidths: const {
               0: FlexColumnWidth(6.0),
               1: FlexColumnWidth(4.0),
               2: FlexColumnWidth(4.0),
               3: FlexColumnWidth(3.0),
             },
-            // border: TableBorder.all(color: colorDividerGreen),
+            border: TableBorder.all(
+                color: colorYellow,
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15))),
             defaultVerticalAlignment: TableCellVerticalAlignment.middle,
             children: [
               TableRow(
@@ -98,13 +110,10 @@ class _DeliverySettingState extends State<DeliverySetting> {
                           topRight: Radius.circular(15))),
                   children: [
                     Container(
-                      alignment: Alignment.center,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 13),
-                      // decoration:
-                      //     BoxDecoration(color: colorGreen),
-                      child: Text(
-                        "Delivery Radius",
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 13),
+                      child: const Text(
+                        "Postcode & City",
                         style: TextStyle(
                             color: colorTextWhite,
                             fontSize: 12,
@@ -112,12 +121,9 @@ class _DeliverySettingState extends State<DeliverySetting> {
                       ),
                     ),
                     Container(
-                      alignment: Alignment.center,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 13),
-                      // decoration:
-                      //     BoxDecoration(color: colorGreen),
-                      child: Text(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 13),
+                      child: const Text(
                         "Charge",
                         style: TextStyle(
                             color: colorTextWhite,
@@ -126,12 +132,9 @@ class _DeliverySettingState extends State<DeliverySetting> {
                       ),
                     ),
                     Container(
-                      alignment: Alignment.center,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 13),
-                      // decoration:
-                      //     BoxDecoration(color: colorGreen),
-                      child: Text(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 13),
+                      child: const Text(
                         "Min. Order",
                         style: TextStyle(
                             color: colorTextWhite,
@@ -140,12 +143,10 @@ class _DeliverySettingState extends State<DeliverySetting> {
                       ),
                     ),
                     Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 13),
                       alignment: Alignment.center,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 13),
-                      // decoration:
-                      //     BoxDecoration(color: colorGreen),
-                      child: Text(
+                      child: const Text(
                         "Time",
                         style: TextStyle(
                             color: colorTextWhite,
@@ -158,7 +159,7 @@ class _DeliverySettingState extends State<DeliverySetting> {
           ),
           Expanded(
               child: isDataLoad
-                  ? Center(
+                  ? const Center(
                       child: CircularProgressIndicator(
                         strokeWidth: 5.0,
                         color: colorGreen,
@@ -166,11 +167,13 @@ class _DeliverySettingState extends State<DeliverySetting> {
                     )
                   : ListView(
                       primary: false,
+                      shrinkWrap: true,
                       children: [
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.75,
-                          decoration: const BoxDecoration(
-                              color: colorTextWhite,
+                          decoration: const BoxDecoration(color: colorTextWhite,
+                              // borderRadius: BorderRadius.only(
+                              //     topLeft: Radius.circular(15),
+                              //     topRight: Radius.circular(15)),
                               boxShadow: [
                                 BoxShadow(
                                   color: colorYellow,
@@ -185,8 +188,6 @@ class _DeliverySettingState extends State<DeliverySetting> {
                                   for (var i = 0; i < itemList.length; i++)
                                     TableRow(children: [
                                       Container(
-                                        padding: EdgeInsets.only(
-                                            left: 17, right: 16),
                                         color: i % 2 == 0
                                             ? const Color.fromRGBO(
                                                 228, 225, 246, 1)
@@ -199,22 +200,24 @@ class _DeliverySettingState extends State<DeliverySetting> {
                                               motion: const ScrollMotion(),
                                               children: [
                                                 const Spacer(),
-                                                SizedBox(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.05,
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.15,
-                                                  child: Column(
-                                                    children: [
+                                                // SizedBox(
+                                                  // height: MediaQuery.of(context)
+                                                  //         .size
+                                                  //         .height *
+                                                  //     0.05,
+                                                  // width: MediaQuery.of(context)
+                                                  //         .size
+                                                  //         .width *
+                                                  //     0.15,
+                                                  // child:
+                                                  // Column(
+                                                  //   children: [
                                                       SlidableAction(
                                                         onPressed: (context) {
-                                                          // dialogDeleteTime(
-                                                          //     PRODUCT_TIME_DELETE,
-                                                          //     itemList[i]);
+                                                          deleteDelivery(
+                                                              itemList[i]
+                                                                  .id
+                                                                  .toString());
                                                         },
                                                         backgroundColor:
                                                             colorButtonYellow,
@@ -222,20 +225,21 @@ class _DeliverySettingState extends State<DeliverySetting> {
                                                             colorTextWhite,
                                                         icon: Icons.delete,
                                                       ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.05,
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.15,
-                                                  child: Column(
-                                                    children: [
+                                                  //   ],
+                                                  // ),
+                                                // ),
+                                                // SizedBox(
+                                                  // height: MediaQuery.of(context)
+                                                  //         .size
+                                                  //         .height *
+                                                  // //     0.05,
+                                                  // width: MediaQuery.of(context)
+                                                  //         .size
+                                                  //         .width *
+                                                  //     0.15,
+                                                  // child:
+                                                  // Column(
+                                                  //   children: [
                                                       SlidableAction(
                                                           backgroundColor:
                                                               colorTextBlack,
@@ -246,32 +250,62 @@ class _DeliverySettingState extends State<DeliverySetting> {
                                                             dialogAddNewType(
                                                                 itemList[i]);
                                                           }),
-                                                    ],
-                                                  ),
-                                                ),
+                                                  //   ],
+                                                  // ),
+                                                // ),
                                               ],
                                             ),
                                             key: ValueKey(itemList[i]),
                                             child: Row(
                                               children: [
-                                                SizedBox(
+                                                Container(
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *
-                                                      0.34,
+                                                      0.365,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    horizontal: 10,
+                                                  ),
                                                   child: Text(
                                                       itemList[i]
-                                                              .minDistance
-                                                              .toString() +
-                                                          " - " +
-                                                          itemList[i]
-                                                              .maxDistance
+                                                              .postcode
                                                               .toString(),
                                                       maxLines: 1,
                                                       softWrap: false,
                                                       overflow:
                                                           TextOverflow.clip,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
+                                                        color: colorTextBlack,
+                                                        fontSize: 14,
+                                                      )),
+                                                ),
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.165,
+                                                  child: Text(
+                                                      itemList[i]
+                                                              .deliveryCharge
+                                                              .toString() +
+                                                          "€",
+                                                      style: const TextStyle(
+                                                        color: colorTextBlack,
+                                                        fontSize: 14,
+                                                      )),
+                                                ),
+                                                Container(
+                                                  alignment: Alignment.center,
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.15,
+                                                  child: Text(
+                                                      itemList[i]
+                                                          .minOrder
+                                                          .toString(),
+                                                      style: const TextStyle(
                                                         color: colorTextBlack,
                                                         fontSize: 14,
                                                       )),
@@ -283,58 +317,14 @@ class _DeliverySettingState extends State<DeliverySetting> {
                                                       0.20,
                                                   child: Text(
                                                       itemList[i]
-                                                              .deliveryCharge
-                                                              .toString() +
-                                                          "€",
-                                                      style: TextStyle(
-                                                        color: colorTextBlack,
-                                                        fontSize: 14,
-                                                      )),
-                                                ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.14,
-                                                  child: Text(
-                                                      itemList[i]
-                                                          .minOrder
-                                                          .toString(),
-                                                      style: TextStyle(
-                                                        color: colorTextBlack,
-                                                        fontSize: 14,
-                                                      )),
-                                                ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.15,
-                                                  child: Text(
-                                                      itemList[i]
                                                           .deliveryTime
                                                           .toString(),
                                                       textAlign: TextAlign.end,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         color: colorTextBlack,
                                                         fontSize: 14,
                                                       )),
                                                 ),
-                                                // GestureDetector(
-                                                //   child: Container(
-                                                //     padding: EdgeInsets.symmetric(
-                                                //         horizontal: 10, vertical: 13),
-                                                //     alignment: Alignment.center,
-                                                //     child: Text("Edit",
-                                                //         style: TextStyle(
-                                                //           color: colorLightRed,
-                                                //           fontSize: 14,
-                                                //         )),
-                                                //   ),
-                                                //   onTap: () {
-                                                //     dialogAddNewType(itemList[i]);
-                                                //   },
-                                                // ),
                                               ],
                                             )),
                                       )
@@ -362,6 +352,9 @@ class _DeliverySettingState extends State<DeliverySetting> {
                                           colors: [coloryello2, coloryello])),
                                 ),
                               ),
+                              const SizedBox(
+                                height: 24,
+                              )
                             ],
                           ),
                         )
@@ -404,5 +397,41 @@ class _DeliverySettingState extends State<DeliverySetting> {
         );
       },
     );
+  }
+
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
+  deleteDelivery(String id) {
+    StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
+      StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
+          .then((restaurantId) async {
+        var body = jsonEncode({
+          'id': id,
+        });
+
+        if (body.isNotEmpty) {
+          Dialogs.showLoadingDialog(context, _keyLoader); //invoking login
+          try {
+            final response = await _helper.post(
+                ApiBaseHelper.deleteDeliveryData, body, token);
+
+            CommonModel model =
+                CommonModel.fromJson(_helper.returnResponse(context, response));
+            Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
+            if (model.success!) {
+              // Navigator.pop(context);
+              getDeliveryData();
+            } else {
+              showMessage(model.message!, context);
+              // Navigator.pop(context);
+              getDeliveryData();
+            }
+          } catch (e) {
+            print(e.toString());
+            // Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
+          }
+        }
+      });
+    });
   }
 }

@@ -71,6 +71,7 @@ class _ItemsTimeSetState extends State<ItemsTimeSet> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.only(left: 12, right: 12),
       decoration: const BoxDecoration(color: colorBackground),
       child: Column(
         children: [
@@ -164,10 +165,8 @@ class _ItemsTimeSetState extends State<ItemsTimeSet> {
                       children: [
                         Container(
                           height: MediaQuery.of(context).size.height * 0.75,
-                          decoration: const BoxDecoration(color: colorTextWhite,
-                              // borderRadius: BorderRadius.only(
-                              //     topLeft: Radius.circular(15),
-                              //     topRight: Radius.circular(15)),
+                          decoration: const BoxDecoration(
+                              color: colorTextWhite,
                               boxShadow: [
                                 BoxShadow(
                                   color: colorYellow,

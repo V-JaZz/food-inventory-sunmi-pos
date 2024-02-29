@@ -1,101 +1,83 @@
-// ignore_for_file: unnecessary_null_comparison, unused_field, must_be_immutable, must_call_super
+// ignore_for_file: unnecessary_null_comparison, unused_field, must_call_super, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:food_inventory/UI/itemsTimeSet/repository/addTimeZoneItem.dart';
-import 'package:food_inventory/UI/itemsTimeSet/restaurantSelect.dart';
+import 'package:food_inventory/UI/Dashboard/forms/Items/model/menu_items.dart';
+import 'package:food_inventory/UI/itemsTimeSet/model/category_list_response_model.dart';
+import 'package:food_inventory/UI/itemsTimeSet/model/menu_list_response_model.dart';
+import 'package:food_inventory/UI/itemsTimeSet/repository/addITimeZoneRepository.dart';
+import 'package:food_inventory/UI/itemsTimeSet/restaurant_select.dart';
+import 'package:food_inventory/networking/api_base_helper.dart';
 import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/image.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/constant/validation_util.dart';
-import 'package:food_inventory/networking/api_base_helper.dart';
-import 'model/category_list_response_model.dart';
-import 'model/menu_list_response_model.dart';
-import 'model/time_zone_response_list.dart';
 
-class DialogEditScheduleProduct extends StatefulWidget {
+class DialogScheduleProduct extends StatefulWidget {
   VoidCallback onDialogClose;
   late String name;
-  late String nameEdit;
   late String category;
-  TimeZoneItemData itemList;
 
-  DialogEditScheduleProduct(
-      {required this.onDialogClose,
+  DialogScheduleProduct(
+      {Key? key, required this.onDialogClose,
       required this.name,
-      required this.nameEdit,
-      required this.category,
-      required this.itemList});
+      required this.category}) : super(key: key);
 
   @override
   _DialogScheduleProductState createState() => _DialogScheduleProductState();
 }
 
-class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
-  var _dropDownValue = "";
-  List<TypeList> _selectedGrpData = [];
+class _DialogScheduleProductState extends State<DialogScheduleProduct> {
+  final _dropDownValue = "";
+  final List<TypeList> _selectedGrpData = [];
   List<SelectionModel> selectionModel = [];
+  String timeRest = "Select Time";
+  String timeRest2 = "Select Time";
+
   String timeStart = "";
   String timeEnd = "";
 
   late String dateTime;
-  TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
+  TimeOfDay selectedTime = const TimeOfDay(hour: 00, minute: 00);
 
-  var Color1 = Colors.grey;
-  var Color2 = Colors.grey;
-  var Color3 = Colors.grey;
-  var Color4 = Colors.grey;
-  var Color5 = Colors.grey;
-  var Color6 = Colors.grey;
-  var Color7 = Colors.grey;
+  var Color1 = const Color(0xff5E5887);
+  var Color2 = const Color(0xff5E5887);
+  var Color3 = const Color(0xff5E5887);
+  var Color4 = const Color(0xff5E5887);
+  var Color5 = const Color(0xff5E5887);
+  var Color6 = const Color(0xff5E5887);
+  var Color7 = const Color(0xff5E5887);
 
-  var ColorGrey = Colors.grey;
-  var ColorGreen = Colors.green;
-
-  bool valuesecond = false;
+  bool valueSecond = false;
 
   bool isDataLoad = false;
   bool isDataLoaded = false;
   var _valueC = false;
+  final _productCheckBox = false;
 
-  List<MenuItemData> itemList = [];
+  List<Items> itemList = [];
   List<ItemIds> itemsData = [];
   List<String> days = [];
   List<String> items = [];
-  List<String> dataCategoryItems = [];
 
   List<CategoryDataModel> dataListCategory = [];
-  late AddItemsRepository _addItemsRepository;
+  late AddNewTimeZoneRepository _addItemsRepository;
+
   late TimeOfDay selectedStartTime, selectedEndTime;
-  var _productCheckBox = false;
+  List<String> isChecked = [];
+  List<Widget> viewList = [];
   late GlobalKey dropdownProduct;
+  List<Data> data = [];
 
   @override
   void initState() {
     dropdownProduct = GlobalKey();
-    _addItemsRepository = new AddItemsRepository(context, widget);
-    selectedStartTime = new TimeOfDay.now();
-    selectedEndTime = new TimeOfDay.now();
+    _addItemsRepository = AddNewTimeZoneRepository(context, widget);
+    selectedStartTime = TimeOfDay.now();
+    selectedEndTime = TimeOfDay.now();
     itemList = [];
     dataListCategory = [];
-    for (int i = 0; i < widget.itemList.options!.length; i++) {
-      dataCategoryItems.add(widget.itemList.options![i].name.toString());
-      setState(() {
-        print(
-            "DataPrint ${widget.itemList.options![i].sId}  ${widget.itemList.options![i].name} ${widget.itemList.options![i].categoryId}");
-        ItemIds mode = new ItemIds();
-        mode.sId = widget.itemList.options![i].sId;
-        mode.name = widget.itemList.options![i].name;
-        mode.categoryID = widget.itemList.options![i].categoryId;
-        List<String> idList = [];
-        idList.add(mode.sId!);
-        _selectedGrpData.add(TypeList(
-            "ReEdit", mode.sId!, mode.name!, mode.categoryID!, idList, false));
-        itemsData.add(mode);
-      });
-    }
     getMenuItems();
     getCategories();
   }
@@ -108,28 +90,22 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
       try {
         final response =
             await ApiBaseHelper().get(ApiBaseHelper.getItemsTimeZone, token);
-        MenuListResponseModel model = MenuListResponseModel.fromJson(
+        MenuItems model = MenuItems.fromJson(
             ApiBaseHelper().returnResponse(context, response));
         setState(() {
           isDataLoad = false;
         });
         if (model.success!) {
           if (model.data!.isNotEmpty) {
-            for (MenuItemData data in model.data!) {
-              if (dataCategoryItems.contains(data.name)) {
-                data.checkbox = true;
-                itemList.add(data);
-              } else {
-                itemList.add(data);
+            setState(() {
+              data = model.data!;
+              for (int i = 0; i < model.data!.length; i++) {
+                itemList = model.data![i].items!;
               }
-            }
-            /*  setState(() {
-              itemList = model.data!;
-            });*/
+            });
           }
         }
       } catch (e) {
-        print(e.toString());
         setState(() {
           isDataLoad = false;
         });
@@ -143,8 +119,8 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
         isDataLoaded = true;
       });
       try {
-        final response =
-            await ApiBaseHelper().get(ApiBaseHelper.getCategories, token);
+        final response = await ApiBaseHelper()
+            .get(ApiBaseHelper.getCategoriesTimeZone, token);
         CategoryListResponseModel model = CategoryListResponseModel.fromJson(
             ApiBaseHelper().returnResponse(context, response));
         setState(() {
@@ -153,28 +129,17 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
         if (model.success!) {
           if (model.data!.isNotEmpty) {
             for (CategoryListData data in model.data!) {
-              if (dataCategoryItems.contains(data.name)) {
-                if (data.description != null) {
-                  dataListCategory.add(CategoryDataModel("Category", data.sId!,
-                      data.name!, "", data.description!, [], true));
-                } else {
-                  dataListCategory.add(CategoryDataModel(
-                      "Category", data.sId!, data.name!, "", "", [], true));
-                }
+              if (data.description != null) {
+                dataListCategory.add(CategoryDataModel("Category", data.sId!,
+                    data.name!, "", data.description!, [], false));
               } else {
-                if (data.description != null) {
-                  dataListCategory.add(CategoryDataModel("Category", data.sId!,
-                      data.name!, "", data.description!, [], false));
-                } else {
-                  dataListCategory.add(CategoryDataModel(
-                      "Category", data.sId!, data.name!, "", "", [], false));
-                }
+                dataListCategory.add(CategoryDataModel(
+                    "Category", data.sId!, data.name!, "", "", [], false));
               }
             }
           }
         }
       } catch (e) {
-        print(e.toString());
         setState(() {
           isDataLoaded = false;
         });
@@ -197,32 +162,21 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
             child: ListView(
               shrinkWrap: true,
               children: [
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Select ${widget.itemList.zoneGroup}",
-                      style: TextStyle(
+                      "Select ${widget.category}",
+                      style: const TextStyle(
                           color: colorTextBlack,
                           fontWeight: FontWeight.w700,
                           fontSize: 18),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    // Text(
-                    //   widget.name == "items" ? TYPE_MENU_ITEM : TYPE_CATEGORY,
-                    //   style: TextStyle(
-                    //       color: colorTextBlack,
-                    //       fontWeight: FontWeight.bold,
-                    //       fontSize: 18),
-                    //   textAlign: TextAlign.center,
-                    // ),
-                    // SizedBox(
-                    //   height: 10,
-                    // ),
                     Container(
                       padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                       decoration: BoxDecoration(
@@ -232,10 +186,10 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                       child: GestureDetector(
                         onTap: () {
                           selectTypeData(
-                              "ReEdit",
-                              widget.category == "items"
+                              widget.category == "Product"
                                   ? TYPE_MENU_ITEM
                                   : TYPE_CATEGORY,
+                              "ReEdit",
                               -1,
                               _selectedGrpData);
                         },
@@ -256,42 +210,44 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      height: 60,
-                      child: ListView(
-                        children: [
-                          Table(
-                            children: [
-                              for (var i = 0; i < _selectedGrpData.length; i++)
-                                TableRow(
+                    selectionModel.isNotEmpty
+                        ? Column(children: <Widget>[
+                            SizedBox(
+                              height: 60,
+                              child: ListView.builder(
+                                itemCount: selectionModel.length,
+                                itemBuilder: (context, index) => Table(
                                   children: [
-                                    Container(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 1, vertical: 1),
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        _selectedGrpData[i].name.toString(),
-                                        style: TextStyle(
-                                          color: colorTextBlack,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w500,
+                                    TableRow(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 1, vertical: 1),
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            selectionModel[index].name,
+                                            style: const TextStyle(
+                                              color: colorTextBlack,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
                                         ),
-                                      ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
+                              ),
+                            )
+                          ])
+                        : const SizedBox(),
+                    const SizedBox(
                       height: 20,
                     ),
-                    Text(
+                    const Text(
                       "Opening Closing Schedule",
                       style: TextStyle(
                           color: colorTextBlack,
@@ -300,15 +256,15 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                       textAlign: TextAlign.center,
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 19),
+                      margin: const EdgeInsets.only(top: 19),
                       child: Row(
                         children: [
                           Expanded(
                             child: GestureDetector(
                               child: Container(
-                                padding: EdgeInsets.all(18),
+                                padding: const EdgeInsets.all(18),
                                 // width: 160,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: Color(0xffDFDDEF),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
@@ -320,19 +276,19 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                                       child: TextField(
                                         maxLines: 1,
                                         enabled: false,
-                                        controller: new TextEditingController(
+                                        controller: TextEditingController(
                                             text: timeStart.isEmpty
-                                                ? widget.itemList.startTime
+                                                ? timeRest
                                                 : formatTimeOfDay(
                                                     selectedStartTime,
                                                     'hh:mm a')),
                                         textAlignVertical:
                                             TextAlignVertical.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 13,
                                             fontWeight: FontWeight.w400,
                                             color: colorTextBlack),
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           contentPadding: EdgeInsets.all(0),
                                           isDense: true,
                                           hintText: "Start Time",
@@ -361,25 +317,25 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                               },
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          Text(
+                          const Text(
                             "To",
                             style: TextStyle(
                                 color: colorTextBlack,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(
                             child: GestureDetector(
                               child: Container(
-                                padding: EdgeInsets.all(18),
+                                padding: const EdgeInsets.all(18),
                                 // width: 160,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: Color(0xffDFDDEF),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
@@ -391,19 +347,19 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                                       child: TextField(
                                         maxLines: 1,
                                         enabled: false,
-                                        controller: new TextEditingController(
+                                        controller: TextEditingController(
                                             text: timeEnd.isEmpty
-                                                ? widget.itemList.endTime
+                                                ? timeRest2
                                                 : formatTimeOfDay(
                                                     selectedEndTime,
                                                     'hh:mm a')),
                                         textAlignVertical:
                                             TextAlignVertical.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 13,
                                             fontWeight: FontWeight.w400,
                                             color: colorTextBlack),
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           contentPadding: EdgeInsets.all(0),
                                           isDense: true,
                                           hintText: "End Time",
@@ -440,7 +396,7 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Select Days ",
                           style: TextStyle(
                               color: colorTextBlack,
@@ -450,25 +406,22 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            new Text(
+                            const Text(
                               "Select All",
                               style: TextStyle(
                                   color: colorTextBlack,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w700),
                             ),
-                            new Checkbox(
+                            Checkbox(
                               value: _valueC,
                               checkColor: Colors.grey,
                               onChanged: (bool? value) {
                                 setState(() {
                                   _valueC = value!;
                                   if (value) {
-                                    if (days.length != 0) {
+                                    if (days.isNotEmpty) {
                                       days.clear();
-                                    }
-                                    if (widget.itemList.days! != 0) {
-                                      widget.itemList.days!.clear();
                                     }
                                     Color1 = Colors.green;
                                     Color2 = Colors.green;
@@ -485,22 +438,17 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                                     days.add("Friday");
                                     days.add("Saturday");
                                   } else {
-                                    Color1 = Colors.grey;
-                                    Color2 = Colors.grey;
-                                    Color3 = Colors.grey;
-                                    Color4 = Colors.grey;
-                                    Color5 = Colors.grey;
-                                    Color6 = Colors.grey;
-                                    Color7 = Colors.grey;
-                                    if (days.length != 0) {
+                                    Color1 = const Color(0xff5E5887);
+                                    Color2 = const Color(0xff5E5887);
+                                    Color3 = const Color(0xff5E5887);
+                                    Color4 = const Color(0xff5E5887);
+                                    Color5 = const Color(0xff5E5887);
+                                    Color6 = const Color(0xff5E5887);
+                                    Color7 = const Color(0xff5E5887);
+                                    if (days.isNotEmpty) {
                                       days.clear();
                                     }
-
-                                    if (widget.itemList.days! != 0) {
-                                      widget.itemList.days!.clear();
-                                    }
                                   }
-                                  print('value: $value');
                                 });
                               },
                             ),
@@ -509,36 +457,25 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                       ],
                     ),
                     Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 13),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 13),
                         child: Row(children: [
                           InkWell(
                             onTap: () {
                               setState(() {
-                                if (widget.itemList.days!.contains("Sunday")) {
-                                  widget.itemList.days!.remove("Sunday");
-                                }
-                                if (Color1 == Colors.grey) {
+                                if (Color1 == const Color(0xff5E5887)) {
                                   Color1 = Colors.green;
-
                                   days.add("Sunday");
                                 } else if (Color1 == Colors.green) {
-                                  Color1 = Colors.grey;
-                                  if (days.contains("Sunday")) {
-                                    days.remove("Sunday");
-                                  }
+                                  Color1 = const Color(0xff5E5887);
+                                  days.remove("Sunday");
                                 }
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor:
-                                  widget.itemList.days!.contains("Sunday")
-                                      ? (Color1 == Colors.grey
-                                          ? Colors.green
-                                          : Colors.grey)
-                                      : Color1,
+                              backgroundColor: Color1,
                               radius: 17,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "S",
                                   style: TextStyle(
@@ -547,35 +484,25 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 7,
                           ),
                           InkWell(
                             onTap: () {
                               setState(() {
-                                if (widget.itemList.days!.contains("Monday")) {
-                                  widget.itemList.days!.remove("Monday");
-                                }
-                                if (Color2 == Colors.grey) {
+                                if (Color2 == const Color(0xff5E5887)) {
                                   Color2 = Colors.green;
                                   days.add("Monday");
                                 } else if (Color2 == Colors.green) {
-                                  Color2 = Colors.grey;
-                                  if (days.contains("Monday")) {
-                                    days.remove("Monday");
-                                  }
+                                  Color2 = const Color(0xff5E5887);
+                                  days.remove("Monday");
                                 }
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor:
-                                  widget.itemList.days!.contains("Monday")
-                                      ? (Color2 == Colors.grey
-                                          ? Colors.green
-                                          : Colors.grey)
-                                      : Color2,
+                              backgroundColor: Color2,
                               radius: 17,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "M",
                                   style: TextStyle(
@@ -584,33 +511,25 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 7,
                           ),
                           InkWell(
                             onTap: () {
                               setState(() {
-                                if (widget.itemList.days!.contains("Tuesday")) {
-                                  widget.itemList.days!.remove("Tuesday");
-                                }
-                                if (Color3 == Colors.grey) {
+                                if (Color3 == const Color(0xff5E5887)) {
                                   Color3 = Colors.green;
                                   days.add("Tuesday");
                                 } else if (Color3 == Colors.green) {
-                                  Color3 = Colors.grey;
+                                  Color3 = const Color(0xff5E5887);
                                   days.remove("Tuesday");
                                 }
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor:
-                                  widget.itemList.days!.contains("Tuesday")
-                                      ? (Color3 == Colors.grey
-                                          ? Colors.green
-                                          : Colors.grey)
-                                      : Color3,
+                              backgroundColor: Color3,
                               radius: 17,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "T",
                                   style: TextStyle(
@@ -619,37 +538,25 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 7,
                           ),
                           InkWell(
                             onTap: () {
                               setState(() {
-                                if (widget.itemList.days!
-                                    .contains("Wednesday")) {
-                                  widget.itemList.days!.remove("Wednesday");
-                                }
-                                if (Color4 == Colors.grey) {
+                                if (Color4 == const Color(0xff5E5887)) {
                                   Color4 = Colors.green;
-
                                   days.add("Wednesday");
                                 } else if (Color4 == Colors.green) {
-                                  Color4 = Colors.grey;
-                                  if (days.contains("Wednesday")) {
-                                    days.remove("Wednesday");
-                                  }
+                                  Color4 = const Color(0xff5E5887);
+                                  days.remove("Wednesday");
                                 }
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor:
-                                  widget.itemList.days!.contains("Wednesday")
-                                      ? (Color4 == Colors.grey
-                                          ? Colors.green
-                                          : Colors.grey)
-                                      : Color4,
+                              backgroundColor: Color4,
                               radius: 17,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "W",
                                   style: TextStyle(
@@ -658,36 +565,25 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 7,
                           ),
                           InkWell(
                             onTap: () {
                               setState(() {
-                                if (widget.itemList.days!
-                                    .contains("Thursday")) {
-                                  widget.itemList.days!.remove("Thursday");
-                                }
-                                if (Color5 == Colors.grey) {
+                                if (Color5 == const Color(0xff5E5887)) {
                                   Color5 = Colors.green;
                                   days.add("Thursday");
                                 } else if (Color5 == Colors.green) {
-                                  Color5 = Colors.grey;
-                                  if (days.contains("Thursday")) {
-                                    days.remove("Thursday");
-                                  }
+                                  Color5 = const Color(0xff5E5887);
+                                  days.remove("Thursday");
                                 }
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor:
-                                  widget.itemList.days!.contains("Thursday")
-                                      ? (Color5 == Colors.grey
-                                          ? Colors.green
-                                          : Colors.grey)
-                                      : Color5,
+                              backgroundColor: Color5,
                               radius: 17,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "T",
                                   style: TextStyle(
@@ -696,35 +592,25 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 7,
                           ),
                           InkWell(
                             onTap: () {
                               setState(() {
-                                if (widget.itemList.days!.contains("Friday")) {
-                                  widget.itemList.days!.remove("Friday");
-                                }
-                                if (Color6 == Colors.grey) {
+                                if (Color6 == const Color(0xff5E5887)) {
                                   Color6 = Colors.green;
                                   days.add("Friday");
                                 } else if (Color6 == Colors.green) {
-                                  Color6 = Colors.grey;
-                                  if (days.contains("Friday")) {
-                                    days.remove("Friday");
-                                  }
+                                  Color6 = const Color(0xff5E5887);
+                                  days.remove("Friday");
                                 }
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor:
-                                  widget.itemList.days!.contains("Friday")
-                                      ? (Color6 == Colors.grey
-                                          ? Colors.green
-                                          : Colors.grey)
-                                      : Color6,
+                              backgroundColor: Color6,
                               radius: 17,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "F",
                                   style: TextStyle(
@@ -733,36 +619,25 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 7,
                           ),
                           InkWell(
                             onTap: () {
                               setState(() {
-                                if (widget.itemList.days!
-                                    .contains("Saturday")) {
-                                  widget.itemList.days!.remove("Saturday");
-                                }
-                                if (Color7 == Colors.grey) {
+                                if (Color7 == const Color(0xff5E5887)) {
                                   Color7 = Colors.green;
                                   days.add("Saturday");
                                 } else if (Color7 == Colors.green) {
-                                  Color7 = Colors.grey;
-                                  if (days.contains("Saturday")) {
-                                    days.remove("Saturday");
-                                  }
+                                  Color7 = const Color(0xff5E5887);
+                                  days.remove("Saturday");
                                 }
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor:
-                                  widget.itemList.days!.contains("Saturday")
-                                      ? (Color7 == Colors.grey
-                                          ? Colors.green
-                                          : Colors.grey)
-                                      : Color7,
+                              backgroundColor: Color7,
                               radius: 17,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "S",
                                   style: TextStyle(
@@ -773,7 +648,7 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                           ),
                         ])),
                     Container(
-                      margin: EdgeInsets.only(top: 20, bottom: 20),
+                      margin: const EdgeInsets.only(top: 20, bottom: 20),
                       child: Row(
                         children: [
                           Expanded(
@@ -788,7 +663,7 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                                     color: colorGreen,
                                     borderRadius: BorderRadius.circular(30)),
                                 child: const Text(
-                                  "Update",
+                                  "Save",
                                   style: TextStyle(
                                       color: colorTextWhite,
                                       fontWeight: FontWeight.w700,
@@ -796,19 +671,13 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                                 ),
                               ),
                               onTap: () {
-                                if (widget.itemList.days!.length != null) {
-                                  for (String dataDays
-                                      in widget.itemList.days!) {
-                                    days.add(dataDays);
-                                  }
-                                }
-                                _addItemsRepository.addEditOption(
-                                    widget.nameEdit,
+                                _addItemsRepository.addOption(
                                     timeStart,
                                     timeEnd,
                                     days,
                                     selectionModel,
-                                    widget.itemList);
+                                    widget.name,
+                                    widget.category);
                               },
                             ),
                           ),
@@ -823,7 +692,7 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                                 decoration: BoxDecoration(
                                     color: colorGrey,
                                     borderRadius: BorderRadius.circular(30)),
-                                child: Text(
+                                child: const Text(
                                   "Back",
                                   style: TextStyle(
                                       color: colorTextWhite,
@@ -832,7 +701,7 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
                                 ),
                               ),
                               onTap: () {
-                                Navigator.pop(context);
+                                Navigator.of(context).pop();
                               },
                               behavior: HitTestBehavior.opaque,
                             ),
@@ -848,14 +717,14 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
     );
   }
 
-  Future<Null> _selectStartTime() async {
+  Future<void> _selectStartTime() async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialEntryMode: TimePickerEntryMode.input,
       useRootNavigator: false,
       confirmText: "Set",
       cancelText: "Cancel",
-      routeSettings: RouteSettings(),
+      routeSettings: const RouteSettings(),
       initialTime: selectedStartTime,
       builder: (BuildContext _context, Widget? child) {
         return MediaQuery(
@@ -866,22 +735,22 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
         );
       },
     );
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         selectedStartTime = picked;
         timeStart = formatTimeOfDay(selectedStartTime, 'HH:mm');
-        print("$selectedStartTime");
       });
+    }
   }
 
-  Future<Null> _selectEndTime() async {
+  Future<void> _selectEndTime() async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialEntryMode: TimePickerEntryMode.input,
       useRootNavigator: false,
       confirmText: "Set",
       cancelText: "Cancel",
-      routeSettings: RouteSettings(),
+      routeSettings: const RouteSettings(),
       initialTime: selectedEndTime,
       builder: (BuildContext _context, Widget? child) {
         return MediaQuery(
@@ -892,42 +761,22 @@ class _DialogScheduleProductState extends State<DialogEditScheduleProduct> {
         );
       },
     );
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         selectedEndTime = picked;
         timeEnd = formatTimeOfDay(selectedEndTime, 'HH:mm');
-        print("$selectedEndTime");
       });
-  }
-
-  getProductCheck(MenuItemData value, TimeZoneItemData itemList) {
-    for (int i = 0; i < itemList.options!.length; i++) {
-      if (itemList.options![i].name == value.name) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  }
-
-  getCategoryCheck(CategoryDataModel value, TimeZoneItemData itemList) {
-    for (int i = 0; i < itemList.options!.length; i++) {
-      if (itemList.options![i].name == value.name) {
-        return true;
-      } else {
-        return false;
-      }
     }
   }
 
   void selectTypeData(
-      String ty, String type, int index, List<TypeList> selectedData) {
+      String type, String ty, int index, List<TypeList> selectedData) {
     showDialog(
       context: context,
       builder: (selectDataDialogContext) {
         return DialogRestaurantDataSelection(
           type: type,
-          typefor: ty,
+          typeFor: ty,
           selectedData: selectedData,
           onSelectData: (List<SelectionModel> dataModel) {
             setState(() {
