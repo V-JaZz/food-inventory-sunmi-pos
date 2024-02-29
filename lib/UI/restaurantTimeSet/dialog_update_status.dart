@@ -1,18 +1,18 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:food_inventory/UI/restaurentTimeSet/repository/updateStatusRepository.dart';
+import 'package:food_inventory/UI/restaurantTimeSet/repository/updateStatusRepository.dart';
 import 'package:food_inventory/constant/colors.dart';
-import 'model/restaurantTimeSlotResponseModel.dart';
+import 'model/restaurant_time_slot_response_model.dart';
 
 class DialogEditTimeZoneStatus extends StatefulWidget {
   // var type,name;
   VoidCallback onDialogClose;
   TimeSlotItemData itemList;
-  var type;
+  dynamic type;
 
   DialogEditTimeZoneStatus(
-      {this.type, required this.onDialogClose, required this.itemList});
+      {Key? key, this.type, required this.onDialogClose, required this.itemList}) : super(key: key);
 
   @override
   _DialogDeleteTypeState createState() => _DialogDeleteTypeState();
@@ -24,7 +24,7 @@ class _DialogDeleteTypeState extends State<DialogEditTimeZoneStatus> {
   @override
   void initState() {
     super.initState();
-    _statusRepository = new UpdateStatusTimeZoneRepository(context, widget);
+    _statusRepository = UpdateStatusTimeZoneRepository(context, widget);
   }
 
   callStatusType() async {
@@ -52,16 +52,16 @@ class _DialogDeleteTypeState extends State<DialogEditTimeZoneStatus> {
               children: [
                 Text(
                   widget.itemList.name.toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: colorButtonYellow,
                       fontWeight: FontWeight.w700,
                       fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
-                Text(
+                const Text(
                   "Are you sure to update the status ?",
                   style: TextStyle(
                       color: colorTextBlack,
@@ -70,7 +70,7 @@ class _DialogDeleteTypeState extends State<DialogEditTimeZoneStatus> {
                   textAlign: TextAlign.center,
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 40),
+                  margin: const EdgeInsets.only(top: 40),
                   child: Row(
                     children: [
                       Expanded(
@@ -82,7 +82,7 @@ class _DialogDeleteTypeState extends State<DialogEditTimeZoneStatus> {
                             decoration: BoxDecoration(
                                 color: colorLightRed,
                                 borderRadius: BorderRadius.circular(30)),
-                            child: Text(
+                            child: const Text(
                               "Update",
                               style: TextStyle(
                                   color: colorTextWhite,
@@ -104,7 +104,7 @@ class _DialogDeleteTypeState extends State<DialogEditTimeZoneStatus> {
                             decoration: BoxDecoration(
                                 color: colorGrey,
                                 borderRadius: BorderRadius.circular(30)),
-                            child: Text(
+                            child: const Text(
                               "Cancel",
                               style: TextStyle(
                                   color: colorTextWhite,

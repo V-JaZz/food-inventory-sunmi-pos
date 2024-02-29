@@ -1,39 +1,38 @@
 // ignore_for_file: unused_field, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:food_inventory/UI/itemsTimeSet/edit_scheduleZone.dart';
+import 'package:food_inventory/UI/itemsTimeSet/edit_schedule_zone.dart';
 import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/ui/menu/model/add_type_model.dart';
 import 'model/time_zone_response_list.dart';
 
 class DialogEditTimeZone extends StatefulWidget {
-  var type;
+  dynamic type;
   TimeZoneItemData itemList;
   VoidCallback onDialogClose;
 
   DialogEditTimeZone(
-      {this.type, required this.onDialogClose, required this.itemList});
+      {Key? key, this.type, required this.onDialogClose, required this.itemList}) : super(key: key);
 
   @override
   _DialogAddNewTypeState createState() => _DialogAddNewTypeState();
 }
 
 class _DialogAddNewTypeState extends State<DialogEditTimeZone> {
-  List<AddTypeModel> _typeModel = [];
-  var _dropDownValue = "";
-  var _dropDownData = "";
-  var _textController = TextEditingController();
+  final List<AddTypeModel> _typeModel = [];
+  final _dropDownValue = "";
+  final _dropDownData = "";
+  final _textController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _typeModel.add(AddTypeModel(
-        new TextEditingController(),
-        new TextEditingController(),
-        new TextEditingController(),
-        new TextEditingController()));
+        TextEditingController(),
+        TextEditingController(),
+        TextEditingController(),
+        TextEditingController()));
   }
 
   // callAddCategoryApi() async {
@@ -63,23 +62,23 @@ class _DialogAddNewTypeState extends State<DialogEditTimeZone> {
                       widget.type == TYPE_CATEGORY
                           ? "Add New ${widget.type}"
                           : "Edit Time",
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: colorTextBlack,
                           fontWeight: FontWeight.w700,
                           fontSize: 18),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 ListView.separated(
                   shrinkWrap: true,
                   itemCount: _typeModel.length,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (listContext, index) {
                     return Container(
-                      margin: EdgeInsets.only(bottom: 5),
+                      margin: const EdgeInsets.only(bottom: 5),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -87,36 +86,36 @@ class _DialogAddNewTypeState extends State<DialogEditTimeZone> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(top: 3),
+                                  margin: const EdgeInsets.only(top: 3),
                                   decoration: BoxDecoration(
-                                    color: Color(0xffDFDDEF),
+                                    color: const Color(0xffDFDDEF),
                                     border: Border.all(
                                         color: colorFieldBorder, width: 1),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(5)),
+                                        const BorderRadius.all(Radius.circular(5)),
                                   ),
                                   child: Row(
                                     children: [
                                       Expanded(
                                         child: Container(
-                                            margin: EdgeInsets.all(18),
+                                            margin: const EdgeInsets.all(18),
                                             child: TextField(
                                               maxLines: 1,
                                               controller: _textController,
                                               textAlignVertical:
                                                   TextAlignVertical.center,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.normal,
                                                   color: colorTextBlack),
                                               cursorColor: colorTextBlack,
                                               decoration: InputDecoration(
                                                   contentPadding:
-                                                      EdgeInsets.all(0),
+                                                      const EdgeInsets.all(0),
                                                   isDense: true,
                                                   hintText:
                                                       "${widget.itemList.name}",
-                                                  hintStyle: TextStyle(
+                                                  hintStyle: const TextStyle(
                                                       color: colorTextHint,
                                                       fontSize: 18),
                                                   border: InputBorder.none),
@@ -125,18 +124,18 @@ class _DialogAddNewTypeState extends State<DialogEditTimeZone> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: 10),
+                                const SizedBox(height: 10),
                                 Container(
                                   alignment: Alignment.centerLeft,
-                                  margin: EdgeInsets.only(
+                                  margin: const EdgeInsets.only(
                                       // top: 3,
                                       ),
                                   decoration: BoxDecoration(
-                                    color: Color(0xffDFDDEF),
+                                    color: const Color(0xffDFDDEF),
                                     border: Border.all(
                                         color: colorFieldBorder, width: 1),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(5)),
+                                        const BorderRadius.all(Radius.circular(5)),
                                   ),
                                   child: Row(
                                     children: [
@@ -144,14 +143,14 @@ class _DialogAddNewTypeState extends State<DialogEditTimeZone> {
                                         child: Container(
                                             alignment: Alignment.centerLeft,
                                             // height: 20,
-                                            margin: EdgeInsets.all(15),
+                                            margin: const EdgeInsets.all(15),
                                             child: widget.itemList.zoneGroup ==
                                                     null
-                                                ? Text('Not Found')
+                                                ? const Text('Not Found')
                                                 : Text(
                                                     widget.itemList.zoneGroup
                                                         .toString(),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         color: colorTextHint,
                                                         fontSize: 18),
                                                   )),
@@ -166,14 +165,14 @@ class _DialogAddNewTypeState extends State<DialogEditTimeZone> {
                   },
                   separatorBuilder: (context, index) {
                     return Container(
-                      margin: EdgeInsets.only(top: 4, bottom: 4),
+                      margin: const EdgeInsets.only(top: 4, bottom: 4),
                       height: 1,
                       color: colorTextHint, // Custom style
                     );
                   },
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 25),
+                  margin: const EdgeInsets.only(top: 25),
                   child: Row(
                     children: [
                       Expanded(
@@ -187,7 +186,7 @@ class _DialogAddNewTypeState extends State<DialogEditTimeZone> {
                                 borderRadius: BorderRadius.circular(30)),
                             child: Text(
                               widget.type == TYPE_TOPPINGS ? "Next" : "Add",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: colorTextWhite,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 12),
@@ -214,7 +213,7 @@ class _DialogAddNewTypeState extends State<DialogEditTimeZone> {
                             decoration: BoxDecoration(
                                 color: colorGrey,
                                 borderRadius: BorderRadius.circular(30)),
-                            child: Text(
+                            child: const Text(
                               "Cancel",
                               style: TextStyle(
                                   color: colorTextWhite,

@@ -9,12 +9,12 @@ import 'package:food_inventory/networking/api_base_helper.dart';
 import '../../../main.dart';
 
 class DeleteDataRepository {
-  ApiBaseHelper _helper = ApiBaseHelper();
-  BuildContext? _context;
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  final BuildContext? _context;
   late String delID;
   DialogDeleteType widget;
 
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
 
   DeleteDataRepository(this._context, this.widget);
 

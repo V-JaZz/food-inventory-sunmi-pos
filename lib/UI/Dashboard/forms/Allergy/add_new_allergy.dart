@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:food_inventory/UI/dashboard/forms/Allergy/repository/allergy_repository.dart';
-import 'package:food_inventory/UI/dashboard/forms/Allergy/seeAll.dart';
+import 'package:food_inventory/UI/dashboard/forms/Allergy/see_all.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/validation_util.dart';
 import 'edit_allergy.dart';

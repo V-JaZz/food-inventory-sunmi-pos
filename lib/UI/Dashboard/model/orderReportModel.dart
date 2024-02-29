@@ -10,34 +10,34 @@ class OrderReport {
   OrderReport.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     restDetails = json['restDetails'] != null
-        ? new RestDetails.fromJson(json['restDetails'])
+        ? RestDetails.fromJson(json['restDetails'])
         : null;
     if (json['reportData'] != null) {
       reportData = <ReportData>[];
       json['reportData'].forEach((v) {
-        reportData!.add(new ReportData.fromJson(v));
+        reportData!.add(ReportData.fromJson(v));
       });
     }
     if (json['reportSummary'] != null) {
       reportSummary = <ReportSummary>[];
       json['reportSummary'].forEach((v) {
-        reportSummary!.add(new ReportSummary.fromJson(v));
+        reportSummary!.add(ReportSummary.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    if (this.restDetails != null) {
-      data['restDetails'] = this.restDetails!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    if (restDetails != null) {
+      data['restDetails'] = restDetails!.toJson();
     }
-    if (this.reportData != null) {
-      data['reportData'] = this.reportData!.map((v) => v.toJson()).toList();
+    if (reportData != null) {
+      data['reportData'] = reportData!.map((v) => v.toJson()).toList();
     }
-    if (this.reportSummary != null) {
+    if (reportSummary != null) {
       data['reportSummary'] =
-          this.reportSummary!.map((v) => v.toJson()).toList();
+          reportSummary!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -57,10 +57,10 @@ class RestDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['restaurantName'] = this.restaurantName;
-    data['location'] = this.location;
-    data['wifiPrinterIP'] = this.wifiPrinterIP;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['restaurantName'] = restaurantName;
+    data['location'] = location;
+    data['wifiPrinterIP'] = wifiPrinterIP;
     return data;
   }
 }
@@ -85,7 +85,7 @@ class ReportData {
   UserDetails? userDetails;
   String? orderDateTime;
   String? createdOn;
-  int? iV;
+  num? iV;
   String? createdAt;
   String? updatedAt;
   String? deliveryAddress;
@@ -120,7 +120,7 @@ class ReportData {
     if (json['itemDetails'] != null) {
       itemDetails = <ItemData>[];
       json['itemDetails'].forEach((v) {
-        itemDetails!.add(new ItemData.fromJson(v));
+        itemDetails!.add(ItemData.fromJson(v));
       });
     }
     tip = json['tip'];
@@ -138,7 +138,7 @@ class ReportData {
     totalAmount = json['totalAmount'].toString();
     orderNumber = json['orderNumber'];
     userDetails = json['userDetails'] != null
-        ? new UserDetails.fromJson(json['userDetails'])
+        ? UserDetails.fromJson(json['userDetails'])
         : null;
     orderDateTime = json['orderDateTime'];
     createdOn = json['createdOn'];
@@ -149,34 +149,34 @@ class ReportData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    if (this.itemDetails != null) {
-      data['itemDetails'] = this.itemDetails!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    if (itemDetails != null) {
+      data['itemDetails'] = itemDetails!.map((v) => v.toJson()).toList();
     }
-    data['tip'] = this.tip;
-    data['deliveryCharge'] = this.deliveryCharge.toString();
-    data['discount'] = this.discount.toString();
-    data['orderStatus'] = this.orderStatus;
-    data['note'] = this.note;
-    data['isDeleted'] = this.isDeleted;
-    data['isPaid'] = this.isPaid;
-    data['restaurantId'] = this.restaurantId;
-    data['deliveryType'] = this.deliveryType;
-    data['paymentMode'] = this.paymentMode;
-    data['orderTime'] = this.orderTime;
-    data['subTotal'] = this.subTotal.toString();
-    data['totalAmount'] = this.totalAmount.toString();
-    data['orderNumber'] = this.orderNumber;
-    if (this.userDetails != null) {
-      data['userDetails'] = this.userDetails!.toJson();
+    data['tip'] = tip;
+    data['deliveryCharge'] = deliveryCharge.toString();
+    data['discount'] = discount.toString();
+    data['orderStatus'] = orderStatus;
+    data['note'] = note;
+    data['isDeleted'] = isDeleted;
+    data['isPaid'] = isPaid;
+    data['restaurantId'] = restaurantId;
+    data['deliveryType'] = deliveryType;
+    data['paymentMode'] = paymentMode;
+    data['orderTime'] = orderTime;
+    data['subTotal'] = subTotal.toString();
+    data['totalAmount'] = totalAmount.toString();
+    data['orderNumber'] = orderNumber;
+    if (userDetails != null) {
+      data['userDetails'] = userDetails!.toJson();
     }
-    data['orderDateTime'] = this.orderDateTime;
-    data['createdOn'] = this.createdOn;
-    data['__v'] = this.iV;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['deliveryAddress'] = this.deliveryAddress;
+    data['orderDateTime'] = orderDateTime;
+    data['createdOn'] = createdOn;
+    data['__v'] = iV;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['deliveryAddress'] = deliveryAddress;
     return data;
   }
 }
@@ -187,7 +187,7 @@ class ItemData {
   String? option;
   String? price;
   String? note;
-  List<Toppings>? toppings;
+  List<ToppingsReports>? toppings;
   String? discount;
   String? catDiscount;
   String? overallDiscount;
@@ -222,9 +222,9 @@ class ItemData {
     price = json['price'].toString();
     note = json['note'];
     if (json['toppings'] != null) {
-      toppings = <Toppings>[];
+      toppings = <ToppingsReports>[];
       json['toppings'].forEach((v) {
-        toppings!.add(new Toppings.fromJson(v));
+        toppings!.add(ToppingsReports.fromJson(v));
       });
     }
     discount = json['discount'].toString();
@@ -239,40 +239,40 @@ class ItemData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId.toString();
-    data['name'] = this.name;
-    data['option'] = this.option;
-    data['price'] = this.price.toString();
-    data['note'] = this.note;
-    if (this.toppings != null) {
-      data['toppings'] = this.toppings!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId.toString();
+    data['name'] = name;
+    data['option'] = option;
+    data['price'] = price.toString();
+    data['note'] = note;
+    if (toppings != null) {
+      data['toppings'] = toppings!.map((v) => v.toJson()).toList();
     }
-    data['discount'] = this.discount.toString();
-    data['catDiscount'] = this.catDiscount.toString();
-    data['overallDiscount'] = this.overallDiscount.toString();
-    data['excludeDiscount'] = this.excludeDiscount.toString();
-    data['variant'] = this.variant.toString();
-    data['variantPrice'] = this.variantPrice.toString();
-    data['subVariant'] = this.subVariant.toString();
-    data['subVariantPrice'] = this.subVariantPrice.toString();
-    data['quantity'] = this.quantity.toString();
+    data['discount'] = discount.toString();
+    data['catDiscount'] = catDiscount.toString();
+    data['overallDiscount'] = overallDiscount.toString();
+    data['excludeDiscount'] = excludeDiscount.toString();
+    data['variant'] = variant.toString();
+    data['variantPrice'] = variantPrice.toString();
+    data['subVariant'] = subVariant.toString();
+    data['subVariantPrice'] = subVariantPrice.toString();
+    data['quantity'] = quantity.toString();
     return data;
   }
 }
 
-class Toppings {
+class ToppingsReports {
   String? sId;
   String? createdOn;
   bool? isDeleted;
   String? restaurantId;
   String? name;
-  int? price;
-  int? iV;
+  num? price;
+  num? iV;
   String? createdAt;
   String? updatedAt;
 
-  Toppings(
+  ToppingsReports(
       {this.sId,
       this.createdOn,
       this.isDeleted,
@@ -283,7 +283,7 @@ class Toppings {
       this.createdAt,
       this.updatedAt});
 
-  Toppings.fromJson(Map<String, dynamic> json) {
+  ToppingsReports.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     createdOn = json['createdOn'];
     isDeleted = json['isDeleted'];
@@ -296,16 +296,16 @@ class Toppings {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['restaurantId'] = this.restaurantId;
-    data['name'] = this.name;
-    data['price'] = this.price;
-    data['__v'] = this.iV;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['restaurantId'] = restaurantId;
+    data['name'] = name;
+    data['price'] = price;
+    data['__v'] = iV;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }
@@ -354,19 +354,19 @@ class UserDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['isDelete'] = this.isDelete;
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    data['email'] = this.email;
-    data['houseNumber'] = this.houseNumber;
-    data['street'] = this.street;
-    data['city'] = this.city;
-    data['contact'] = this.contact;
-    data['address'] = this.address;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['postcode'] = this.postcode;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['isDelete'] = isDelete;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    data['email'] = email;
+    data['houseNumber'] = houseNumber;
+    data['street'] = street;
+    data['city'] = city;
+    data['contact'] = contact;
+    data['address'] = address;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['postcode'] = postcode;
     return data;
   }
 }
@@ -412,18 +412,18 @@ class ReportSummary {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId.toString();
-    data['pickupOrders'] = this.pickupOrders.toString();
-    data['deliveryOrders'] = this.deliveryOrders.toString();
-    data['totalPickupSales'] = this.totalPickupSales.toString();
-    data['totalDeliverySales'] = this.totalDeliverySales.toString();
-    data['totalOnlinePayment'] = this.totalOnlinePayment.toString();
-    data['totalCashPayment'] = this.totalCashPayment.toString();
-    data['totalOrders'] = this.totalOrders.toString();
-    data['totalOnlineCount'] = this.totalOnlineCount.toString();
-    data['totalCashCount'] = this.totalCashCount.toString();
-    data['totalSales'] = this.totalSales.toString();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId.toString();
+    data['pickupOrders'] = pickupOrders.toString();
+    data['deliveryOrders'] = deliveryOrders.toString();
+    data['totalPickupSales'] = totalPickupSales.toString();
+    data['totalDeliverySales'] = totalDeliverySales.toString();
+    data['totalOnlinePayment'] = totalOnlinePayment.toString();
+    data['totalCashPayment'] = totalCashPayment.toString();
+    data['totalOrders'] = totalOrders.toString();
+    data['totalOnlineCount'] = totalOnlineCount.toString();
+    data['totalCashCount'] = totalCashCount.toString();
+    data['totalSales'] = totalSales.toString();
     return data;
   }
 }

@@ -33,6 +33,14 @@ String getAmountWithCurrency(String? price) {
   return "${priceDouble.toString()} €";
 }
 
+String getAmountWithCurrencyH(String? price) {
+  double priceDouble =
+      double.parse((double.parse(defaultValue(price, "0"))).toStringAsFixed(2));
+  print("total amount");
+  print(priceDouble);
+  return "€ ${priceDouble.toString()}";
+}
+
 String getAmountWithCurrencyOrder(String? price) {
   double priceDouble =
       double.parse((double.parse(defaultValue(price, "0"))).toStringAsFixed(2));

@@ -13,17 +13,17 @@ import '../../main.dart';
 import 'package:food_inventory/constant/switch.dart' as SW;
 
 // ignore: must_be_immutable
-class ExcluedPage extends StatefulWidget {
+class ExcludedPage extends StatefulWidget {
   var type;
   VoidCallback onDialogClose;
 
-  ExcluedPage({this.type, required this.onDialogClose});
+  ExcludedPage({this.type, required this.onDialogClose});
 
   @override
-  _ExcluedPageState createState() => _ExcluedPageState();
+  _ExcludedPageState createState() => _ExcludedPageState();
 }
 
-class _ExcluedPageState extends State<ExcluedPage> {
+class _ExcludedPageState extends State<ExcludedPage> {
   List itemIds = [];
   List discountType = [];
 
@@ -40,7 +40,7 @@ class _ExcluedPageState extends State<ExcluedPage> {
   }
 
   var data;
-  var datatwo;
+  var dataTwo;
   bool search = false;
   final _searchFieldController = TextEditingController();
 
@@ -288,7 +288,7 @@ class _ExcluedPageState extends State<ExcluedPage> {
                                   ),
                                   onTap: () {
                                     // Navigator.of(context).pop();
-                                    itemDiscount(data, datatwo);
+                                    itemDiscount(data, dataTwo);
                                   },
                                 ),
                               ),

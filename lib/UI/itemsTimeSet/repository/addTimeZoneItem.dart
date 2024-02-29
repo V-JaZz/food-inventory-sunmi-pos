@@ -2,18 +2,18 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:food_inventory/UI/itemsTimeSet/model/time_zone_response_list.dart';
-import 'package:food_inventory/UI/itemsTimeSet/restaurantSelect.dart';
+import 'package:food_inventory/UI/itemsTimeSet/restaurant_select.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/constant/validation_util.dart';
 import 'package:food_inventory/model/common_model.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 import '../../../main.dart';
-import '../edit_scheduleZone.dart';
+import '../edit_schedule_zone.dart';
 
 class AddItemsRepository {
-  ApiBaseHelper _helper = new ApiBaseHelper();
-  late BuildContext _context;
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  late final BuildContext _context;
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
   DialogEditScheduleProduct widget;
 
   AddItemsRepository(this._context, this.widget);
@@ -104,7 +104,7 @@ class AddItemsRepository {
         } else {
           name = listitem.name.toString();
         }
-        if (items.length != 0) {
+        if (items.isNotEmpty) {
           for (SelectionModel data in items) {
             dataJson.add({
               'name': data.name.toString(),
@@ -131,9 +131,9 @@ class AddItemsRepository {
           timeRest2 = listitem.endTime.toString();
         }
 
-        if (days.length == 0) {
+        if (days.isEmpty) {
           showMessage("Add Days", _context);
-        } else if(items.length == 0) {
+        } else if(items.isEmpty) {
           showMessage("Add Items", _context);
         }  else {
           var body = jsonEncode({
@@ -165,7 +165,6 @@ class AddItemsRepository {
                 showMessage(model.message!, _context);
               }
             } catch (e) {
-              print(e.toString());
               Navigator.of(_keyLoader.currentContext!, rootNavigator: true)
                   .pop();
             }

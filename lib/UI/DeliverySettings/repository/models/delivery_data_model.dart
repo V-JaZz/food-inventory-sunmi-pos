@@ -8,14 +8,14 @@ class DeliveryListResponseModel {
     success = json['success'];
     if (json['data'] != null) {
       data = json['data'] != null
-          ? new DeliveryItemData.fromJson(json['data'])
+          ? DeliveryItemData.fromJson(json['data'])
           : null;
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -37,15 +37,15 @@ class DeliveryItemData {
     if (json['distanceDetails'] != null) {
       distanceDetail = <DistanceDetail>[];
       json['distanceDetails'].forEach((v) {
-        distanceDetail!.add(new DistanceDetail.fromJson(v));
+        distanceDetail!.add(DistanceDetail.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.distanceDetail != null) {
-      data['distanceDetails'] = this.distanceDetail!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (distanceDetail != null) {
+      data['distanceDetails'] = distanceDetail!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -58,27 +58,30 @@ class DistanceDetail {
   String? minDistance;
   String? minOrder;
   String? id;
+  String? postcode;
+
 
   DistanceDetail({this.deliveryCharge, this.deliveryTime, this.maxDistance, this.minDistance,this.id});
 
   DistanceDetail.fromJson(Map<String, dynamic> json) {
-    print("DistanceDetail  $json");
     deliveryCharge = json['deliveryCharge'];
     deliveryTime = json['deliveryTime'];
     maxDistance = json['maxDistance'];
     minDistance = json['minDistance'].toString();
     minOrder = json['minOrder'].toString();
     id = json['id'].toString();
+    postcode = json['postcode'].toString();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['deliveryCharge'] = this.deliveryCharge;
-    data['deliveryTime'] = this.deliveryTime;
-    data['maxDistance'] = this.maxDistance;
-    data['minDistance'] = this.minDistance;
-    data['minOrder'] = this.minOrder;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['deliveryCharge'] = deliveryCharge;
+    data['deliveryTime'] = deliveryTime;
+    data['maxDistance'] = maxDistance;
+    data['minDistance'] = minDistance;
+    data['minOrder'] = minOrder;
+    data['id'] = id;
+    data['postcode'] = postcode;
     return data;
   }
 }

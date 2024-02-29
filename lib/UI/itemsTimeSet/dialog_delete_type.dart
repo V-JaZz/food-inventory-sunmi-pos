@@ -10,7 +10,7 @@ class DialogDeleteType extends StatefulWidget {
   VoidCallback onDialogClose;
   late String delId;
 
-  DialogDeleteType({required this.model, required this.onDialogClose});
+  DialogDeleteType({Key? key, required this.model, required this.onDialogClose}) : super(key: key);
 
   @override
   _DialogDeleteTypeState createState() => _DialogDeleteTypeState();
@@ -22,7 +22,7 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
   @override
   void initState() {
     super.initState();
-    _deleteDataRepository = new DeleteDataRepository(context, widget);
+    _deleteDataRepository = DeleteDataRepository(context, widget);
   }
 
   callDeleteType() async {
@@ -46,25 +46,25 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
               children: [
                 Text(
                   widget.model.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: colorButtonYellow,
                       fontWeight: FontWeight.w700,
                       fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Text(
                   "Are you sure Delete this ${widget.model.type}?",
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: colorTextBlack,
                       fontWeight: FontWeight.w700,
                       fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 40),
+                  margin: const EdgeInsets.only(top: 40),
                   child: Row(
                     children: [
                       Expanded(
@@ -76,7 +76,7 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
                             decoration: BoxDecoration(
                                 color: colorLightRed,
                                 borderRadius: BorderRadius.circular(30)),
-                            child: Text(
+                            child: const Text(
                               "Delete",
                               style: TextStyle(
                                   color: colorTextWhite,
@@ -98,7 +98,7 @@ class _DialogDeleteTypeState extends State<DialogDeleteType> {
                             decoration: BoxDecoration(
                                 color: colorGrey,
                                 borderRadius: BorderRadius.circular(30)),
-                            child: Text(
+                            child: const Text(
                               "Cancel",
                               style: TextStyle(
                                   color: colorTextWhite,

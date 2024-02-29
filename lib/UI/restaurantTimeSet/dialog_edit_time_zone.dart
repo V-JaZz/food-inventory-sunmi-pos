@@ -2,75 +2,75 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:food_inventory/UI/restaurentTimeSet/repository/editTimeRepository.dart';
+import 'package:food_inventory/UI/restaurantTimeSet/repository/editTimeRepository.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/image.dart';
 import 'package:food_inventory/constant/validation_util.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 
-import 'model/restaurantTimeSlotResponseModel.dart';
+import 'model/restaurant_time_slot_response_model.dart';
 
 class DialogEditTimeSlot extends StatefulWidget {
   // var type, name;
-  var data;
+  dynamic data;
   VoidCallback onDialogClose;
   TimeSlotItemData itemList;
 
   DialogEditTimeSlot(
-      {required this.onDialogClose,
+      {Key? key, required this.onDialogClose,
       required this.itemList,
-      required this.data});
+      required this.data}) : super(key: key);
 
   @override
   _DialogScheduleProductState createState() => _DialogScheduleProductState();
 }
 
 class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
-  var _dropDownValue = "";
+  final _dropDownValue = "";
 
   String timeStart = "";
   String timeEnd = "";
   late String dateTime;
-  TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
+  TimeOfDay selectedTime = const TimeOfDay(hour: 00, minute: 00);
 
-  var Color1 = Colors.grey;
-  var Color2 = Colors.grey;
-  var Color3 = Colors.grey;
-  var Color4 = Colors.grey;
-  var Color5 = Colors.grey;
-  var Color6 = Colors.grey;
-  var Color7 = Colors.grey;
+  var color1 = Colors.grey;
+  var color2 = Colors.grey;
+  var color3 = Colors.grey;
+  var color4 = Colors.grey;
+  var color5 = Colors.grey;
+  var color6 = Colors.grey;
+  var color7 = Colors.grey;
 
-  var ColorGrey = Colors.grey;
-  var ColorGreen = Colors.green;
+  var colorGrey = Colors.grey;
+  var colorGreen = Colors.green;
 
-  bool valuesecond = false;
+  bool valueSecond = false;
 
   bool isDataLoad = false;
   bool isDataLoaded = false;
   var _valueC = false;
-  late DateRangePickerController _multipleDatePicker =
+  late final DateRangePickerController _multipleDatePicker =
       DateRangePickerController();
 
   List<DateTime> _specialDates = [];
   List<String> data = [];
   List<String> days = [];
   List<String> items = [];
-  List<DateTime> _selectedDate = [];
-  List<DateTime> _selected = [];
-  String _dateCount = '';
-  String _range = '';
-  String _rangeCount = '';
+  final List<DateTime> _selectedDate = [];
+  final List<DateTime> _selected = [];
+  final String _dateCount = '';
+  final String _range = '';
+  final String _rangeCount = '';
   late EditTimeZoneRepository _addItemsRepository;
   late TimeOfDay selectedStartTime, selectedEndTime;
   TextEditingController slotController = TextEditingController();
 
   @override
   void initState() {
-    _addItemsRepository = new EditTimeZoneRepository(context, widget);
-    selectedStartTime = new TimeOfDay.now();
-    selectedEndTime = new TimeOfDay.now();
+    _addItemsRepository = EditTimeZoneRepository(context, widget);
+    selectedStartTime = TimeOfDay.now();
+    selectedEndTime = TimeOfDay.now();
     var dateItem = widget.itemList.holidayDates!;
     for (int i = 0; i < widget.itemList.holidayDates!.length; i++) {
       var _time = widget.itemList.holidayDates![i].toString();
@@ -84,10 +84,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
       setState(() {
         _selectedDate.addAll(_specialDates);
         data.add(_time);
-        print("Time Data" + data.toString());
       });
-      print("SPECIAL DATE: " + _specialDates.toString());
-      print("SPECIAL DATES: " + _selectedDate.toString());
     }
   }
 
@@ -109,7 +106,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       "Update Restaurant Time Zone",
                       style: TextStyle(
                           color: colorTextBlack,
@@ -117,47 +114,47 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                           fontSize: 18),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Container(
-                        margin: EdgeInsets.only(top: 3),
+                        margin: const EdgeInsets.only(top: 3),
                         decoration: BoxDecoration(
                           color: const Color.fromRGBO(223, 221, 239, 1),
                           border: Border.all(color: colorFieldBorder, width: 1),
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          borderRadius: const BorderRadius.all(Radius.circular(5)),
                         ),
                         child: Container(
-                            margin: EdgeInsets.all(18),
+                            margin: const EdgeInsets.all(18),
                             child: TextField(
                               maxLines: 1,
                               controller: slotController,
                               textAlignVertical: TextAlignVertical.center,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.normal,
                                   color: colorTextBlack),
                               cursorColor: colorTextBlack,
                               decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(0),
+                                  contentPadding: const EdgeInsets.all(0),
                                   isDense: true,
                                   hintText: widget.itemList.name,
-                                  hintStyle: TextStyle(
+                                  hintStyle: const TextStyle(
                                       color: colorTextHint, fontSize: 16),
                                   border: InputBorder.none),
                             ))),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 19),
+                      margin: const EdgeInsets.only(top: 19),
                       child: Row(
                         children: [
                           Expanded(
                             child: GestureDetector(
                               child: Container(
-                                padding: EdgeInsets.all(18),
-                                decoration: BoxDecoration(
+                                padding: const EdgeInsets.all(18),
+                                decoration: const BoxDecoration(
                                   color: Color(0xffDFDDEF),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
@@ -169,7 +166,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                                       child: TextField(
                                         maxLines: 1,
                                         enabled: false,
-                                        controller: new TextEditingController(
+                                        controller: TextEditingController(
                                             text: timeStart.isEmpty
                                                 ? widget.itemList.startTime
                                                 : formatTimeOfDay(
@@ -177,11 +174,11 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                                                     'hh:mm a')),
                                         textAlignVertical:
                                             TextAlignVertical.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 13,
                                             fontWeight: FontWeight.w400,
                                             color: colorTextBlack),
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           contentPadding: EdgeInsets.all(0),
                                           isDense: true,
                                           hintText: "Start Time",
@@ -210,24 +207,24 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                               },
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          Text(
+                          const Text(
                             "To",
                             style: TextStyle(
                                 color: colorTextBlack,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(
                             child: GestureDetector(
                               child: Container(
-                                padding: EdgeInsets.all(18),
-                                decoration: BoxDecoration(
+                                padding: const EdgeInsets.all(18),
+                                decoration: const BoxDecoration(
                                   color: Color(0xffDFDDEF),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
@@ -239,7 +236,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                                       child: TextField(
                                         maxLines: 1,
                                         enabled: false,
-                                        controller: new TextEditingController(
+                                        controller: TextEditingController(
                                             text: timeEnd.isEmpty
                                                 ? widget.itemList.endTime
                                                 : formatTimeOfDay(
@@ -247,11 +244,11 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                                                     'hh:mm a')),
                                         textAlignVertical:
                                             TextAlignVertical.center,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 13,
                                             fontWeight: FontWeight.w400,
                                             color: colorTextBlack),
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           contentPadding: EdgeInsets.all(0),
                                           isDense: true,
                                           hintText: "End Time",
@@ -288,7 +285,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Select Days ",
                           style: TextStyle(
                               color: colorTextBlack,
@@ -298,33 +295,33 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
-                            new Text(
+                            const Text(
                               "Select All",
                               style: TextStyle(
                                   color: colorTextBlack,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w700),
                             ),
-                            new Checkbox(
+                            Checkbox(
                               value: _valueC,
                               checkColor: Colors.grey,
                               onChanged: (bool? value) {
                                 setState(() {
                                   _valueC = value!;
                                   if (value) {
-                                    if (days.length != 0) {
+                                    if (days.isNotEmpty) {
                                       days.clear();
                                     }
-                                    if (widget.itemList.days! != 0) {
+                                    if (widget.itemList.days!.isNotEmpty) {
                                       widget.itemList.days!.clear();
                                     }
-                                    Color1 = Colors.green;
-                                    Color2 = Colors.green;
-                                    Color3 = Colors.green;
-                                    Color4 = Colors.green;
-                                    Color5 = Colors.green;
-                                    Color6 = Colors.green;
-                                    Color7 = Colors.green;
+                                    color1 = Colors.green;
+                                    color2 = Colors.green;
+                                    color3 = Colors.green;
+                                    color4 = Colors.green;
+                                    color5 = Colors.green;
+                                    color6 = Colors.green;
+                                    color7 = Colors.green;
                                     days.add("Sunday");
                                     days.add("Monday");
                                     days.add("Tuesday");
@@ -333,22 +330,21 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                                     days.add("Friday");
                                     days.add("Saturday");
                                   } else {
-                                    Color1 = Colors.grey;
-                                    Color2 = Colors.grey;
-                                    Color3 = Colors.grey;
-                                    Color4 = Colors.grey;
-                                    Color5 = Colors.grey;
-                                    Color6 = Colors.grey;
-                                    Color7 = Colors.grey;
-                                    if (days.length != 0) {
+                                    color1 = Colors.grey;
+                                    color2 = Colors.grey;
+                                    color3 = Colors.grey;
+                                    color4 = Colors.grey;
+                                    color5 = Colors.grey;
+                                    color6 = Colors.grey;
+                                    color7 = Colors.grey;
+                                    if (days.isNotEmpty) {
                                       days.clear();
                                     }
 
-                                    if (widget.itemList.days! != 0) {
+                                    if (widget.itemList.days!.isNotEmpty) {
                                       widget.itemList.days!.clear();
                                     }
                                   }
-                                  print('value: $value');
                                 });
                               },
                             ),
@@ -358,7 +354,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                     ),
                     Container(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 13),
+                            const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
                         child: Row(children: [
                           InkWell(
                             onTap: () {
@@ -366,12 +362,12 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                                 if (widget.itemList.days!.contains("Sunday")) {
                                   widget.itemList.days!.remove("Sunday");
                                 }
-                                if (Color1 == Colors.grey) {
-                                  Color1 = Colors.green;
+                                if (color1 == Colors.grey) {
+                                  color1 = Colors.green;
 
                                   days.add("Sunday");
-                                } else if (Color1 == Colors.green) {
-                                  Color1 = Colors.grey;
+                                } else if (color1 == Colors.green) {
+                                  color1 = Colors.grey;
                                   if (days.contains("Sunday")) {
                                     days.remove("Sunday");
                                   }
@@ -381,12 +377,12 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                             child: CircleAvatar(
                               backgroundColor:
                                   widget.itemList.days!.contains("Sunday")
-                                      ? (Color1 == Colors.grey
+                                      ? (color1 == Colors.grey
                                           ? Colors.green
                                           : Colors.grey)
-                                      : Color1,
+                                      : color1,
                               radius: 17,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "S",
                                   style: TextStyle(
@@ -395,7 +391,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 7,
                           ),
                           InkWell(
@@ -404,11 +400,11 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                                 if (widget.itemList.days!.contains("Monday")) {
                                   widget.itemList.days!.remove("Monday");
                                 }
-                                if (Color2 == Colors.grey) {
-                                  Color2 = Colors.green;
+                                if (color2 == Colors.grey) {
+                                  color2 = Colors.green;
                                   days.add("Monday");
-                                } else if (Color2 == Colors.green) {
-                                  Color2 = Colors.grey;
+                                } else if (color2 == Colors.green) {
+                                  color2 = Colors.grey;
                                   if (days.contains("Monday")) {
                                     days.remove("Monday");
                                   }
@@ -418,12 +414,12 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                             child: CircleAvatar(
                               backgroundColor:
                                   widget.itemList.days!.contains("Monday")
-                                      ? (Color2 == Colors.grey
+                                      ? (color2 == Colors.grey
                                           ? Colors.green
                                           : Colors.grey)
-                                      : Color2,
+                                      : color2,
                               radius: 17,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "M",
                                   style: TextStyle(
@@ -432,7 +428,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 7,
                           ),
                           InkWell(
@@ -441,11 +437,11 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                                 if (widget.itemList.days!.contains("Tuesday")) {
                                   widget.itemList.days!.remove("Tuesday");
                                 }
-                                if (Color3 == Colors.grey) {
-                                  Color3 = Colors.green;
+                                if (color3 == Colors.grey) {
+                                  color3 = Colors.green;
                                   days.add("Tuesday");
-                                } else if (Color3 == Colors.green) {
-                                  Color3 = Colors.grey;
+                                } else if (color3 == Colors.green) {
+                                  color3 = Colors.grey;
                                   days.remove("Tuesday");
                                 }
                               });
@@ -453,12 +449,12 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                             child: CircleAvatar(
                               backgroundColor:
                                   widget.itemList.days!.contains("Tuesday")
-                                      ? (Color3 == Colors.grey
+                                      ? (color3 == Colors.grey
                                           ? Colors.green
                                           : Colors.grey)
-                                      : Color3,
+                                      : color3,
                               radius: 17,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "T",
                                   style: TextStyle(
@@ -467,7 +463,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 7,
                           ),
                           InkWell(
@@ -477,12 +473,12 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                                     .contains("Wednesday")) {
                                   widget.itemList.days!.remove("Wednesday");
                                 }
-                                if (Color4 == Colors.grey) {
-                                  Color4 = Colors.green;
+                                if (color4 == Colors.grey) {
+                                  color4 = Colors.green;
 
                                   days.add("Wednesday");
-                                } else if (Color4 == Colors.green) {
-                                  Color4 = Colors.grey;
+                                } else if (color4 == Colors.green) {
+                                  color4 = Colors.grey;
                                   if (days.contains("Wednesday")) {
                                     days.remove("Wednesday");
                                   }
@@ -492,12 +488,12 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                             child: CircleAvatar(
                               backgroundColor:
                                   widget.itemList.days!.contains("Wednesday")
-                                      ? (Color4 == Colors.grey
+                                      ? (color4 == Colors.grey
                                           ? Colors.green
                                           : Colors.grey)
-                                      : Color4,
+                                      : color4,
                               radius: 17,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "W",
                                   style: TextStyle(
@@ -506,7 +502,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 7,
                           ),
                           InkWell(
@@ -516,11 +512,11 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                                     .contains("Thursday")) {
                                   widget.itemList.days!.remove("Thursday");
                                 }
-                                if (Color5 == Colors.grey) {
-                                  Color5 = Colors.green;
+                                if (color5 == Colors.grey) {
+                                  color5 = Colors.green;
                                   days.add("Thursday");
-                                } else if (Color5 == Colors.green) {
-                                  Color5 = Colors.grey;
+                                } else if (color5 == Colors.green) {
+                                  color5 = Colors.grey;
                                   if (days.contains("Thursday")) {
                                     days.remove("Thursday");
                                   }
@@ -530,12 +526,12 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                             child: CircleAvatar(
                               backgroundColor:
                                   widget.itemList.days!.contains("Thursday")
-                                      ? (Color5 == Colors.grey
+                                      ? (color5 == Colors.grey
                                           ? Colors.green
                                           : Colors.grey)
-                                      : Color5,
+                                      : color5,
                               radius: 17,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "T",
                                   style: TextStyle(
@@ -544,7 +540,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 7,
                           ),
                           InkWell(
@@ -553,11 +549,11 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                                 if (widget.itemList.days!.contains("Friday")) {
                                   widget.itemList.days!.remove("Friday");
                                 }
-                                if (Color6 == Colors.grey) {
-                                  Color6 = Colors.green;
+                                if (color6 == Colors.grey) {
+                                  color6 = Colors.green;
                                   days.add("Friday");
-                                } else if (Color6 == Colors.green) {
-                                  Color6 = Colors.grey;
+                                } else if (color6 == Colors.green) {
+                                  color6 = Colors.grey;
                                   if (days.contains("Friday")) {
                                     days.remove("Friday");
                                   }
@@ -567,12 +563,12 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                             child: CircleAvatar(
                               backgroundColor:
                                   widget.itemList.days!.contains("Friday")
-                                      ? (Color6 == Colors.grey
+                                      ? (color6 == Colors.grey
                                           ? Colors.green
                                           : Colors.grey)
-                                      : Color6,
+                                      : color6,
                               radius: 17,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "F",
                                   style: TextStyle(
@@ -581,7 +577,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 7,
                           ),
                           InkWell(
@@ -591,11 +587,11 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                                     .contains("Saturday")) {
                                   widget.itemList.days!.remove("Saturday");
                                 }
-                                if (Color7 == Colors.grey) {
-                                  Color7 = Colors.green;
+                                if (color7 == Colors.grey) {
+                                  color7 = Colors.green;
                                   days.add("Saturday");
-                                } else if (Color7 == Colors.green) {
-                                  Color7 = Colors.grey;
+                                } else if (color7 == Colors.green) {
+                                  color7 = Colors.grey;
                                   if (days.contains("Saturday")) {
                                     days.remove("Saturday");
                                   }
@@ -605,12 +601,12 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                             child: CircleAvatar(
                               backgroundColor:
                                   widget.itemList.days!.contains("Saturday")
-                                      ? (Color7 == Colors.grey
+                                      ? (color7 == Colors.grey
                                           ? Colors.green
                                           : Colors.grey)
-                                      : Color7,
+                                      : color7,
                               radius: 17,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   "S",
                                   style: TextStyle(
@@ -620,14 +616,14 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                             ),
                           ),
                         ])),
-                    Text(
+                    const Text(
                       "Add Holidays",
                       style: TextStyle(
                           color: colorTextBlack,
                           fontSize: 12,
                           fontWeight: FontWeight.w700),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
@@ -648,7 +644,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                               width: 14,
                               height: 14,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             const Text(
@@ -668,7 +664,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 40),
+                      margin: const EdgeInsets.only(top: 40),
                       child: Row(
                         children: [
                           Expanded(
@@ -682,7 +678,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                                 decoration: BoxDecoration(
                                     color: colorGreen,
                                     borderRadius: BorderRadius.circular(30)),
-                                child: Text(
+                                child: const Text(
                                   "Update",
                                   style: TextStyle(
                                       color: colorTextWhite,
@@ -697,7 +693,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                                     days.add(dataDays);
                                   }
                                 }
-                                var _holidayData;
+                                dynamic _holidayData;
                                 setState(() {
                                   _holidayData = data.toSet().toList();
                                 });
@@ -722,7 +718,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                                 decoration: BoxDecoration(
                                     color: colorGrey,
                                     borderRadius: BorderRadius.circular(30)),
-                                child: Text(
+                                child: const Text(
                                   "Back",
                                   style: TextStyle(
                                       color: colorTextWhite,
@@ -747,14 +743,14 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
     );
   }
 
-  Future<Null> _selectStartTime() async {
+  Future<void> _selectStartTime() async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialEntryMode: TimePickerEntryMode.input,
       useRootNavigator: false,
       confirmText: "Set",
       cancelText: "Cancel",
-      routeSettings: RouteSettings(),
+      routeSettings: const RouteSettings(),
       initialTime: selectedStartTime,
       builder: (BuildContext _context, Widget? child) {
         return MediaQuery(
@@ -765,22 +761,22 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
         );
       },
     );
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         selectedStartTime = picked;
         timeStart = formatTimeOfDay(selectedStartTime, 'HH:mm');
-        print("$selectedStartTime");
       });
+    }
   }
 
-  Future<Null> _selectEndTime() async {
+  Future<void> _selectEndTime() async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialEntryMode: TimePickerEntryMode.input,
       useRootNavigator: false,
       confirmText: "Set",
       cancelText: "Cancel",
-      routeSettings: RouteSettings(),
+      routeSettings: const RouteSettings(),
       initialTime: selectedEndTime,
       builder: (BuildContext _context, Widget? child) {
         return MediaQuery(
@@ -791,12 +787,12 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
         );
       },
     );
-    if (picked != null)
+    if (picked != null) {
       setState(() {
         selectedEndTime = picked;
         timeEnd = formatTimeOfDay(selectedEndTime, 'HH:mm');
-        print("$selectedEndTime");
       });
+    }
   }
 
   void dialogDateType() {
@@ -828,12 +824,12 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                     selectionRadius: 10,
                     todayHighlightColor: colorTextWhite,
                     monthCellStyle: DateRangePickerMonthCellStyle(
-                      todayTextStyle: TextStyle(color: colorTextWhite),
+                      todayTextStyle: const TextStyle(color: colorTextWhite),
                       todayCellDecoration: BoxDecoration(
-                          color: Color.fromRGBO(81, 200, 0, 1),
+                          color: const Color.fromRGBO(81, 200, 0, 1),
                           borderRadius: BorderRadius.circular(10)),
                       cellDecoration: BoxDecoration(
-                          color: Color.fromRGBO(251, 245, 232, 1),
+                          color: const Color.fromRGBO(251, 245, 232, 1),
                           borderRadius: BorderRadius.circular(10)),
                       specialDatesDecoration: BoxDecoration(
                           color: colorLightRed,
@@ -845,7 +841,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                         dayFormat: 'EEE',
                         enableSwipeSelection: false,
                         specialDates: _selectedDate,
-                        viewHeaderStyle: DateRangePickerViewHeaderStyle(
+                        viewHeaderStyle: const DateRangePickerViewHeaderStyle(
                           textStyle: TextStyle(
                               color: colorTextWhite,
                               fontWeight: FontWeight.w700,
@@ -860,7 +856,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                           fontWeight: FontWeight.w700,
                           fontSize: 15),
                     ),
-                    selectionTextStyle: TextStyle(
+                    selectionTextStyle: const TextStyle(
                         color: colorTextWhite,
                         fontWeight: FontWeight.w700,
                         fontSize: 12),
@@ -869,7 +865,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                     endRangeSelectionColor: colorGreen,
                     rangeSelectionColor: colorGreen,
                     rangeTextStyle:
-                        TextStyle(color: Colors.black, fontSize: 15),
+                        const TextStyle(color: Colors.black, fontSize: 15),
                     view: DateRangePickerView.month,
                     selectionMode: DateRangePickerSelectionMode.multiple,
                     enablePastDates: false,
@@ -913,7 +909,7 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
                             decoration: BoxDecoration(
                                 color: colorGrey,
                                 borderRadius: BorderRadius.circular(30)),
-                            child: Text(
+                            child: const Text(
                               "Back",
                               style: TextStyle(
                                   color: colorTextWhite,
@@ -957,7 +953,6 @@ class _DialogScheduleProductState extends State<DialogEditTimeSlot> {
       data.remove(remove);
       data.remove(remove);
       //=============================================need to work here ===========================================================
-      print("Data : " + data.toString());
     });
   }
 }

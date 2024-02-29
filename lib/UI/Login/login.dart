@@ -17,7 +17,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   late TextEditingController _emailController;
-  late String devicetoken;
+  late String deviceToken;
   late LoginRepository _loginRepository;
   late TextEditingController _passController;
   @override
@@ -31,10 +31,10 @@ class _LoginPageState extends State<LoginPage> {
 
   callLogin() async {
     _loginRepository.login(
-        _emailController.text, _passController.text, devicetoken);
+        _emailController.text, _passController.text, deviceToken);
     print(_emailController.text);
     print(_passController.text);
-    print(devicetoken);
+    print(deviceToken);
   }
 
   @override
@@ -217,11 +217,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   getToken() async {
-    devicetoken = (await FirebaseMessaging.instance.getToken())!;
+    deviceToken = (await FirebaseMessaging.instance.getToken())!;
     setState(() {
-      devicetoken = devicetoken;
+      deviceToken = deviceToken;
     });
-    print("raj" "dfhshdkfjshfhsdjfsjsfdgs");
-    print("dev" + devicetoken);
+    print("dev" + deviceToken);
   }
 }

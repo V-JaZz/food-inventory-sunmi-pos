@@ -1,10 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:food_inventory/UI/DeliverySettings/dailog_delivery_setting.dart';
-import 'package:food_inventory/UI/DeliverySettings/repository/delivery_repository.dart';
 import 'package:food_inventory/UI/DeliverySettings/repository/models/delivery_data_model.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/storage_util.dart';
@@ -16,6 +14,8 @@ import 'package:food_inventory/networking/api_base_helper.dart';
 import 'dialog_create_delivery.dart';
 
 class DeliverySetting extends StatefulWidget {
+  const DeliverySetting({Key? key}) : super(key: key);
+
   // const DeliverySetting({ Key? key }) : super(key: key);
 
   @override
@@ -37,8 +37,6 @@ class _DeliverySettingState extends State<DeliverySetting> {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
-        print("restauranttoday");
-        print(restaurantId);
         setState(() {
           resId = restaurantId;
         });
@@ -48,7 +46,6 @@ class _DeliverySettingState extends State<DeliverySetting> {
         try {
           final response = await ApiBaseHelper()
               .get(ApiBaseHelper.getDeliveryData + "/" + restaurantId, token);
-          print(response);
           DeliveryListResponseModel model = DeliveryListResponseModel.fromJson(
               ApiBaseHelper().returnResponse(context, response));
           setState(() {
@@ -64,7 +61,6 @@ class _DeliverySettingState extends State<DeliverySetting> {
             }
           }
         } catch (e) {
-          print(e.toString());
           setState(() {
             isDataLoad = false;
           });
@@ -280,7 +276,7 @@ class _DeliverySettingState extends State<DeliverySetting> {
                                                         fontSize: 14,
                                                       )),
                                                 ),
-                                                Container(
+                                                SizedBox(
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *
@@ -310,7 +306,7 @@ class _DeliverySettingState extends State<DeliverySetting> {
                                                         fontSize: 14,
                                                       )),
                                                 ),
-                                                Container(
+                                                SizedBox(
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *
@@ -427,7 +423,6 @@ class _DeliverySettingState extends State<DeliverySetting> {
               getDeliveryData();
             }
           } catch (e) {
-            print(e.toString());
             // Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
           }
         }

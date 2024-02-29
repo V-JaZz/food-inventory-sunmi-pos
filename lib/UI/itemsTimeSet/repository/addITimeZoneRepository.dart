@@ -1,18 +1,18 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:food_inventory/UI/itemsTimeSet/restaurantSelect.dart';
+import 'package:food_inventory/UI/itemsTimeSet/restaurant_select.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/constant/validation_util.dart';
 import 'package:food_inventory/model/common_model.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 import '../../../main.dart';
-import '../dialog_scheduleProduct.dart';
+import '../dialog_schedule_product.dart';
 
 class AddNewTimeZoneRepository {
-  ApiBaseHelper _helper = new ApiBaseHelper();
-  late BuildContext _context;
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  late final BuildContext _context;
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
   DialogScheduleProduct widget;
   AddNewTimeZoneRepository(this._context, this.widget);
 
@@ -37,9 +37,9 @@ class AddNewTimeZoneRepository {
           categorries = "categories";
         }
 
-        if (days.length == 0) {
+        if (days.isEmpty) {
           showMessage("Add Days", _context);
-        } else if (items.length == 0) {
+        } else if (items.isEmpty) {
           showMessage("Add Items", _context);
         } else if (timeRest.isEmpty) {
           showMessage("Choose Start Time", _context);
@@ -75,7 +75,6 @@ class AddNewTimeZoneRepository {
                 showMessage(model.message!, _context);
               }
             } catch (e) {
-              print(e.toString());
               Navigator.of(_keyLoader.currentContext!, rootNavigator: true)
                   .pop();
             }

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:food_inventory/UI/itemsTimeSet/dialog_add_time_zone.dart';
 import 'package:food_inventory/UI/itemsTimeSet/dialog_delete_type.dart';
-import 'package:food_inventory/UI/itemsTimeSet/dialog_editStatus.dart';
+import 'package:food_inventory/UI/itemsTimeSet/dialog_edit_status.dart';
 import 'package:food_inventory/UI/itemsTimeSet/dialog_edit_type.dart';
 import 'package:food_inventory/UI/itemsTimeSet/model/time_zone_response_list.dart';
 import 'package:food_inventory/UI/menu/dialog_type_list_view.dart';
 import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
-import 'package:food_inventory/constant/switch.dart' as SW;
+import 'package:food_inventory/constant/switch.dart' as sw;
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 
@@ -259,7 +259,7 @@ class _ItemsTimeSetState extends State<ItemsTimeSet> {
                                                         fontWeight:
                                                             FontWeight.w500)),
                                               ),
-                                              Container(
+                                              SizedBox(
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width *
@@ -294,7 +294,7 @@ class _ItemsTimeSetState extends State<ItemsTimeSet> {
                                                           .width *
                                                       0.23,
                                                   alignment: Alignment.center,
-                                                  child: SW.Switch(
+                                                  child: sw.Switch(
                                                       value:
                                                           itemList[i].isActive!,
                                                       onChanged: (value) {
@@ -304,15 +304,9 @@ class _ItemsTimeSetState extends State<ItemsTimeSet> {
                                                           if (itemList[i]
                                                                   .isActive ==
                                                               value) {
-                                                            print("DATA FIRST" +
-                                                                itemList[i]
-                                                                    .isActive
-                                                                    .toString());
                                                             if (itemList[i]
                                                                     .isActive ==
                                                                 false) {
-                                                              print(
-                                                                  "DATA FALSE");
                                                               dialogEditStatus(
                                                                   "Deactivate",
                                                                   itemList[i]);
@@ -320,18 +314,13 @@ class _ItemsTimeSetState extends State<ItemsTimeSet> {
                                                                         i]
                                                                     .isActive ==
                                                                 true) {
-                                                              print(
-                                                                  "DATA TRUE");
                                                               dialogEditStatus(
                                                                   "Active",
                                                                   itemList[i]);
                                                             }
                                                           } else {
-                                                            print(
-                                                                "NOT MATCHED");
                                                           }
 
-                                                          print(value);
                                                         });
                                                       },
                                                       // activeColor: colorGreen,

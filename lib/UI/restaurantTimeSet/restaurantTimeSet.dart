@@ -1,17 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:food_inventory/UI/restaurentTimeSet/dialog_add_time_zone.dart';
-import 'package:food_inventory/UI/restaurentTimeSet/dialog_delete_time.dart';
-import 'package:food_inventory/UI/restaurentTimeSet/dialog_edit_time_zone.dart';
-import 'package:food_inventory/UI/restaurentTimeSet/dialog_update_status.dart';
+import 'package:food_inventory/UI/restaurantTimeSet/dialog_add_time_zone.dart';
+import 'package:food_inventory/UI/restaurantTimeSet/dialog_delete_time.dart';
+import 'package:food_inventory/UI/restaurantTimeSet/dialog_edit_time_zone.dart';
+import 'package:food_inventory/UI/restaurantTimeSet/dialog_update_status.dart';
 import 'package:food_inventory/constant/colors.dart';
-// ignore: library_prefixes
-import 'package:food_inventory/constant/switch.dart' as SW;
+import 'package:food_inventory/constant/switch.dart' as sw;
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
-
-import 'model/restaurantTimeSlotResponseModel.dart';
+import 'model/restaurant_time_slot_response_model.dart';
 
 class RestaurantTimeSet extends StatefulWidget {
   const RestaurantTimeSet({Key? key}) : super(key: key);
@@ -257,7 +255,7 @@ class _RestaurantTimeSetState extends State<RestaurantTimeSet> {
                                                         fontWeight:
                                                             FontWeight.w500)),
                                               ),
-                                              Container(
+                                              SizedBox(
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width *
@@ -291,7 +289,7 @@ class _RestaurantTimeSetState extends State<RestaurantTimeSet> {
                                                           .width *
                                                       0.2,
                                                   alignment: Alignment.center,
-                                                  child: SW.Switch(
+                                                  child: sw.Switch(
                                                       value:
                                                           itemList[i].isActive!,
                                                       onChanged: (value) {
@@ -301,15 +299,9 @@ class _RestaurantTimeSetState extends State<RestaurantTimeSet> {
                                                           if (itemList[i]
                                                                   .isActive ==
                                                               value) {
-                                                            print("DATA FIRST" +
-                                                                itemList[i]
-                                                                    .isActive
-                                                                    .toString());
                                                             if (itemList[i]
                                                                     .isActive ==
                                                                 false) {
-                                                              print(
-                                                                  "DATA FALSE");
                                                               dialogEditStatus(
                                                                   "Deactivate",
                                                                   itemList[i]);
@@ -317,18 +309,13 @@ class _RestaurantTimeSetState extends State<RestaurantTimeSet> {
                                                                         i]
                                                                     .isActive ==
                                                                 true) {
-                                                              print(
-                                                                  "DATA TRUE");
                                                               dialogEditStatus(
                                                                   "Active",
                                                                   itemList[i]);
                                                             }
                                                           } else {
-                                                            print(
-                                                                "NOT MATCHED");
                                                           }
 
-                                                          print(value);
                                                         });
                                                       },
                                                       // activeColor: colorGreen,
@@ -385,7 +372,7 @@ class _RestaurantTimeSetState extends State<RestaurantTimeSet> {
       builder: (
         dialogListContext,
       ) {
-        return DialogAddtimeSlot(
+        return DialogAddTimeSlot(
           onDialogClose: () {
             setState(() {
               getTimeZone();
@@ -403,7 +390,7 @@ class _RestaurantTimeSetState extends State<RestaurantTimeSet> {
       builder: (dialogContext) {
         return DialogEditTimeSlot(
           itemList: itemList,
-          data: [],
+          data: const [],
           onDialogClose: () {
             setState(() {
               getTimeZone();

@@ -11,60 +11,60 @@ import '../../../main.dart';
 import '../dailog_delivery_setting.dart';
 
 class EditDeliveryRepository {
-  ApiBaseHelper _helper = new ApiBaseHelper();
-  late BuildContext _context;
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  late final BuildContext _context;
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
 
   DialogDeliverySetting widget;
 
   EditDeliveryRepository(this._context, this.widget);
 
-  updateDelivery(String minDistance, String maxDistance, String deliveryCharge,
-      String minOrder, String deliveryTime, DistanceDetail itemList) {
+  updateDelivery(
+      String postcode,
+      /* String maxDistance,*/
+      String deliveryCharge,
+      String minOrder,
+      String deliveryTime,
+      DistanceDetail itemList) {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
-        String minimumDistance,
-            maximunDistance,
-            DelCharge,
-            MinimumOrder,
-            DelTime;
-        if (minDistance.isEmpty) {
-          minimumDistance = itemList.minDistance.toString();
+        String postCodeData, delCharges, minimumOrder, delTime;
+        if (postcode.isEmpty) {
+          postCodeData = itemList.postcode.toString();
         } else {
-          minimumDistance = minDistance;
+          postCodeData = postcode;
         }
 
-        if (maxDistance.length == 0) {
+        /* if (maxDistance.length == 0) {
           maximunDistance = itemList.maxDistance.toString();
         } else {
           maximunDistance = maxDistance;
         }
-
+*/
         if (deliveryCharge.isEmpty) {
-          DelCharge = itemList.deliveryCharge.toString();
+          delCharges = itemList.deliveryCharge.toString();
         } else {
-          DelCharge = deliveryCharge;
+          delCharges = deliveryCharge;
         }
 
         if (minOrder.isEmpty) {
-          MinimumOrder = itemList.minOrder.toString();
+          minimumOrder = itemList.minOrder.toString();
         } else {
-          MinimumOrder = minOrder;
+          minimumOrder = minOrder;
         }
 
         if (deliveryTime.isEmpty) {
-          DelTime = itemList.deliveryTime.toString();
+          delTime = itemList.deliveryTime.toString();
         } else {
-          DelTime = deliveryTime;
+          delTime = deliveryTime;
         }
 
         var body = jsonEncode({
-          'minDistance': minimumDistance,
-          'maxDistance': maximunDistance,
-          'deliveryCharge': DelCharge,
-          'minOrder': MinimumOrder,
-          'deliveryTime': DelTime,
+          'postcode': postCodeData,
+          'deliveryCharge': delCharges,
+          'minOrder': minimumOrder,
+          'deliveryTime': delTime,
           'id': itemList.id.toString(),
         });
 
@@ -86,7 +86,6 @@ class EditDeliveryRepository {
               widget.onDialogClose();
             }
           } catch (e) {
-            print(e.toString());
             Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
             widget.onDialogClose();
           }
@@ -121,7 +120,6 @@ class EditDeliveryRepository {
               widget.onDialogClose();
             }
           } catch (e) {
-            print(e.toString());
             Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
             widget.onDialogClose();
           }

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:food_inventory/UI/restaurentTimeSet/dialog_delete_time.dart';
+import 'package:food_inventory/UI/restaurantTimeSet/dialog_delete_time.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/constant/validation_util.dart';
 import 'package:food_inventory/model/common_model.dart';
@@ -9,12 +9,12 @@ import 'package:food_inventory/networking/api_base_helper.dart';
 import '../../../main.dart';
 
 class DeleteTimeZoneRepository {
-  ApiBaseHelper _helper = ApiBaseHelper();
-  BuildContext? _context;
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  final BuildContext? _context;
   late String delID;
   DialogDeleteTimeZone widget;
 
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
 
   DeleteTimeZoneRepository(this._context, this.widget);
 

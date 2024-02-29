@@ -75,8 +75,7 @@ class _OfferDiscountState extends State<OfferDiscount> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // color: colorBackgroundyellow,
-      padding: const EdgeInsets.only(top: 10, right: 10),
+      padding: const EdgeInsets.only(top: 10, right: 22,left: 12, ),
       child: ListView(
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -326,7 +325,7 @@ class _OfferDiscountState extends State<OfferDiscount> {
       context: context,
       barrierDismissible: false,
       builder: (buildContext) {
-        return ExcluedPage(
+        return ExcludedPage(
           type: type,
           onDialogClose: () {
             Navigator.pop(context);

@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:food_inventory/constant/switch.dart' as SW;
+import 'package:food_inventory/constant/switch.dart' as sw;
 import 'package:food_inventory/UI/Dashboard/forms/Items/model/menu_items.dart';
 import 'package:food_inventory/UI/dashboard/forms/Category/model/category_list_response_model.dart';
 import 'package:food_inventory/constant/app_util.dart';
@@ -13,16 +12,16 @@ typedef SelectDataFunc = void Function(List<SelectionModel>);
 // ignore: must_be_immutable
 class DialogRestaurantDataSelection extends StatefulWidget {
   late String type;
-  late String typefor;
+  late String typeFor;
   List<TypeList>? selectedData;
   SelectDataFunc onSelectData;
 
-  DialogRestaurantDataSelection({
+  DialogRestaurantDataSelection({Key? key,
     required this.type,
-    required this.typefor,
+    required this.typeFor,
     this.selectedData,
     required this.onSelectData,
-  });
+  }) : super(key: key);
 
   @override
   _DialogRestaurantDataSelectionState createState() =>
@@ -56,7 +55,6 @@ class _DialogRestaurantDataSelectionState
             await ApiBaseHelper().get(ApiBaseHelper.getItems, token);
         MenuItems model = MenuItems.fromJson(
             ApiBaseHelper().returnResponse(context, response));
-        print(ApiBaseHelper.getItems);
         setState(() {
           isDataLoad = false;
         });
@@ -65,19 +63,16 @@ class _DialogRestaurantDataSelectionState
             for (Data data in model.data!) {
               for (Items subData in data.items!) {
                 bool isSelected = false;
-                if (widget.typefor == "ReEdit") {
-                  print("object");
+                if (widget.typeFor == "ReEdit") {
                   for (TypeList ty in widget.selectedData!) {
                     for (String selectedId in ty.selected) {
                       if (subData.sId == selectedId) {
                         isSelected = true;
-                        print("IS SELECTED: " + isSelected.toString());
                         break;
                       }
                     }
                   }
                 }
-                print("object 1");
                 type.add(TypeList("", subData.sId.toString(), subData.name!,
                     subData.category!.sId!, [], isSelected));
               }
@@ -85,7 +80,6 @@ class _DialogRestaurantDataSelectionState
           }
         }
       } catch (e) {
-        print(e.toString());
         setState(() {
           isDataLoad = false;
         });
@@ -110,7 +104,7 @@ class _DialogRestaurantDataSelectionState
           if (model.data!.isNotEmpty) {
             for (CategoryListData data in model.data!) {
               bool isSelected = false;
-              if (widget.typefor == "ReEdit") {
+              if (widget.typeFor == "ReEdit") {
                 for (TypeList ty in widget.selectedData!) {
                   for (String selectedId in ty.selected) {
                     if (data.sId == selectedId) {
@@ -126,7 +120,6 @@ class _DialogRestaurantDataSelectionState
           }
         }
       } catch (e) {
-        print(e.toString());
         setState(() {
           isDataLoad = false;
         });
@@ -151,14 +144,14 @@ class _DialogRestaurantDataSelectionState
               children: [
                 Text(
                   widget.type,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: colorTextBlack,
                       fontSize: 18,
                       fontWeight: FontWeight.w700),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 isDataLoad
-                    ? Center(
+                    ? const Center(
                         child: CircularProgressIndicator(
                           strokeWidth: 5.0,
                           color: colorGreen,
@@ -166,14 +159,14 @@ class _DialogRestaurantDataSelectionState
                       )
                     : ListView.builder(
                         itemCount: type.length,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (listContext, index) {
                           return Container(
                             color: index % 2 == 0
                                 ? const Color.fromRGBO(228, 225, 246, 1)
                                 : colorTextWhite,
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                               left: 5,
                             ),
                             child: Row(
@@ -182,14 +175,14 @@ class _DialogRestaurantDataSelectionState
                               children: [
                                 Text(
                                   type[index].name,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: colorTextBlack,
                                       fontSize: 13,
                                       fontWeight: FontWeight.w500),
                                 ),
                                 Container(
                                     alignment: Alignment.center,
-                                    child: SW.Switch(
+                                    child: sw.Switch(
                                         value: type[index].isSelected,
                                         onChanged: (value) {
                                           setState(() {
@@ -208,7 +201,7 @@ class _DialogRestaurantDataSelectionState
                         },
                       ),
                 Container(
-                  margin: EdgeInsets.only(top: 20, bottom: 20),
+                  margin: const EdgeInsets.only(top: 20, bottom: 20),
                   child: Row(
                     children: [
                       Expanded(
@@ -220,7 +213,7 @@ class _DialogRestaurantDataSelectionState
                             decoration: BoxDecoration(
                                 color: colorGreen,
                                 borderRadius: BorderRadius.circular(30)),
-                            child: Text(
+                            child: const Text(
                               "Save",
                               style: TextStyle(
                                   color: colorTextWhite,
@@ -237,7 +230,6 @@ class _DialogRestaurantDataSelectionState
                               }
                             }
                             for (int i = 0; toppings.length > i; i++) {
-                              print("DATA SELECTED: " + toppings[i].name);
                             }
                             widget.onSelectData(toppings);
 
@@ -254,7 +246,7 @@ class _DialogRestaurantDataSelectionState
                             decoration: BoxDecoration(
                                 color: colorGrey,
                                 borderRadius: BorderRadius.circular(30)),
-                            child: Text(
+                            child: const Text(
                               "Back",
                               style: TextStyle(
                                   color: colorTextWhite,

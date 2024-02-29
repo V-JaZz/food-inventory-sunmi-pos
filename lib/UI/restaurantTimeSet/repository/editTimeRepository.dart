@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:food_inventory/UI/restaurentTimeSet/dialog_edit_time_zone.dart';
-import 'package:food_inventory/UI/restaurentTimeSet/model/restaurantTimeSlotResponseModel.dart';
+import 'package:food_inventory/UI/restaurantTimeSet/dialog_edit_time_zone.dart';
+import 'package:food_inventory/UI/restaurantTimeSet/model/restaurant_time_slot_response_model.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/constant/validation_util.dart';
 import 'package:food_inventory/model/common_model.dart';
@@ -10,9 +10,9 @@ import 'package:food_inventory/networking/api_base_helper.dart';
 import '../../../main.dart';
 
 class EditTimeZoneRepository {
-  ApiBaseHelper _helper = new ApiBaseHelper();
-  late BuildContext _context;
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  late final BuildContext _context;
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
 
   DialogEditTimeSlot widget;
 
@@ -36,7 +36,7 @@ class EditTimeZoneRepository {
           name=listitem.name.toString();
         }
 
-        if (days.length == 0) {
+        if (days.isEmpty) {
           showMessage("Add Days", _context);
         } else {
           var body = jsonEncode({

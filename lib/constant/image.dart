@@ -49,3 +49,8 @@ const String icDashRate = 'assets/icRate.svg';
 const String icDashDoc = 'assets/icDoc.svg';
 const String icHistoryCal = 'assets/icHistory.svg';
 const String icDropDown = 'assets/icDropDown.svg';
+const String icFeather = 'assets/icFeather.svg';
+const String icLocation = 'assets/icLocation.svg';
+const String placeHol = 'assets/placeHolder.svg';
+const String icEuroReport = 'assets/report_eruo_icon.svg';
+

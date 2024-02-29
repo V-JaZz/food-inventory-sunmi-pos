@@ -31,7 +31,6 @@ class OrderListResponseModel {
   }
 }
 
-//ase hogaa
 class OrderDataModel {
   String? sId;
   List<ItemDetails>? itemDetails;
@@ -197,7 +196,8 @@ class ItemDetails {
       this.variant,
       this.variantPrice,
       this.subVariant,
-      this.subVariantPrice});
+      this.subVariantPrice}
+      );
 
   ItemDetails.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -301,7 +301,7 @@ class UserDetails {
   String? email;
   String? address;
   String? city;
-  String? passcode;
+  String? postcode;
   String? contact;
 
   UserDetails(
@@ -311,7 +311,7 @@ class UserDetails {
       this.email,
       this.address,
       this.city,
-      this.passcode,
+      this.postcode,
       this.contact});
 
   UserDetails.fromJson(Map<String, dynamic> json) {
@@ -321,7 +321,7 @@ class UserDetails {
     email = json['email'];
     address = json['address'];
     city = json['city'];
-    passcode = json['passcode'];
+    postcode = json['postcode'];
     contact = json['contact'];
   }
 
@@ -333,7 +333,7 @@ class UserDetails {
     data['email'] = email;
     data['address'] = address;
     data['city'] = city;
-    data['passcode'] = passcode;
+    data['postcode'] = postcode;
     data['contact'] = contact;
     return data;
   }

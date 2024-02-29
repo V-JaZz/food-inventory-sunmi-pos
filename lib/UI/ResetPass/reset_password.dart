@@ -15,13 +15,13 @@ class _ResetPasswordState extends State<ResetPassword> {
 
   late TextEditingController _oldPassController;
 
-  late TextEditingController _newpassController;
+  late TextEditingController _newPassController;
   @override
   void initState() {
     super.initState();
     _userNameController = TextEditingController();
     _oldPassController =  TextEditingController();
-    _newpassController =  TextEditingController();
+    _newPassController =  TextEditingController();
   }
 
   @override
@@ -167,7 +167,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                     borderRadius: const BorderRadius.all(Radius.circular(100)),
                   ),
                   child: TextField(
-                    controller: _newpassController,
+                    controller: _newPassController,
                     maxLines: 1,
                     textAlignVertical: TextAlignVertical.center,
                     style: const TextStyle(

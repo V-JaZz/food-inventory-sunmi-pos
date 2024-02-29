@@ -7,17 +7,17 @@ import 'package:food_inventory/constant/validation_util.dart';
 import 'package:food_inventory/model/common_model.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 import '../../../main.dart';
-import '../dialog_editStatus.dart';
+import '../dialog_edit_status.dart';
 
 class StatusTimeZoneRepository {
-  ApiBaseHelper _helper = new ApiBaseHelper();
-  late BuildContext _context;
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  late final BuildContext _context;
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
   DialogEditStatus widget;
 
   StatusTimeZoneRepository(this._context,this.widget);
 
-  statusTimeZone(bool status,TimeZoneItemData listitem) {
+  statusTimeZone(bool status,TimeZoneItemData listItem) {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
@@ -26,7 +26,7 @@ class StatusTimeZoneRepository {
 
           var body = jsonEncode({
             'isActive': status,
-            'id': listitem.sId,
+            'id': listItem.sId,
           });
 
 
@@ -48,7 +48,6 @@ class StatusTimeZoneRepository {
                 widget.onDialogClose();
               }
             } catch (e) {
-              print(e.toString());
               Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
               widget.onDialogClose();
             }

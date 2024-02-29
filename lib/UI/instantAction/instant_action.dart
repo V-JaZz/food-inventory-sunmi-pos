@@ -55,7 +55,6 @@ class _InstantActionState extends State<InstantAction> {
             });
           }
         } catch (e) {
-         
           Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
         }
       });
@@ -68,93 +67,99 @@ class _InstantActionState extends State<InstantAction> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      // crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 10),
-        const Text(
-          "Select Instant Action",
-          style: TextStyle(
-            color: colorTextBlack,
-            fontSize: 18,
-            fontWeight: FontWeight.w400,
+    return Container(
+      padding: const EdgeInsets.only(
+        right: 12,
+        left: 12,
+      ),
+      child: ListView(
+        // crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 10),
+          const Text(
+            "Select Instant Action",
+            style: TextStyle(
+              color: colorTextBlack,
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+            ),
           ),
-        ),
-        Container(
-          height: 57,
-          width: 280,
-          margin: const EdgeInsets.only(top: 20, right: 50),
-          decoration: BoxDecoration(
-              color: colorTextWhite,
-              borderRadius: BorderRadius.circular(46),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.grey,
-                  offset: Offset(1.0, 1.0), //(x,y)
-                  blurRadius: 1.0,
-                ),
-              ]),
-          child: Row(
-            children: [
-              Expanded(
-                  child: GestureDetector(
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: isOpen ? colorGreen : colorTextWhite,
-                      borderRadius: BorderRadius.circular(46)),
-                  child: Text(
-                    "Open",
-                    style: TextStyle(
-                      color: isOpen ? colorTextWhite : colorGreen,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
+          Container(
+            height: 57,
+            width: 280,
+            margin: const EdgeInsets.only(top: 20, right: 50),
+            decoration: BoxDecoration(
+                color: colorTextWhite,
+                borderRadius: BorderRadius.circular(46),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.grey,
+                    offset: Offset(1.0, 1.0), //(x,y)
+                    blurRadius: 1.0,
+                  ),
+                ]),
+            child: Row(
+              children: [
+                Expanded(
+                    child: GestureDetector(
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: isOpen ? colorGreen : colorTextWhite,
+                        borderRadius: BorderRadius.circular(46)),
+                    child: Text(
+                      "Open",
+                      style: TextStyle(
+                        color: isOpen ? colorTextWhite : colorGreen,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
-                ),
-                onTap: () {
-                  if (!isOpen) {
-                    setState(() {
-                      isOpen = true;
-                      isClose = false;
-                    });
+                  onTap: () {
+                    if (!isOpen) {
+                      setState(() {
+                        isOpen = true;
+                        isClose = false;
+                      });
 
-                    callApi("1");
-                  }
-                },
-                behavior: HitTestBehavior.opaque,
-              )),
-              Expanded(
-                  child: GestureDetector(
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: isClose ? colorButtonYellow : colorTextWhite,
-                      borderRadius: BorderRadius.circular(46)),
-                  child: Text(
-                    "Close",
-                    style: TextStyle(
-                      color: isClose ? colorTextWhite : colorButtonYellow,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
+                      callApi("1");
+                    }
+                  },
+                  behavior: HitTestBehavior.opaque,
+                )),
+                Expanded(
+                    child: GestureDetector(
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: isClose ? colorButtonYellow : colorTextWhite,
+                        borderRadius: BorderRadius.circular(46)),
+                    child: Text(
+                      "Close",
+                      style: TextStyle(
+                        color: isClose ? colorTextWhite : colorButtonYellow,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
-                ),
-                onTap: () {
-                  if (!isClose) {
-                    setState(() {
-                      isOpen = false;
-                      isClose = true;
-                    });
-                    callApi("0");
-                  }
-                },
-                behavior: HitTestBehavior.opaque,
-              )),
-            ],
-          ),
-        )
-      ],
+                  onTap: () {
+                    if (!isClose) {
+                      setState(() {
+                        isOpen = false;
+                        isClose = true;
+                      });
+                      callApi("0");
+                    }
+                  },
+                  behavior: HitTestBehavior.opaque,
+                )),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

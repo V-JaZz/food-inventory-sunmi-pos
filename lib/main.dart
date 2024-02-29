@@ -13,10 +13,10 @@ import 'constant/colors.dart';
 import 'constant/image.dart';
 import 'constant/storage_util.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print('Handling a background message ${message.messageId}');
-  print(message.data);
-}
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   print('Handling a background message ${message.messageId}');
+//   print(message.data);
+// }
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'high_importance_channel', // id
@@ -75,7 +75,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  String tokent = "";
+  String tokenT = "";
   String token = "";
   getToken() async {
     token = (await FirebaseMessaging.instance.getToken())!;
@@ -89,15 +89,15 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((value) {
-      tokent = value;
+      tokenT = value;
     });
     startTime();
     getToken();
-    firebase();
-    checkForInitialMessage();
+/*    firebase();
+    checkForInitialMessage();*/
   }
 
-  firebase() async {
+ /* firebase() async {
     await Firebase.initializeApp();
     print("FIREBASE=========================================");
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -150,10 +150,10 @@ class _MainPageState extends State<MainPage> {
       }
       print('Message clicked!');
     });
-  }
+  }*/
 
   // For handling notification when the app is in terminated state
-  checkForInitialMessage() async {
+ /* checkForInitialMessage() async {
     await Firebase.initializeApp();
     RemoteMessage? initialMessage =
         await FirebaseMessaging.instance.getInitialMessage();
@@ -175,7 +175,7 @@ class _MainPageState extends State<MainPage> {
           ));
       setState(() {});
     }
-  }
+  }*/
 
   startTime() async {
     var duration = const Duration(seconds: 1);
@@ -183,12 +183,12 @@ class _MainPageState extends State<MainPage> {
   }
 
   route() {
-    print(tokent + ":::TOKEN IS HERE");
+    print(tokenT + ":::TOKEN IS HERE");
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) =>
-                tokent.isEmpty ? const LoginPage() : const DashBoard()));
+                tokenT.isEmpty ? const LoginPage() : const DashBoard()));
   }
 
   @override

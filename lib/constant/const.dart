@@ -12,7 +12,7 @@ class Constants {
   static const String lName = 'l_name';
   static const String gender = 'gender';
   static const String mobile = 'mobile_no';
-  static const String urlImagen = 'profile_image';
+  static const String urlImageN = 'profile_image';
   static const String bloodGroup = 'blood_group';
   static const String token = 'token';
   static const String createdAt = 'createdAt';

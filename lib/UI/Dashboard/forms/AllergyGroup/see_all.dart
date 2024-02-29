@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:food_inventory/UI/dashboard/forms/AllergyGroup/allergyList.dart';
+import 'package:food_inventory/UI/dashboard/forms/AllergyGroup/allergy_list.dart';
 import 'package:food_inventory/UI/menu/dialog_delete_type.dart';
 import 'package:food_inventory/UI/menu/dialog_type_list_view.dart';
 import 'package:food_inventory/constant/app_util.dart';

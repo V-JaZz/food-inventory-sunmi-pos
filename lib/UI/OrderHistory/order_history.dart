@@ -1,12 +1,6 @@
-import 'dart:async';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_inventory/UI/OrderHistory/order_history_date_model.dart';
-import 'package:food_inventory/UI/dashboard/dashboard.dart';
 import 'package:food_inventory/UI/order/dialog_order_details.dart';
 import 'package:food_inventory/UI/order/model/order_list_response_model.dart';
 import 'package:food_inventory/constant/app_util.dart';
@@ -17,7 +11,7 @@ import 'package:food_inventory/constant/validation_util.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 typedef OrderResponseFunc = void Function(String, SummaryData);
 
@@ -39,8 +33,8 @@ class _OrderHistoryState extends State<OrderHistory> {
   List<OrderHistoryData> _historyList = [];
   bool isDataLoad = false;
 
-  IO.Socket socket =
-  IO.io("https://test-foodinventoryde.herokuapp.com", <String, dynamic>{
+  io.Socket socket =
+  io.io("https://test-foodinventoryde.herokuapp.com", <String, dynamic>{
   // IO.io("https://orderonline.foodinventory.co.uk", <String, dynamic>{
     "transports": ["websocket"],
     'autoConnect': false
@@ -59,14 +53,11 @@ class _OrderHistoryState extends State<OrderHistory> {
     super.initState();
     _orderList = [];
     _historyList = [];
-    print('inside initState');
     getOrderList(true);
     StorageUtil.getData(StorageUtil.keyEmail, "")!.then((email) async {
       this.email = email;
-      print("Inside initLocalStorage " + email);
       socket.connect();
       socket.onConnect((_) {
-        print("Connected");
         socket.emit("joinOwner", email);
       });
       listenToSocket();
@@ -80,7 +71,6 @@ class _OrderHistoryState extends State<OrderHistory> {
   @override
   void dispose() {
     super.dispose();
-    print("inside dispose method...disconnecting");
     // socket.emit("leaveOwner", this.email);
     // socket.clearListeners();
     // socket.disconnect();
@@ -89,7 +79,6 @@ class _OrderHistoryState extends State<OrderHistory> {
 
   listenToSocket() {
     socket.on("onOrderAdded", (response) {
-      print("Socket response");
       isSocketOrderAdded = true;
       model = OrderListResponseModel.fromJson(response);
       getOrderList(false);
@@ -100,8 +89,6 @@ class _OrderHistoryState extends State<OrderHistory> {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
-        print("restauranttoday");
-        print(restaurantId);
         if (isLoad) {
           if (mounted) {
             setState(() {
@@ -128,17 +115,12 @@ class _OrderHistoryState extends State<OrderHistory> {
           }
           isSocketOrderAdded = false;
 
-          print("todayresponfirst");
-          print("todayresponfirst");
-          print(model.data.toString());
           if (isLoad) {
             setState(() {
               isDataLoad = false;
             });
           }
           if (model.success!) {
-            print("todayresponse");
-            print(model.data.toString());
             if (model.data!.isEmpty) {
               setState(() {
                 _orderList = [];
@@ -176,7 +158,6 @@ class _OrderHistoryState extends State<OrderHistory> {
               if (model.summaryData != null) {
                 var pendingOrder = int.parse(defaultValue(
                     model.summaryData?.pendingOrder.toString(), "0"));
-                print("OrderPendngNAme $pendingOrder");
                 if (pendingOrder > 0) {
                   // FlutterRingtonePlayer.play(
                   //   android: AndroidSounds.notification,
@@ -190,7 +171,6 @@ class _OrderHistoryState extends State<OrderHistory> {
             }
           }
         } catch (e) {
-          print(e.toString());
           if (mounted) {
             setState(() {
               isDataLoad = false;
@@ -205,9 +185,6 @@ class _OrderHistoryState extends State<OrderHistory> {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
-        print("restaurantId");
-        print(restaurantId);
-        print("restaurantId");
         if (_historyList.isEmpty) {
           setState(() {
             isDataLoad = true;
@@ -235,7 +212,6 @@ class _OrderHistoryState extends State<OrderHistory> {
             }
           }
         } catch (e) {
-          print(e.toString());
           setState(() {
             isDataLoad = false;
           });
@@ -655,7 +631,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                     // isToday = true;
                     // isHistory = false;
                     showReport = true;
-                    var now = new DateTime.now();
+                    var now = DateTime.now();
                     // if (selectedDay.difference(now).inDays == 0) {
                     if (getSendableDate(selectedDay) == getSendableDate(now)) {
                       selectedDate = "";
@@ -674,7 +650,7 @@ class _OrderHistoryState extends State<OrderHistory> {
   }
 
   String truncateString(String data, int length) {
-    return (data.length >= length) ? '${data.substring(0, length)}' : data;
+    return (data.length >= length) ? data.substring(0, length) : data;
   }
 
   DateTime _focusedDay = DateTime.now();
@@ -682,29 +658,30 @@ class _OrderHistoryState extends State<OrderHistory> {
 
   // DateTime selectedHistoryDate = DateTime.now();
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: _focusedDay,
-        firstDate: DateTime(1990),
-        lastDate: DateTime.now());
-    if (picked != null && picked != _focusedDay)
-      setState(() {
-        // selectedHistoryDate = picked;
-        _focusedDay = picked;
-        if (_focusedDay.day < 10) {
-          day = "0${_focusedDay.day.toString()}";
-        } else {
-          day = _focusedDay.day.toString();
-        }
-        if (_focusedDay.month < 10) {
-          month = "0${_focusedDay.month.toString()}";
-        } else {
-          month = _focusedDay.month.toString();
-        }
-        year = _focusedDay.year.toString();
-      });
-  }
+  // Future<void> _selectDate(BuildContext context) async {
+  //   final DateTime? picked = await showDatePicker(
+  //       context: context,
+  //       initialDate: _focusedDay,
+  //       firstDate: DateTime(1990),
+  //       lastDate: DateTime.now());
+  //   if (picked != null && picked != _focusedDay) {
+  //     setState(() {
+  //       // selectedHistoryDate = picked;
+  //       _focusedDay = picked;
+  //       if (_focusedDay.day < 10) {
+  //         day = "0${_focusedDay.day.toString()}";
+  //       } else {
+  //         day = _focusedDay.day.toString();
+  //       }
+  //       if (_focusedDay.month < 10) {
+  //         month = "0${_focusedDay.month.toString()}";
+  //       } else {
+  //         month = _focusedDay.month.toString();
+  //       }
+  //       year = _focusedDay.year.toString();
+  //     });
+  //   }
+  // }
 
   void showOrderDialog(OrderDataModel orderDataModel, String name) {
     showDialog(
@@ -727,7 +704,7 @@ class _OrderHistoryState extends State<OrderHistory> {
 
   Widget orderListData() {
     return isDataLoad
-        ? Center(
+        ? const Center(
             child: CircularProgressIndicator(
               strokeWidth: 5.0,
               color: colorGreen,
@@ -783,17 +760,10 @@ class _OrderHistoryState extends State<OrderHistory> {
                   shrinkWrap: true,
                   itemCount: _orderList.length,
                   padding:
-                      EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+                      const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
                   itemBuilder: (context, index) {
-                    String status = "";
                     if (_orderList[index].orderStatus == STATUS_PENDING) {
-                      status = "New Order";
                     } else {
-                      status = _orderList[index].orderStatus![0].toUpperCase() +
-                          _orderList[index]
-                              .orderStatus!
-                              .substring(1)
-                              .toLowerCase();
                     }
 
                     OrderDataModel orderObj = _orderList[index];

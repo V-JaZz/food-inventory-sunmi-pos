@@ -66,10 +66,10 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
     selectedType = widget.type == "Menu" ? "online" : "table";
     if (widget.isEdit) {
       clearImageCache(widget.editItem!.sId!);
-      if (widget.editItem!.options!.isEmpty) {
+      if (widget.editItem!.options!.isNotEmpty) {
         isShowAddMoreOption = true;
         print("OPTIONIS WORKING NIT");
-        for (int i = 0; widget.editItem!.options!.length > i; i++) {
+        for (int i = 0; i < widget.editItem!.options!.length; i++) {
           print("JSJSJJSJ" + widget.editItem!.options![i].price.toString());
           print("OPTIONIS WORKING NIT");
 
@@ -88,24 +88,23 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                       widget.editItem!.options![i].price, "0.0"))));
         }
       } else {
-        for (Options data in widget.editItem!.options!) {
-          print("OPTIONIS WORKING");
-          optionData.add(SelectOptionData(
-              SelectionMenuDataList(
-                  data.sId!, data.name!, data.price!, 0.0, 0.0, "", "", true),
-              TextEditingController(text: data.price)));
-        }
+        // for (Options data in widget.editItem!.options!) {
+        print("OPTIONIS WORKING");
+        optionData.add(SelectOptionData(
+            SelectionMenuDataList("", "Default Option", widget.editItem!.price!,
+                0.0, 0.0, "", "", true),
+            TextEditingController(text: widget.editItem!.price!)));
+        // }
       }
-      if (widget.editItem!.variants!.isEmpty) {
+      if (widget.editItem!.variants!.isNotEmpty) {
         isShowAddMore = true;
         print("VARIANTY WORKING NIT");
-
-        for (int i = 0; widget.editItem!.variants!.length > i; i++) {
+        for (int i = 0; i < widget.editItem!.variants!.length; i++) {
           print("JSJSJJSJ" + widget.editItem!.variants![i].price.toString());
           variantData.add(SelectVariantData(
               SelectionMenuDataList(
                   "",
-                  "Default Option",
+                  "Default Variant",
                   defaultValue(widget.editItem!.variants![i].price, "0.0"),
                   0.0,
                   0.0,
@@ -118,13 +117,12 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
         }
       } else {
         print("VARIANTY WORKING");
-
-        for (Variants data in widget.editItem!.variants!) {
-          variantData.add(SelectVariantData(
-              SelectionMenuDataList(data.sId!, data.name!, data.price!, 0.0,
-                  0.0, "", data.variantGroup.toString(), true),
-              TextEditingController(text: data.price)));
-        }
+        // for (Variants data in widget.editItem!.variants!) {
+        variantData.add(SelectVariantData(
+            SelectionMenuDataList(
+                "", "Default Variant", "0.0", 0.0, 0.0, "", "", true),
+            TextEditingController(text: "0.0")));
+        // }
       }
       _itemNameController = TextEditingController(text: widget.editItem!.name);
       _descriptionController =
@@ -661,7 +659,8 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                     alignment: Alignment.center,
                                     width: 60,
                                     padding: const EdgeInsets.only(left: 10),
-                                    color: const Color.fromRGBO(213, 210, 234, 1),
+                                    color:
+                                        const Color.fromRGBO(213, 210, 234, 1),
                                     height: MediaQuery.of(context).size.width *
                                         0.14,
                                     child: TextField(
@@ -787,7 +786,8 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
                                     alignment: Alignment.center,
                                     width: 60,
                                     padding: const EdgeInsets.only(left: 10),
-                                    color: const Color.fromRGBO(213, 210, 234, 1),
+                                    color:
+                                        const Color.fromRGBO(213, 210, 234, 1),
                                     height: MediaQuery.of(context).size.width *
                                         0.14,
                                     child: TextField(
@@ -973,7 +973,6 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
     );
   }
 
-
   void _pickerFile() async {
     // FilePickerResult? result = await FilePicker.platform.pickFiles();
     // if (result == null) return;
@@ -984,5 +983,4 @@ class _DialogMenuItemsState extends State<DialogMenuItems> {
     //   cropperFile = File(file.path!);
     // });
   }
-
 }

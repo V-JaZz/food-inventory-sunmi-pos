@@ -56,13 +56,13 @@ class Items {
   String? sId;
   List<Options>? options;
   List<Variants>? variants;
-  int? discount;
+  num? discount;
   String? description;
   bool? excludeDiscount;
   String? name;
   Category? category;
   String? price;
-  int? position;
+  num? position;
   AllergyGroups? allergyGroups;
   List<Allergies>? allergies;
   String? imageName;
@@ -215,8 +215,8 @@ class Toppings {
   bool? isDeleted;
   String? restaurantId;
   String? name;
-  int? price;
-  int? iV;
+  num? price;
+  num? iV;
   String? createdAt;
   String? updatedAt;
 
@@ -264,7 +264,7 @@ class Variants {
   String? createdOn;
   String? restaurantId;
   String? name;
-  int? iV;
+  num? iV;
   String? createdAt;
   String? updatedAt;
   String? price;
@@ -325,8 +325,8 @@ class SubVariants {
   bool? isDeleted;
   String? restaurantId;
   String? name;
-  int? price;
-  int? iV;
+  num? price;
+  num? iV;
   String? createdAt;
   String? updatedAt;
 
@@ -374,9 +374,9 @@ class SubVariants {
 class Category {
   String? sId;
   String? name;
-  int? position;
+  num? position;
   String? description;
-  int? discount;
+  num? discount;
   bool? excludeDiscount;
 
   Category(
@@ -434,7 +434,7 @@ class Allergies {
   String? restaurantId;
   String? name;
   String? description;
-  int? iV;
+  num? iV;
   String? createdAt;
   String? updatedAt;
 

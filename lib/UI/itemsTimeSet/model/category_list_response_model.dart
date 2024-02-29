@@ -9,14 +9,14 @@ class CategoryListResponseModel {
     if (json['data'] != null) {
       data = <CategoryListData>[];
       json['data'].forEach((v) {
-        data!.add(new CategoryListData.fromJson(v));
+        data!.add(CategoryListData.fromJson(v));
       }); 
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -47,14 +47,14 @@ class CategoryListData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['createdOn'] = this.createdOn;
-    data['isDeleted'] = this.isDeleted;
-    data['_id'] = this.sId;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['createdOn'] = createdOn;
+    data['isDeleted'] = isDeleted;
+    data['_id'] = sId;
+    data['name'] = name;
     if(data['description'] != null)
       {
-        data['description'] = this.description;
+        data['description'] = description;
       }
     return data;
   }

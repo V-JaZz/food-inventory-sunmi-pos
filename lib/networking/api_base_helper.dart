@@ -9,20 +9,27 @@ import 'app_exception.dart';
 import 'package:http_parser/http_parser.dart';
 
 class ApiBaseHelper {
-  static const String baseURL =
-      "https://demo-foodinventoryde.herokuapp.com/v1/";
+
+  //uk
+  //https://foodinventoryukvariant.herokuapp.com/v1/
+
+  //german
+  //https://demo-foodinventoryde.herokuapp.com/v1/
+  // static const String baseURL =
+  //     "https://demo-foodinventoryde.herokuapp.com/v1/";
+
+  static const String baseURL = "https://test-foodinventoryde.herokuapp.com/v1/";
+  // static const String baseURL = "https://orderonline.foodinventory.co.uk/v1/";
   static const String login = "ownerService/login";
   static const String logout = "ownerService/logout";
   static const String editProfile = "ownerService/editProfile";
   static const String resetPassword = "ownerService/resetPassword";
   static const String instanceAction = "restaurantService/instanceAction";
   static const String restaurantSetting = "restaurantService/restaurantSetting";
-  static const String addRestaurantImage =
-      "restaurantService/addRestaurantImage";
+  static const String addRestaurantImage = "restaurantService/addRestaurantImage";
   static const String profile = "restaurantService/profile";
   static const String updateDiscount = "restaurantService/updateDiscount";
-  static const String downloadRestaurantImage =
-      "restaurantService/downloadRestaurantImage";
+  static const String downloadRestaurantImage = "restaurantService/downloadRestaurantImage";
   static const String addToppings = "menuService/addToppings";
   static const String getToppings = "menuService/getToppings";
   static const String deleteTopping = "menuService/deleteTopping";
@@ -94,15 +101,20 @@ class ApiBaseHelper {
   static const String getOrderPerUser = "orderService/getOrder";
   static const String getTableOrders = "orderService/getTableOrders";
   static const String getTableOrdersPerUser = "orderService/getTableOrder";
+  static const String getOrderReport = "orderService/getReportData?type=";
+
 
   static const String ip = 'ip';
   static const String port = 'port';
   static const String url = 'url';
+  static String websiteURL = 'url';
   static bool orderbool = true;
   static String status = 'status';
   static bool autoAccept = true;
   static bool autoPrint = true;
+  static bool print50mm = true;
   static bool? autoTablePrint = true;
+  static int printCount = 1;
 
   // static bool? allowOnlineDelivery = false;
   // static bool? allowOnlinePickup = false;

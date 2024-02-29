@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -11,8 +9,9 @@ import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/storage_util.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 import 'edit_allergy.dart';
-
+// ignore_for_file: avoid_print
 // ignore: must_be_immutable
+
 class AllergyList extends StatefulWidget {
   // ignore: prefer_typing_uninitialized_variables
   var type;

@@ -1,9 +1,9 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:food_inventory/UI/restaurentTimeSet/repository/delete_time_repository.dart';
+import 'package:food_inventory/UI/restaurantTimeSet/repository/delete_time_repository.dart';
 import 'package:food_inventory/constant/colors.dart';
-import 'model/restaurantTimeSlotResponseModel.dart';
+import 'model/restaurant_time_slot_response_model.dart';
 
 class DialogDeleteTimeZone extends StatefulWidget {
   // var type, name;
@@ -25,7 +25,7 @@ class _DialogDeleteTypeState extends State<DialogDeleteTimeZone> {
   @override
   void initState() {
     super.initState();
-    _deleteDataRepository = new DeleteTimeZoneRepository(context, widget);
+    _deleteDataRepository = DeleteTimeZoneRepository(context, widget);
 
     /* _deleteDataRepository =
         new DeleteDataRepository(context,delId);*/
@@ -52,25 +52,25 @@ class _DialogDeleteTypeState extends State<DialogDeleteTimeZone> {
               children: [
                 Text(
                   widget.itemList.name!,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: colorButtonYellow,
                       fontWeight: FontWeight.w700,
                       fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 15,
                 ),
                 Text(
                   "Are you sure to Delete ${widget.itemList.name!}?",
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: colorTextBlack,
                       fontWeight: FontWeight.w700,
                       fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 40),
+                  margin: const EdgeInsets.only(top: 40),
                   child: Row(
                     children: [
                       Expanded(
@@ -82,7 +82,7 @@ class _DialogDeleteTypeState extends State<DialogDeleteTimeZone> {
                             decoration: BoxDecoration(
                                 color: colorLightRed,
                                 borderRadius: BorderRadius.circular(30)),
-                            child: Text(
+                            child: const Text(
                               "Delete",
                               style: TextStyle(
                                   color: colorTextWhite,
@@ -104,7 +104,7 @@ class _DialogDeleteTypeState extends State<DialogDeleteTimeZone> {
                             decoration: BoxDecoration(
                                 color: colorGrey,
                                 borderRadius: BorderRadius.circular(30)),
-                            child: Text(
+                            child: const Text(
                               "Cancel",
                               style: TextStyle(
                                   color: colorTextWhite,

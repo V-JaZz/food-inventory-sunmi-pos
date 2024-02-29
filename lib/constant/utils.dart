@@ -3,13 +3,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../UI/dashboard/dialog_menu_data_selection.dart';
 
 class Utils {
-  static GifController? controller;
+
 
   static void showToast(String text, Color bgColor) {
     Fluttertoast.cancel();

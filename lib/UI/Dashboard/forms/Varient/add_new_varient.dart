@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_inventory/UI/dashboard/dialog_menu_data_selection.dart';
 import 'package:food_inventory/UI/dashboard/forms/Allergy/repository/allergy_repository.dart';
-import 'package:food_inventory/UI/dashboard/forms/Allergy/seeAll.dart';
-import 'package:food_inventory/UI/dashboard/forms/Varient/seeAll.dart';
+import 'package:food_inventory/UI/dashboard/forms/Allergy/see_all.dart';
+import 'package:food_inventory/UI/dashboard/forms/Varient/see_all.dart';
 import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/validation_util.dart';

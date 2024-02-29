@@ -18,12 +18,12 @@ class LoginRepository {
 
   final GlobalKey<State> _keyLoader =  GlobalKey<State>();
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  late String restaurantid;
-  late String emailid;
+  late String restaurantID;
+  late String emailID;
 
   LoginRepository(this._context);
 
-  login(String email, String pass, String devicetoken) async {
+  login(String email, String pass, String deviceToken) async {
     if (checkString(pass)) {
       showMessage("Enter Password", _context!);
     } else {
@@ -43,12 +43,12 @@ class LoginRepository {
             jsonEncode(<String, String>{
               'email': email,
               'password': pass,
-              'deviceToken': devicetoken,
+              'deviceToken': deviceToken,
               'appVersion': version,
               'deviceType': deviceType
             }),
             "");
-        print("posting pramas");
+        print("posting params");
         print(jsonEncode.toString());
         LoginModel model =
             LoginModel.fromJson(_helper.returnResponse(_context!, response));
@@ -61,17 +61,17 @@ class LoginRepository {
           StorageUtil.setData(StorageUtil.keyEmail, model.data!.email);
           StorageUtil.setData(
               StorageUtil.keyRestaurantId, model.data!.restaurantId);
-          emailid = model.data!.email!;
+          emailID = model.data!.email!;
 
           final SharedPreferences prefs = await _prefs;
-          restaurantid = model.data!.restaurantId!;
+          restaurantID = model.data!.restaurantId!;
           print("login");
-          print(restaurantid);
-          prefs.setString('restaurant', restaurantid);
+          print(restaurantID);
+          prefs.setString('restaurant', restaurantID);
           Navigator.pushAndRemoveUntil(
               _context!,
               MaterialPageRoute(
-                builder: (context) => DashBoard(),
+                builder: (context) => const DashBoard(),
               ),
               (e) => false);
         } else {

@@ -4,17 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:food_inventory/UI/dashboard/forms/Category/repository/category_repository.dart';
 import 'package:food_inventory/UI/dashboard/forms/Option/repository/option_repository.dart';
 import 'package:food_inventory/UI/dashboard/forms/Toppings/repository/topping_repository.dart';
-import 'package:food_inventory/UI/itemsTimeSet/dialog_scheduleProduct.dart';
+import 'package:food_inventory/UI/itemsTimeSet/dialog_schedule_product.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/validation_util.dart';
-// import 'package:food_inventory/ui/menu/dialog_type_list_view.dart';
 
 class DialogAddNewType extends StatefulWidget {
-  var type;
+  dynamic type;
   VoidCallback onDialogClose;
 
-  DialogAddNewType({this.type, required this.onDialogClose});
+  DialogAddNewType({Key? key, this.type, required this.onDialogClose}) : super(key: key);
 
   @override
   _DialogAddNewTypeState createState() => _DialogAddNewTypeState();
@@ -34,9 +33,9 @@ class _DialogAddNewTypeState extends State<DialogAddNewType> {
     super.initState();
     _nameController = TextEditingController();
 
-    _categoryRepository = new CategoryRepository(context);
-    _optionRepository = new OptionRepository(context);
-    _addTypeRepository = new ToppingsRepository(context);
+    _categoryRepository = CategoryRepository(context);
+    _optionRepository = OptionRepository(context);
+    _addTypeRepository = ToppingsRepository(context);
   }
 
   callAddCategoryApi() async {
@@ -86,7 +85,7 @@ class _DialogAddNewTypeState extends State<DialogAddNewType> {
                       widget.type == TYPE_CATEGORY
                           ? "Add New ${widget.type}"
                           : "Add New Time",
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: colorTextBlack,
                           fontWeight: FontWeight.w700,
                           fontSize: 18),
@@ -94,7 +93,7 @@ class _DialogAddNewTypeState extends State<DialogAddNewType> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -107,12 +106,12 @@ class _DialogAddNewTypeState extends State<DialogAddNewType> {
                         maxLines: 1,
                         controller: _nameController,
                         textAlignVertical: TextAlignVertical.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
                             color: colorTextBlack),
                         cursorColor: colorTextBlack,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             contentPadding: EdgeInsets.all(0),
                             isDense: true,
                             hintText: "Enter New Time Offer Name",
@@ -120,7 +119,7 @@ class _DialogAddNewTypeState extends State<DialogAddNewType> {
                                 TextStyle(color: colorTextHint, fontSize: 16),
                             border: InputBorder.none),
                       )),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Container(
                       padding: const EdgeInsets.only(left: 15.0, right: 15.0),
                       decoration: BoxDecoration(
@@ -128,13 +127,13 @@ class _DialogAddNewTypeState extends State<DialogAddNewType> {
                           borderRadius: BorderRadius.circular(05)),
                       child: DropdownButton(
                         hint: _dropDownValue.isEmpty
-                            ? Text('--select--')
+                            ? const Text('--select--')
                             : Text(
                                 _dropDownValue,
                               ),
                         isExpanded: true,
-                        underline: SizedBox(),
-                        style: TextStyle(
+                        underline: const SizedBox(),
+                        style: const TextStyle(
                           color: Colors.black87,
                           fontSize: 18,
                           height: 1.5,
@@ -159,7 +158,7 @@ class _DialogAddNewTypeState extends State<DialogAddNewType> {
                       )),
                 ]),
                 Container(
-                  margin: EdgeInsets.only(top: 25),
+                  margin: const EdgeInsets.only(top: 25),
                   child: Row(
                     children: [
                       Expanded(
@@ -173,7 +172,7 @@ class _DialogAddNewTypeState extends State<DialogAddNewType> {
                                 borderRadius: BorderRadius.circular(30)),
                             child: Text(
                               widget.type == TYPE_TOPPINGS ? "Next" : "Add",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: colorTextWhite,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 12),
@@ -202,7 +201,7 @@ class _DialogAddNewTypeState extends State<DialogAddNewType> {
                             decoration: BoxDecoration(
                                 color: colorGrey,
                                 borderRadius: BorderRadius.circular(30)),
-                            child: Text(
+                            child: const Text(
                               "Cancel",
                               style: TextStyle(
                                   color: colorTextWhite,

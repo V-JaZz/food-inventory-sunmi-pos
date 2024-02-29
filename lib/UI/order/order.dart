@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print, unused_local_variable, unnecessary_string_interpolations, prefer_typing_uninitialized_variables
 
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,28 +12,43 @@ import 'package:food_inventory/networking/api_base_helper.dart';
 import '../../constant/app_util.dart';
 import '../../constant/image.dart';
 import '../../model/common_model.dart';
+import '../OrderHistory/order_history.dart';
 import 'model/order_list_response_model.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+late _OrderState orderState;
+
+// ignore: must_be_immutable
 class Order extends StatefulWidget {
-  const Order({Key? key}) : super(key: key);
+  OrderResponseFunc onOrderResponse;
+  String name;
+
+  Order({Key? key, required this.onOrderResponse, required this.name}) : super(key: key);
 
   @override
-  State<Order> createState() => _OrderState();
+  // ignore: no_logic_in_create_state
+  State<Order> createState() {
+    orderState = _OrderState();
+    return orderState;
+  }
 }
 
+List<OrderDataModel> orderList = [];
+
 class _OrderState extends State<Order> {
-  List<OrderDataModel> _orderList = [];
   bool isDataLoad = false;
-  IO.Socket socket =
-      IO.io("https://demo-foodinventoryde.herokuapp.com", <String, dynamic>{
-    "transports": ["websocket"],
-    'autoConnect': false
-  });
+
+  //https://foodinventoryukvariant.herokuapp.com/
+  //https://demo-foodinventoryde.herokuapp.com
+  // static const platformChannel =
+  //     MethodChannel('com.suresh.foodinventory/orderprint');
+
   bool isSocketOrderAdded = false;
   String email = "";
   late OrderDataModel orderDataModel;
   OrderListResponseModel model = OrderListResponseModel.fromJson({});
+
+  AutoPrintOrderModel autoPrintOrderModel = AutoPrintOrderModel.fromJson({});
+
   String truncateString(String data, int length) {
     return (data.length >= length) ? '${data.substring(0, length)}' : data;
   }
@@ -42,13 +58,15 @@ class _OrderState extends State<Order> {
   bool isDiscovering = false;
   int found = -1;
   TextEditingController portController = TextEditingController(text: '9100');
+
   @override
   void initState() {
     super.initState();
-    _orderList = [];
+    orderList = [];
     print('inside initState');
     getOrderList(true);
-    StorageUtil.getData(StorageUtil.keyEmail, "")!.then((email) async {
+
+    /*  StorageUtil.getData(StorageUtil.keyEmail, "")!.then((email) async {
       this.email = email;
       print("Inside initLocalStorage " + email);
       socket.connect();
@@ -57,6 +75,27 @@ class _OrderState extends State<Order> {
         socket.emit("joinOwner", email);
       });
       listenToSocket();
+    });*/
+
+    StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
+      StorageUtil.getData(StorageUtil.keyEmail, "")!.then((email) async {
+        print("Inside initLocalStorage " + email);
+        this.email = email;
+
+
+        // socket.emit("leaveOwner", this.email);
+        // socket.clearListeners();
+        // socket.disconnect();
+
+        // socket.open();
+        // socket.connect();
+        // socket.onConnect((_) {
+        //   print("Connected O");
+        //   socket.emit("joinOwner", email);
+        // });
+        //   listenToSocket(token);
+        // getOrderList(false);
+      });
     });
   }
 
@@ -67,37 +106,49 @@ class _OrderState extends State<Order> {
     // socket.emit("leaveOwner", this.email);
     // socket.clearListeners();
     // socket.disconnect();
+    // socket.destroy();
+    // socket.dispose();
+    // socket.close();
     isSocketOrderAdded = false;
   }
 
-  var orderId;
+  String orderId = '';
 
-  listenToSocket() {
-    socket.on("onAutoPrintOrder", (response) async {
-      if (ApiBaseHelper.autoAccept == true) {
-        print('---Auto Print Order Response---');
-        print(response);
-        orderId = response;
-        await changeOrderStatus(STATUS_ACCEPTED, orderId);
-        print("Change Order Status init");
-        getOrderListtwo(false);
-      }
-    });
-    socket.on("onOrderAdded", (response) {
-      print("Socket Response Data Order  " + response.toString());
-      if (ApiBaseHelper.autoAccept == false) {
-        print("Socket response");
-        isSocketOrderAdded = true;
-        model = OrderListResponseModel.fromJson(response);
-        getOrderList(false);
-      }
-    });
-  }
+  // listenToSocket(token) {
+  //   print("Socket Called O");
+  //
+  //   Future.delayed(const Duration(seconds: 1),() async {
+  //   socket.on("onAutoPrintOrder", (response) async {
+  //
+  //       if (ApiBaseHelper.autoAccept == true) {
+  //         print('---Auto Print Order Response O---');
+  //         print(response.toString());
+  //         orderId = response;
+  //         await changeOrderStatus(STATUS_ACCEPTED, orderId);
+  //         getOrderListTwo(false);
+  //         print("orderID" + orderId);
+  //
+  //       }
+  //
+  //   });
+  //
+  //   },);
+  //
+  //   socket.on("onOrderAdded", (response) async {
+  //     print("Socket Response Data Order O " + response.toString());
+  //     if (ApiBaseHelper.autoAccept == false) {
+  //         print("Socket response O");
+  //         isSocketOrderAdded = true;
+  //         model = OrderListResponseModel.fromJson(response);
+  //         getOrderList(false);
+  //     }
+  //   });
+  // }
 
   final ApiBaseHelper _helper = ApiBaseHelper();
 
   changeOrderStatus(String status, orderId) {
-    print("Change Order Status");
+    print("Change Order Status qq");
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((value) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
@@ -109,7 +160,7 @@ class _OrderState extends State<Order> {
               value,
               restaurantId);
           CommonModel model =
-              CommonModel.fromJson(_helper.returnResponse(context, response));
+          CommonModel.fromJson(_helper.returnResponse(context, response));
           // Navigator.of(_keyLoader.currentContext!, rootNavigator: true).pop();
           if (model.success!) {
             ApiBaseHelper.pending = ApiBaseHelper.pending - 1;
@@ -130,7 +181,7 @@ class _OrderState extends State<Order> {
     });
   }
 
-  getOrderListtwo(bool isLoad) async {
+  getOrderListTwo(bool isLoad) async {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
@@ -178,31 +229,31 @@ class _OrderState extends State<Order> {
             print(model.data.toString());
             if (model.data!.isEmpty) {
               setState(() {
-                _orderList = [];
+                orderList = [];
               });
             } else {
               setState(() {
-                _orderList = model.data!;
-                for (int i = 0; _orderList.length > i; i++) {
+                orderList = model.data!;
+                for (int i = 0; orderList.length > i; i++) {
                   setState(() {
-                    orderDataModel = _orderList[i];
+                    orderDataModel = orderList[i];
                     print("ORDER MODEL: " + orderDataModel.toString());
                   });
                 }
               });
             }
-            // widget.onOrderResponse(
-            //     selectedDate,
-            //     model.summaryData == null
-            //         ? SummaryData(
-            //             sId: "0",
-            //             acceptedOrder: "0",
-            //             declinedOrder: "0",
-            //             orderReceived: "0",
-            //             cashOrderAmount: "0",
-            //             onlineOrderAmount: "0",
-            //             totalOrderAmount: "0")
-            //         : model.summaryData!);
+            widget.onOrderResponse(
+                selectedDate,
+                model.summaryData == null
+                    ? SummaryData(
+                        sId: "0",
+                        acceptedOrder: "0",
+                        declinedOrder: "0",
+                        orderReceived: "0",
+                        cashOrderAmount: "0",
+                        onlineOrderAmount: "0",
+                        totalOrderAmount: "0")
+                    : model.summaryData!);
             if (isLoad) {
               if (model.summaryData != null) {
                 var pendingOrder = int.parse(defaultValue(
@@ -269,25 +320,25 @@ class _OrderState extends State<Order> {
             print(model.data.toString());
             if (model.data!.isEmpty) {
               setState(() {
-                _orderList = [];
+                orderList = [];
               });
             } else {
               setState(() {
-                _orderList = model.data!;
+                orderList = model.data!;
               });
             }
-            // widget.onOrderResponse(
-            //     selectedDate,
-            //     model.summaryData == null
-            //         ? SummaryData(
-            //             sId: "0",
-            //             acceptedOrder: "0",
-            //             declinedOrder: "0",
-            //             orderReceived: "0",
-            //             cashOrderAmount: "0",
-            //             onlineOrderAmount: "0",
-            //             totalOrderAmount: "0")
-            //         : model.summaryData!);
+            widget.onOrderResponse(
+                selectedDate,
+                model.summaryData == null
+                    ? SummaryData(
+                        sId: "0",
+                        acceptedOrder: "0",
+                        declinedOrder: "0",
+                        orderReceived: "0",
+                        cashOrderAmount: "0",
+                        onlineOrderAmount: "0",
+                        totalOrderAmount: "0")
+                    : model.summaryData!);
             if (isLoad) {
               if (model.summaryData != null) {
                 var pendingOrder = int.parse(defaultValue(
@@ -317,9 +368,419 @@ class _OrderState extends State<Order> {
     });
   }
 
+  void showOrderDialog(OrderDataModel orderDataModel, String name) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (buildContext) {
+        return OrderDetailsDialog(
+          orderDataModel: orderDataModel,
+          name: name,
+          onOrderUpdate: () {
+            print("OrderAccepted1 CallBack");
+            setState(() {
+              print("OrderAccepted CallBack");
+              orderList = [];
+              getOrderList(true);
+            });
+            // _player.stop();
+          },
+        );
+      },
+    );
+  }
+
+  // getAutoPrintOrder(token, orderId) async {
+  //
+  //   Future.delayed(const Duration(milliseconds: 3000), () {
+  //
+  //     int mCounter = 0;
+  //     _timer = Timer.periodic(
+  //         const Duration(seconds: 3), (timer) async {
+  //
+  //       if (ApiBaseHelper.printCount > mCounter) {
+  //         if (mounted) {
+  //           await _printOrder(orderList[0]);
+  //           mCounter++;
+  //         }
+  //       } else {
+  //         _timer.cancel();
+  //       }
+  //     });
+  //   });
+  //
+  // }
+  //
+  // Future<void> _printOrder(OrderDataModel orderDataModel) async {
+  //   StorageUtil.getData(StorageUtil.keyLoginData, "")!.then((value) async {
+  //     print("Storage Data : $value");
+  //     if (value != null && value != "") {
+  //       LoginData loginData = LoginData.fromJson(jsonDecode(value));
+  //
+  //       if (checkString(loginData.wifiPrinterIP) ||
+  //           checkString(loginData.wifiPrinterPort)) {
+  //         showMessage(
+  //             "Add WIFI Printer IP Address and Port number from Setting.",
+  //             context);
+  //       } else {
+  //         try {
+  //           var name = jsonEncode(orderDataModel);
+  //           print("OrderDetill  $name");
+  //
+  //           if (ApiBaseHelper.print50mm == true) {
+  //             // Test regular text
+  //             /*     SunmiPrinter.hr();
+  //           SunmiPrinter.text(
+  //             'Test Sunmi Printer',
+  //             styles: SunmiStyles(align: SunmiAlign.center),
+  //           );
+  //           SunmiPrinter.hr();*/
+  //
+  //             // Test align
+  //             /*SunmiPrinter.text(
+  //             'left',
+  //             styles: SunmiStyles(bold: true, underline: true),
+  //           );
+  //           SunmiPrinter.text(
+  //             'center',
+  //             styles:
+  //             SunmiStyles(bold: true, underline: true, align: SunmiAlign.center),
+  //           );*/
+  //             SunmiPrinter.text(
+  //               orderDataModel.orderDateTime,
+  //               styles: const SunmiStyles(
+  //                   bold: true, underline: false, align: SunmiAlign.right),
+  //             );
+  //
+  //             SunmiPrinter.text(
+  //               loginData.restaurantName,
+  //               styles: const SunmiStyles(
+  //                   bold: true,
+  //                   underline: false,
+  //                   align: SunmiAlign.center,
+  //                   size: SunmiSize.md),
+  //             );
+  //
+  //             SunmiPrinter.text(
+  //               loginData.location,
+  //               styles: const SunmiStyles(
+  //                   bold: true, underline: false, align: SunmiAlign.center),
+  //             );
+  //
+  //             SunmiPrinter.text(
+  //               "Tel.: " + loginData.phoneNumber.toString(),
+  //               styles: const SunmiStyles(
+  //                   bold: true, underline: false, align: SunmiAlign.center),
+  //             );
+  //
+  //             SunmiPrinter.text(
+  //               "Bestellnummer : " +
+  //                   orderDataModel.orderNumber.toString(),
+  //               styles: const SunmiStyles(
+  //                   bold: true, underline: false, align: SunmiAlign.center),
+  //             );
+  //
+  //             SunmiPrinter.text(
+  //               orderDataModel.deliveryType.toString(),
+  //               styles: const SunmiStyles(
+  //                   bold: true, underline: false, align: SunmiAlign.center),
+  //             );
+  //
+  //             SunmiPrinter.text(
+  //               "Bestatigte Ziet : " + orderDataModel.orderTime!,
+  //               styles: const SunmiStyles(
+  //                   bold: true, underline: false, align: SunmiAlign.center),
+  //             );
+  //
+  //             /*  SunmiPrinter.row(cols: [
+  //               SunmiCol(text: 'Auftragsart', width: 5, align: SunmiAlign.left),
+  //               SunmiCol(text: '', width: 2, align: SunmiAlign.center),
+  //               SunmiCol(
+  //                   text: widget.orderDataModel.deliveryType,
+  //                   width: 5,
+  //                   align: SunmiAlign.right),
+  //             ], bold: true);*/
+  //
+  //             /*SunmiPrinter.row(cols: [
+  //               SunmiCol(text: 'Lieferzeit ', width: 5, align: SunmiAlign.left),
+  //               SunmiCol(text: '', width: 2, align: SunmiAlign.center),
+  //               SunmiCol(
+  //                   text: widget.orderDataModel.orderTime,
+  //                   width: 5,
+  //                   align: SunmiAlign.right),
+  //             ], bold: true);*/
+  //
+  //             /* SunmiPrinter.row(cols: [
+  //               SunmiCol(
+  //                   text: 'Zahlungsmethode', width: 5, align: SunmiAlign.left),
+  //               SunmiCol(text: '', width: 2, align: SunmiAlign.center),
+  //               SunmiCol(
+  //                   text: widget.orderDataModel.paymentMode,
+  //                   width: 5,
+  //                   align: SunmiAlign.right),
+  //             ], bold: true);*/
+  //
+  //             SunmiPrinter.hr();
+  //             SunmiPrinter.text(
+  //               orderDataModel.userDetails!.firstName.toString() +
+  //                   " " +
+  //                   orderDataModel.userDetails!.lastName.toString(),
+  //               styles: const SunmiStyles(
+  //                   bold: true, underline: false, align: SunmiAlign.left),
+  //             );
+  //
+  //             SunmiPrinter.text(
+  //               orderDataModel.userDetails!.contact.toString(),
+  //               styles: const SunmiStyles(
+  //                   bold: true, underline: false, align: SunmiAlign.left),
+  //             );
+  //
+  //             if (orderDataModel.deliveryType != "PICKUP") {
+  //               SunmiPrinter.text(
+  //                 orderDataModel.userDetails!.address.toString(),
+  //                 styles: const SunmiStyles(
+  //                     bold: true, underline: false, align: SunmiAlign.left),
+  //               );
+  //             }
+  //             SunmiPrinter.hr();
+  //
+  //             String quantity = "";
+  //             int sum = 0;
+  //             int sumParse = 0;
+  //             int discount = 0;
+  //             for (var i = 0;
+  //             i < orderDataModel.itemDetails!.length;
+  //             i++) {
+  //               ItemDetails itemData = orderDataModel.itemDetails![i];
+  //               discount = itemData.discount!;
+  //               quantity = itemData.quantity!.toString();
+  //               sumParse = int.parse(quantity);
+  //               sum = sum + sumParse;
+  //               print(" QuantityTotal $quantity ");
+  //               print(" QuantitySum $sum ");
+  //               if (discount != 0) {
+  //                 SunmiPrinter.text(
+  //                   itemData.discount.toString() + "% OFF",
+  //                   styles: const SunmiStyles(
+  //                       bold: true, underline: false, align: SunmiAlign.left),
+  //                 );
+  //               } else if (itemData.catDiscount != 0) {
+  //                 SunmiPrinter.text(
+  //                   itemData.catDiscount.toString() + "% OFF",
+  //                   styles: const SunmiStyles(
+  //                       bold: true, underline: false, align: SunmiAlign.left),
+  //                 );
+  //               } else if (itemData.overallDiscount != 0) {
+  //                 SunmiPrinter.text(
+  //                   itemData.overallDiscount.toString() + "% OFF",
+  //                   styles: const SunmiStyles(
+  //                       bold: true, underline: false, align: SunmiAlign.left),
+  //                 );
+  //               }
+  //
+  //               SunmiPrinter.row(cols: [
+  //                 SunmiCol(
+  //                     text: itemData.quantity.toString() +
+  //                         "x " +
+  //                         itemData.name.toString(),
+  //                     width: 7,
+  //                     align: SunmiAlign.left),
+  //                 SunmiCol(text: '', width: 1, align: SunmiAlign.center),
+  //                 SunmiCol(
+  //                     text: /*itemData.price*/ getAmountWithCurrency(
+  //                         itemData.price.toString()),
+  //                     width: 4,
+  //                     align: SunmiAlign.right),
+  //               ], bold: true);
+  //
+  //               if (itemData.option.toString().isNotEmpty) {
+  //                 SunmiPrinter.text(
+  //                   itemData.option.toString(),
+  //                   styles: const SunmiStyles(
+  //                       bold: true, underline: false, align: SunmiAlign.left),
+  //                 );
+  //               }
+  //
+  //               if (itemData.toppings!.isNotEmpty) {
+  //                 for (int toppping = 0;
+  //                 toppping < itemData.toppings!.length;
+  //                 toppping++) {
+  //                   Toppings top = itemData.toppings![toppping];
+  //                   SunmiPrinter.text(
+  //                     "+ " +
+  //                         top.toppingCount.toString() +
+  //                         " " +
+  //                         top.name.toString() +
+  //                         " " +
+  //                         " (" +
+  //                         top.price.toString() +
+  //                         ")",
+  //                     styles: const SunmiStyles(
+  //                         bold: true, underline: false, align: SunmiAlign.left),
+  //                   );
+  //                 }
+  //               }
+  //               SunmiPrinter.text(
+  //                 itemData.note.toString(),
+  //                 styles: const SunmiStyles(
+  //                     bold: true, underline: false, align: SunmiAlign.left),
+  //               );
+  //               /*  SunmiPrinter.text(
+  //                 "${defaultValue(itemData.quantity.toString(), "1")} X ${getOptionName(itemData.toppings!, itemData) == "" ? getAmountWithCurrency(itemData.price.toString()) : getAmountWithCurrency(getOptionName(itemData.toppings!, itemData).toString())}",
+  //                 styles: SunmiStyles(
+  //                     bold: true, underline: false, align: SunmiAlign.right),
+  //               );
+  //               SunmiPrinter.hr();*/
+  //             }
+  //             SunmiPrinter.hr();
+  //
+  //             if (orderDataModel.deliveryCharge != 0) {
+  //               SunmiPrinter.row(cols: [
+  //                 SunmiCol(
+  //                     text: 'Liefergebuehr : ',
+  //                     width: 8,
+  //                     align: SunmiAlign.left),
+  //                 SunmiCol(text: '', width: 1, align: SunmiAlign.center),
+  //                 SunmiCol(
+  //                     text: orderDataModel.deliveryCharge,
+  //                     width: 3,
+  //                     align: SunmiAlign.right),
+  //               ], bold: true);
+  //             }
+  //
+  //             /*SunmiPrinter.row(cols: [
+  //               SunmiCol(text: 'Rabatt : ', width: 7, align: SunmiAlign.left),
+  //               SunmiCol(text: '', width: 2, align: SunmiAlign.center),
+  //               SunmiCol(
+  //                   text: widget.orderDataModel.discount,
+  //                   width: 4,
+  //                   align: SunmiAlign.right),
+  //             ], bold: true);*/
+  //
+  //             /*SunmiPrinter.row(
+  //             cols: [
+  //               SunmiCol(
+  //                   text: 'Tip : ',
+  //                   width: 5,
+  //                   align: SunmiAlign.left),
+  //               SunmiCol(text: '', width: 3, align: SunmiAlign.center),
+  //               SunmiCol(
+  //                   text: widget.orderDataModel.tip,
+  //                   width: 4,
+  //                   align: SunmiAlign.right),
+  //             ],
+  //           );*/
+  //
+  //             SunmiPrinter.hr();
+  //
+  //             SunmiPrinter.row(cols: [
+  //               SunmiCol(text: 'Rabatt : ', width: 4, align: SunmiAlign.left),
+  //               SunmiCol(text: '', width: 4, align: SunmiAlign.center),
+  //               SunmiCol(
+  //                   text: getAmountWithCurrency(defaultValue(
+  //                       orderDataModel.discount.toString(), "0")),
+  //                   width: 4,
+  //                   align: SunmiAlign.right),
+  //             ], bold: true);
+  //
+  //             SunmiPrinter.hr();
+  //
+  //             SunmiPrinter.row(cols: [
+  //               SunmiCol(text: 'Gesamt : ', width: 4, align: SunmiAlign.left),
+  //               SunmiCol(text: '', width: 4, align: SunmiAlign.center),
+  //               SunmiCol(
+  //                   text: orderDataModel.totalAmount,
+  //                   width: 4,
+  //                   align: SunmiAlign.right),
+  //             ], bold: true);
+  //
+  //             SunmiPrinter.hr();
+  //
+  //             SunmiPrinter.text(
+  //               orderDataModel.note != null
+  //                   ? "Notiz :-" + orderDataModel.note.toString()
+  //                   : "",
+  //               styles: const SunmiStyles(
+  //                   bold: true, underline: false, align: SunmiAlign.center),
+  //             );
+  //
+  //             SunmiPrinter.text(
+  //               "Zahlungsmethode : " +
+  //                   orderDataModel.paymentMode.toString(),
+  //               styles: const SunmiStyles(
+  //                   bold: true, underline: false, align: SunmiAlign.center),
+  //             );
+  //             if (orderDataModel.paymentMode == "Online") {
+  //               SunmiPrinter.text(
+  //                 "Bestellung wurde online bezahlt Bezahlung Online",
+  //                 styles: const SunmiStyles(
+  //                     bold: true, underline: false, align: SunmiAlign.center),
+  //               );
+  //             } else {
+  //               SunmiPrinter.text(
+  //                 "Bestellung wurde nicht online bezahlt",
+  //                 styles: const SunmiStyles(
+  //                     bold: true, underline: false, align: SunmiAlign.center),
+  //               );
+  //             }
+  //             if (orderDataModel.paymentMode == "Online") {
+  //               SunmiPrinter.text(
+  //                 "Bazahlung : " + orderDataModel.paymentMode.toString(),
+  //                 styles: const SunmiStyles(
+  //                     bold: true, underline: false, align: SunmiAlign.center),
+  //               );
+  //             }
+  //
+  //             SunmiPrinter.hr();
+  //
+  //             /*   // Test text size
+  //           SunmiPrinter.text('Extra small text',
+  //               styles: SunmiStyles(size: SunmiSize.xs));
+  //           SunmiPrinter.text('Medium text', styles: SunmiStyles(size: SunmiSize.md));
+  //           SunmiPrinter.text('Large text', styles: SunmiStyles(size: SunmiSize.lg));
+  //           SunmiPrinter.text('Extra large text',
+  //               styles: SunmiStyles(size: SunmiSize.xl));
+  //
+  //           // Test row
+  //           SunmiPrinter.row(
+  //             cols: [
+  //               SunmiCol(text: 'col1', width: 4),
+  //               SunmiCol(text: 'col2', width: 4, align: SunmiAlign.center),
+  //               SunmiCol(text: 'col3', width: 4, align: SunmiAlign.right),
+  //             ],
+  //           );*/
+  //
+  //             // Test image
+  //             ByteData bytes = await rootBundle.load('assets/qr_bill.png');
+  //             final buffer = bytes.buffer;
+  //             final imgData = base64.encode(Uint8List.view(buffer));
+  //             SunmiPrinter.image(imgData);
+  //
+  //             SunmiPrinter.emptyLines(3);
+  //           } else {
+  //             platformChannel.invokeMethod('print_order', {
+  //               'name': defaultValue(loginData.restaurantName, ""),
+  //               'phone': defaultValue(loginData.phoneNumber, ""),
+  //               'address': defaultValue(loginData.location, ""),
+  //               'quantity':
+  //               orderDataModel.itemDetails!.length.toString(),
+  //               'orderData': jsonEncode(orderDataModel),
+  //               'ip_address': defaultValue(loginData.wifiPrinterIP, ""),
+  //               'port_number': defaultValue(loginData.wifiPrinterPort, "")
+  //             });
+  //           }
+  //         } on PlatformException {
+  //           print("PlatformException");
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Container(
+        padding: const EdgeInsets.only(left: 12, right: 12),
         color: colorBackgroundyellow,
         child: isDataLoad
             ? const Center(
@@ -329,20 +790,20 @@ class _OrderState extends State<Order> {
                 ),
               )
             : ListView.builder(
-                itemCount: _orderList.length,
+                itemCount: orderList.length,
                 itemBuilder: (BuildContext context, index) {
                   String status = "";
-                  if (_orderList[index].orderStatus == STATUS_PENDING) {
+                  if (orderList[index].orderStatus == STATUS_PENDING) {
                     status = "New Order";
                   } else {
-                    status = _orderList[index].orderStatus![0].toUpperCase() +
-                        _orderList[index]
+                    status = orderList[index].orderStatus![0].toUpperCase() +
+                        orderList[index]
                             .orderStatus!
                             .substring(1)
                             .toLowerCase();
                   }
 
-                  OrderDataModel orderObj = _orderList[index];
+                  OrderDataModel orderObj = orderList[index];
                   return GestureDetector(
                     onTap: () {
                       showOrderDialog(orderObj, "VVVVVVV");
@@ -418,11 +879,18 @@ class _OrderState extends State<Order> {
                                             fontSize: 12),
                                         children: <TextSpan>[
                                           TextSpan(
-                                              text:
-                                                  orderObj.deliveryDatetime ?? "",
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                              )),
+                                              text: orderObj.orderTime!,
+                                              style: orderObj.orderTime! ==
+                                                      "Sofort"
+                                                  ? const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    )
+                                                  : const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w900,
+                                                      color: coloryello,
+                                                      fontSize: 14)),
                                         ],
                                       ),
                                     ),
@@ -504,25 +972,5 @@ class _OrderState extends State<Order> {
                     ),
                   );
                 }));
-  }
-
-  void showOrderDialog(OrderDataModel orderDataModel, String name) {
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (buildContext) {
-        return OrderDetailsDialog(
-          orderDataModel: orderDataModel,
-          name: name,
-          onOrderUpdate: () {
-            setState(() {
-              _orderList = [];
-              getOrderList(true);
-            });
-            // _player.stop();
-          },
-        );
-      },
-    );
   }
 }

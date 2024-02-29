@@ -9,7 +9,7 @@ import 'package:food_inventory/main.dart';
 import 'package:food_inventory/model/common_model.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 
-import '../allergyList.dart';
+import '../allergy_list.dart';
 
 class AllergyGroupsRepository {
   final ApiBaseHelper _helper =  ApiBaseHelper();

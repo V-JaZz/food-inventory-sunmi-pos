@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:food_inventory/constant/app_util.dart';
 import 'package:food_inventory/constant/colors.dart';
 import 'package:food_inventory/constant/validation_util.dart';
-import 'allergyList.dart';
-import 'seeAll.dart';
+import 'allergy_list.dart';
+import 'see_all.dart';
 
 // ignore: must_be_immutable
 class AddAllergyGroups extends StatefulWidget {

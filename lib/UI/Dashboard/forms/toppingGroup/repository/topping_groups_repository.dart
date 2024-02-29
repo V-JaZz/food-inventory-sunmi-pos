@@ -11,8 +11,8 @@ import 'package:food_inventory/model/common_model.dart';
 import 'package:food_inventory/networking/api_base_helper.dart';
 
 class ToppingGroupsRepository {
-  ApiBaseHelper _helper = new ApiBaseHelper();
-  late BuildContext _context;
+  final ApiBaseHelper _helper = new ApiBaseHelper();
+  late final BuildContext _context;
   late ToppingListPage widget;
   // late EditToppingListPage widgetedit;
 
@@ -24,7 +24,7 @@ class ToppingGroupsRepository {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
-        var body;
+        String body;
         List<String> toppings = [];
         for (SelectionToppingListData toppingData in selectionList) {
           if (toppingData.isSelected) {
@@ -72,7 +72,7 @@ class ToppingGroupsRepository {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
-        var body;
+        String body;
         List<String> toppings = [];
         for (SelectionToppingListData toppingData in selectionList) {
           if (toppingData.isSelected) {

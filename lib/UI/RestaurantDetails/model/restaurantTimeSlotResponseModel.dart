@@ -1,15 +1,15 @@
-class MenuListResponseModel {
+class RestaurantTimeSlotListResponseModel {
   bool? success;
-  List<MenuItemData>? data;
+  List<TimeSlotItemData>? data;
 
-  MenuListResponseModel({this.success, this.data});
+  RestaurantTimeSlotListResponseModel({this.success, this.data});
 
-  MenuListResponseModel.fromJson(Map<String, dynamic> json) {
+  RestaurantTimeSlotListResponseModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
-    if (json['data'] != null) {
-      data = <MenuItemData>[];
-      json['data'].forEach((v) {
-        data!.add(MenuItemData.fromJson(v));
+    if (json['timeSlots'] != null) {
+      data = <TimeSlotItemData>[];
+      json['timeSlots'].forEach((v) {
+        data!.add(TimeSlotItemData.fromJson(v));
       });
     }
   }
@@ -18,59 +18,59 @@ class MenuListResponseModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['success'] = success;
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      data['timeZones'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class MenuItemData {
+class TimeSlotItemData {
   String? sId;
   List<OptionsData>? options;
   String? name;
-  String? price;
-  List<Toppings>? toppings;
-  String? description;
-
+  String? startTime;
+  String? endTime;
+  String? zoneGroup;
   CategoryData? category;
   ToppingGroupData? toppingGroups;
-  bool? checkbox;
-
+  bool? isActive;
+  List<dynamic>? days;
+  List<String>? holidayDates;
   // String? categoryName;
   // String? toppingGrpName;
 
-  MenuItemData(
+  TimeSlotItemData(
       {this.sId,
       this.options,
       this.name,
-      this.price,
-      this.toppings,
-        this.description,
+      this.startTime,
+      this.endTime,
+      this.zoneGroup,
       // this.categoryName,
       // this.toppingGrpName
       this.category,
       this.toppingGroups,
-        this.checkbox});
+      this.isActive,
+      this.days,
+      this.holidayDates});
 
-  MenuItemData.fromJson(Map<String, dynamic> json) {
+  TimeSlotItemData.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    if (json['options'] != null) {
+    if (json['items'] != null) {
       options = <OptionsData>[];
-      json['options'].forEach((v) {
+      json['items'].forEach((v) {
         options!.add(OptionsData.fromJson(v));
       });
     }
     name = json['name'];
-    price = json['price'].toString();
-    if (json['toppings'] != null) {
-      toppings = <Toppings>[];
-      json['toppings'].forEach((v) {
-        toppings!.add(Toppings.fromJson(v));
-      });
-    }
-    description=json['description'];
+    startTime = json['openTime'].toString();
+    endTime = json['closeTime'];
+    zoneGroup = json['zoneGroup'];
     // categoryName = json['category'];
     // toppingGrpName = json['toppingGroups'];
+    isActive = json['isActive'];
+    days = json['days'] ?? [];
+    holidayDates = json['holidayDates'].cast<String>();
 
     category = json['category'] != null
         ? CategoryData.fromJson(json['category'])
@@ -78,7 +78,6 @@ class MenuItemData {
     toppingGroups = json['toppingGroups'] != null
         ? ToppingGroupData.fromJson(json['toppingGroups'])
         : null;
-    checkbox=false;
   }
 
   Map<String, dynamic> toJson() {
@@ -87,14 +86,17 @@ class MenuItemData {
     if (options != null) {
       data['options'] = options!.map((v) => v.toJson()).toList();
     }
+    data['holidayDates'] = holidayDates;
+
     data['name'] = name;
-    data['price'] = price;
-    if (toppings != null) {
-      data['toppings'] = toppings!.map((v) => v.toJson()).toList();
-    }
+    data['openTime'] = startTime;
+    /* if (this.toppings != null) {
+      data['toppings'] = this.toppings!.map((v) => v.toJson()).toList();
+    }*/
     // data['category'] = this.categoryName;
     // data['toppingGroups'] = this.toppingGrpName;
-    data['description']=description;
+    data['closeTime'] = endTime;
+    data['zoneGroup'] = zoneGroup;
 
     if (category != null) {
       data['category'] = category!.toJson();
@@ -107,31 +109,28 @@ class MenuItemData {
 }
 
 class OptionsData {
-  String? createdOn;
   String? sId;
   String? name;
-  String? price;
+  String? categoryId;
 
-  OptionsData({this.createdOn, this.sId, this.name, this.price});
+  OptionsData({this.sId, this.name, this.categoryId});
 
   OptionsData.fromJson(Map<String, dynamic> json) {
-    createdOn = json['createdOn'];
     sId = json['_id'];
     name = json['name'];
-    price = json['price'].toString();
+    categoryId = json['categoryId'].toString();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['createdOn'] = createdOn;
     data['_id'] = sId;
     data['name'] = name;
-    data['price'] = price;
+    data['categoryId'] = categoryId;
     return data;
   }
 }
 
-class Toppings {
+class DaysData {
   String? sId;
   String? createdOn;
   bool? isDeleted;
@@ -139,7 +138,7 @@ class Toppings {
   String? price;
   String? iV;
 
-  Toppings(
+  DaysData(
       {this.sId,
       this.createdOn,
       this.isDeleted,
@@ -147,7 +146,7 @@ class Toppings {
       this.price,
       this.iV});
 
-  Toppings.fromJson(Map<String, dynamic> json) {
+  DaysData.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     createdOn = json['createdOn'];
     isDeleted = json['isDeleted'];
@@ -208,22 +207,3 @@ class ToppingGroupData {
     return data;
   }
 }
-
-class ItemIds {
-  String? sId;
-  String? name;
-  String? categoryID;
-
-  ItemIds({this.sId, this.name, this.categoryID});
-
-}
-
-class CategoryDataModel {
-  late String type, id, name, price, description;
-  late bool? checkbox;
-  late List<String> selectedData;
-
-  CategoryDataModel(
-      this.type, this.id, this.name,  this.price, this.description, this.selectedData,this.checkbox);
-}
-

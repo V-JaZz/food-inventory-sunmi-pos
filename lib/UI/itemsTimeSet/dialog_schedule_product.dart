@@ -41,13 +41,13 @@ class _DialogScheduleProductState extends State<DialogScheduleProduct> {
   late String dateTime;
   TimeOfDay selectedTime = const TimeOfDay(hour: 00, minute: 00);
 
-  var Color1 = const Color(0xff5E5887);
-  var Color2 = const Color(0xff5E5887);
-  var Color3 = const Color(0xff5E5887);
-  var Color4 = const Color(0xff5E5887);
-  var Color5 = const Color(0xff5E5887);
-  var Color6 = const Color(0xff5E5887);
-  var Color7 = const Color(0xff5E5887);
+  var color1 = const Color(0xff5E5887);
+  var color2 = const Color(0xff5E5887);
+  var color3 = const Color(0xff5E5887);
+  var color4 = const Color(0xff5E5887);
+  var color5 = const Color(0xff5E5887);
+  var color6 = const Color(0xff5E5887);
+  var color7 = const Color(0xff5E5887);
 
   bool valueSecond = false;
 
@@ -423,13 +423,13 @@ class _DialogScheduleProductState extends State<DialogScheduleProduct> {
                                     if (days.isNotEmpty) {
                                       days.clear();
                                     }
-                                    Color1 = Colors.green;
-                                    Color2 = Colors.green;
-                                    Color3 = Colors.green;
-                                    Color4 = Colors.green;
-                                    Color5 = Colors.green;
-                                    Color6 = Colors.green;
-                                    Color7 = Colors.green;
+                                    color1 = Colors.green;
+                                    color2 = Colors.green;
+                                    color3 = Colors.green;
+                                    color4 = Colors.green;
+                                    color5 = Colors.green;
+                                    color6 = Colors.green;
+                                    color7 = Colors.green;
                                     days.add("Sunday");
                                     days.add("Monday");
                                     days.add("Tuesday");
@@ -438,13 +438,13 @@ class _DialogScheduleProductState extends State<DialogScheduleProduct> {
                                     days.add("Friday");
                                     days.add("Saturday");
                                   } else {
-                                    Color1 = const Color(0xff5E5887);
-                                    Color2 = const Color(0xff5E5887);
-                                    Color3 = const Color(0xff5E5887);
-                                    Color4 = const Color(0xff5E5887);
-                                    Color5 = const Color(0xff5E5887);
-                                    Color6 = const Color(0xff5E5887);
-                                    Color7 = const Color(0xff5E5887);
+                                    color1 = const Color(0xff5E5887);
+                                    color2 = const Color(0xff5E5887);
+                                    color3 = const Color(0xff5E5887);
+                                    color4 = const Color(0xff5E5887);
+                                    color5 = const Color(0xff5E5887);
+                                    color6 = const Color(0xff5E5887);
+                                    color7 = const Color(0xff5E5887);
                                     if (days.isNotEmpty) {
                                       days.clear();
                                     }
@@ -463,17 +463,17 @@ class _DialogScheduleProductState extends State<DialogScheduleProduct> {
                           InkWell(
                             onTap: () {
                               setState(() {
-                                if (Color1 == const Color(0xff5E5887)) {
-                                  Color1 = Colors.green;
+                                if (color1 == const Color(0xff5E5887)) {
+                                  color1 = Colors.green;
                                   days.add("Sunday");
-                                } else if (Color1 == Colors.green) {
-                                  Color1 = const Color(0xff5E5887);
+                                } else if (color1 == Colors.green) {
+                                  color1 = const Color(0xff5E5887);
                                   days.remove("Sunday");
                                 }
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor: Color1,
+                              backgroundColor: color1,
                               radius: 17,
                               child: const Center(
                                 child: Text(
@@ -490,17 +490,17 @@ class _DialogScheduleProductState extends State<DialogScheduleProduct> {
                           InkWell(
                             onTap: () {
                               setState(() {
-                                if (Color2 == const Color(0xff5E5887)) {
-                                  Color2 = Colors.green;
+                                if (color2 == const Color(0xff5E5887)) {
+                                  color2 = Colors.green;
                                   days.add("Monday");
-                                } else if (Color2 == Colors.green) {
-                                  Color2 = const Color(0xff5E5887);
+                                } else if (color2 == Colors.green) {
+                                  color2 = const Color(0xff5E5887);
                                   days.remove("Monday");
                                 }
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor: Color2,
+                              backgroundColor: color2,
                               radius: 17,
                               child: const Center(
                                 child: Text(
@@ -517,17 +517,17 @@ class _DialogScheduleProductState extends State<DialogScheduleProduct> {
                           InkWell(
                             onTap: () {
                               setState(() {
-                                if (Color3 == const Color(0xff5E5887)) {
-                                  Color3 = Colors.green;
+                                if (color3 == const Color(0xff5E5887)) {
+                                  color3 = Colors.green;
                                   days.add("Tuesday");
-                                } else if (Color3 == Colors.green) {
-                                  Color3 = const Color(0xff5E5887);
+                                } else if (color3 == Colors.green) {
+                                  color3 = const Color(0xff5E5887);
                                   days.remove("Tuesday");
                                 }
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor: Color3,
+                              backgroundColor: color3,
                               radius: 17,
                               child: const Center(
                                 child: Text(
@@ -544,17 +544,17 @@ class _DialogScheduleProductState extends State<DialogScheduleProduct> {
                           InkWell(
                             onTap: () {
                               setState(() {
-                                if (Color4 == const Color(0xff5E5887)) {
-                                  Color4 = Colors.green;
+                                if (color4 == const Color(0xff5E5887)) {
+                                  color4 = Colors.green;
                                   days.add("Wednesday");
-                                } else if (Color4 == Colors.green) {
-                                  Color4 = const Color(0xff5E5887);
+                                } else if (color4 == Colors.green) {
+                                  color4 = const Color(0xff5E5887);
                                   days.remove("Wednesday");
                                 }
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor: Color4,
+                              backgroundColor: color4,
                               radius: 17,
                               child: const Center(
                                 child: Text(
@@ -571,17 +571,17 @@ class _DialogScheduleProductState extends State<DialogScheduleProduct> {
                           InkWell(
                             onTap: () {
                               setState(() {
-                                if (Color5 == const Color(0xff5E5887)) {
-                                  Color5 = Colors.green;
+                                if (color5 == const Color(0xff5E5887)) {
+                                  color5 = Colors.green;
                                   days.add("Thursday");
-                                } else if (Color5 == Colors.green) {
-                                  Color5 = const Color(0xff5E5887);
+                                } else if (color5 == Colors.green) {
+                                  color5 = const Color(0xff5E5887);
                                   days.remove("Thursday");
                                 }
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor: Color5,
+                              backgroundColor: color5,
                               radius: 17,
                               child: const Center(
                                 child: Text(
@@ -598,17 +598,17 @@ class _DialogScheduleProductState extends State<DialogScheduleProduct> {
                           InkWell(
                             onTap: () {
                               setState(() {
-                                if (Color6 == const Color(0xff5E5887)) {
-                                  Color6 = Colors.green;
+                                if (color6 == const Color(0xff5E5887)) {
+                                  color6 = Colors.green;
                                   days.add("Friday");
-                                } else if (Color6 == Colors.green) {
-                                  Color6 = const Color(0xff5E5887);
+                                } else if (color6 == Colors.green) {
+                                  color6 = const Color(0xff5E5887);
                                   days.remove("Friday");
                                 }
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor: Color6,
+                              backgroundColor: color6,
                               radius: 17,
                               child: const Center(
                                 child: Text(
@@ -625,17 +625,17 @@ class _DialogScheduleProductState extends State<DialogScheduleProduct> {
                           InkWell(
                             onTap: () {
                               setState(() {
-                                if (Color7 == const Color(0xff5E5887)) {
-                                  Color7 = Colors.green;
+                                if (color7 == const Color(0xff5E5887)) {
+                                  color7 = Colors.green;
                                   days.add("Saturday");
-                                } else if (Color7 == Colors.green) {
-                                  Color7 = const Color(0xff5E5887);
+                                } else if (color7 == Colors.green) {
+                                  color7 = const Color(0xff5E5887);
                                   days.remove("Saturday");
                                 }
                               });
                             },
                             child: CircleAvatar(
-                              backgroundColor: Color7,
+                              backgroundColor: color7,
                               radius: 17,
                               child: const Center(
                                 child: Text(

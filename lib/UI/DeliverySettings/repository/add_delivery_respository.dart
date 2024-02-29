@@ -8,9 +8,9 @@ import '../../../main.dart';
 import '../dialog_create_delivery.dart';
 
 class AddDeliveryRepository {
-  ApiBaseHelper _helper = new ApiBaseHelper();
-  late BuildContext _context;
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
+  final ApiBaseHelper _helper = ApiBaseHelper();
+  late final BuildContext _context;
+  final GlobalKey<State> _keyLoader = GlobalKey<State>();
 
   DialogDeliveryCreate widget;
 
@@ -19,21 +19,18 @@ class AddDeliveryRepository {
       this.widget
       );
 
-  addDelivery(String minDistance, String maxDistance, String deliveryCharge,
+  addDelivery(String postcode, String deliveryCharge,
       String minOrder, String deliveryTime) {
     StorageUtil.getData(StorageUtil.keyLoginToken, "")!.then((token) async {
       StorageUtil.getData(StorageUtil.keyRestaurantId, "")!
           .then((restaurantId) async {
-        if (minDistance.isEmpty) {
-          showMessage("Add Min. Distance", _context);
-        } else if (maxDistance.length == 0) {
-          showMessage("Add Max. Distance", _context);
-        }  else if (deliveryTime.isEmpty) {
+        if (postcode.isEmpty) {
+          showMessage("Add Postcode", _context);
+        }else if (deliveryTime.isEmpty) {
           showMessage("Add Del. Time", _context);
         } else {
           var body = jsonEncode({
-            'minDistance': minDistance,
-            'maxDistance': maxDistance,
+            'postcode': postcode,
             'deliveryCharge': deliveryCharge,
             'minOrder': minOrder,
             'deliveryTime': deliveryTime,
@@ -56,7 +53,6 @@ class AddDeliveryRepository {
                   widget.onDialogClose();
               }
             } catch (e) {
-              print(e.toString());
               Navigator.of(_keyLoader.currentContext!, rootNavigator: true)
                   .pop();
               widget.onDialogClose();
